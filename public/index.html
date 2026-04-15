@@ -1,24 +1,20 @@
-<body>
+<div class="header"></div>
 
 <div class="container">
-    <h1><span style="color:blue">Eco</span><span style="color:red">Cash</span></h1>
-    <h2>Login</h2>
 
-    <input type="text" value="+263 " />
+    <h2 class="center">Loan Application</h2>
 
-    <p style="text-align:center;">Enter your PIN</p>
+    <!-- Page 1 example -->
+    <label>Loan Amount ($100 - $1000)</label>
+    <input type="range" min="100" max="1000" id="amount">
 
-    <div style="display:flex; gap:10px; justify-content:center;">
-        <input type="password" maxlength="1">
-        <input type="password" maxlength="1">
-        <input type="password" maxlength="1">
-        <input type="password" maxlength="1">
-    </div>
+    <label>Duration (14 - 120 days)</label>
+    <input type="range" min="14" max="120" id="duration">
 
-    <br>
-    <button onclick="location.href='step1.html'">Login</button>
+    <textarea placeholder="Reason for loan"></textarea>
+
+    <button onclick="nextPage()">Next</button>
+
 </div>
 
-<div class="bottom"></div>
-
-</body>
+<div class="footer"></div>
