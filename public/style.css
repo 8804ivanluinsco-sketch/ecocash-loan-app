@@ -1,3 +1,45 @@
 body {
-  font-family: Arial;
+    margin: 0;
+    font-family: Arial;
+    background: #0d5ea6;
+}
+
+.container {
+    background: white;
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 20px 20px 0 0;
+    min-height: 60vh;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #0d5ea6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.slider {
+    width: 100%;
+}
+
+.bottom {
+    background: #0d5ea6;
+    height: 150px;
 }
