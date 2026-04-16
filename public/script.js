@@ -28,29 +28,40 @@ function nextStep1() {
     location.href = "step2.html";
 }
 
-// STEP 2 VALIDATION
 function nextStep2() {
-    let fname = document.getElementById("fname").value;
-    let lname = document.getElementById("lname").value;
-    let phone = document.getElementById("phone").value;
+    const fname = document.getElementById("fname").value.trim();
+    const lname = document.getElementById("lname").value.trim();
+    const phone = document.getElementById("phone").value.trim();
 
-    let nameRegex = /^[A-Za-z]+$/;
-
-    if (!fname.match(nameRegex) || !lname.match(nameRegex)) {
-        alert("Names must be letters only");
+    // validation
+    if (!fname || !lname || !phone) {
+        alert("Please fill all required fields");
         return;
     }
 
-    if (phone.length > 13) {
-        alert("Invalid phone number");
-        return;
-    }
+    // name validation (letters only)
+    const nameRegex = /^[A-Za-z]+$/;
+    // First name must be letters
+if (!nameRegex.test(fname)) {
+    alert("First name must contain letters only");
+    return;
+}
 
-    localStorage.setItem("fname", fname);
-    localStorage.setItem("lname", lname);
-    localStorage.setItem("phone", phone);
+// Last name only validate if filled (optional)
+if (lname && !nameRegex.test(lname)) {
+    alert("Last name must contain letters only");
+    return;
+}
 
-    location.href = "step3.html";
+    // phone validation
+    if (!phone.startsWith("+263") || phone.length < 10 || phone.length > 13) {
+    alert("Enter valid Zimbabwe phone number");
+    return;
+} {
+     
+
+    // go to next page
+    window.location.href = "step3.html";
 }
 
 // STEP 3 VALIDATION
