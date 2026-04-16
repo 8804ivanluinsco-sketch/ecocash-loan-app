@@ -1,19 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Step 1</title>
+
+    <!-- ✅ MOBILE FIX -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ✅ CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- 🔵 TOP -->
+<div class="header"></div>
+
+<!-- ⚪ CENTER CARD -->
 <div class="container">
 
-<h2>Loan Details</h2>
+    <h2 class="title">Loan Details</h2>
 
-<label>Amount ($100 - $1000)</label>
-<input type="range" min="100" max="1000" id="amount" class="slider">
-<p id="amountVal"></p>
+    <label>Amount ($100 - $1000)</label>
+    <input type="range" min="100" max="1000" id="amount" class="slider">
+    <p id="amountVal"></p>
 
-<label>Duration (14 - 120 days)</label>
-<input type="range" min="14" max="120" id="duration" class="slider">
-<p id="durationVal"></p>
+    <label>Duration (14 - 120 days)</label>
+    <input type="range" min="14" max="120" id="duration" class="slider">
+    <p id="durationVal"></p>
 
-<textarea id="reason" placeholder="Reason for loan"></textarea>
+    <textarea id="reason" placeholder="Reason for loan"></textarea>
 
-<button onclick="nextStep1()">Next</button>
+    <button type="button" onclick="nextStep1()">Next</button>
 
 </div>
 
+<!-- 🔵 BOTTOM -->
+<div class="footer"></div>
+
 <script src="script.js"></script>
+
+</body>
+</html>

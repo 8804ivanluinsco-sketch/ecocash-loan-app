@@ -139,7 +139,6 @@ function nextStep3() {
     window.location.href = "step4.html";
 }
 
-
 // =====================================
 // FINAL SUBMIT
 // =====================================
@@ -150,6 +149,19 @@ function submitApp() {
     localStorage.clear();
 
     // go back to start
+    window.location.href = "index.html";
+}
+
+function startProcessing() {
+    // optional: show instant feedback
+    alert("Processing your application...");
+
+    // redirect to processing page
+    window.location.href = "processing.html";
+}
+
+function finish() {
+    localStorage.clear();
     window.location.href = "index.html";
 }
 
