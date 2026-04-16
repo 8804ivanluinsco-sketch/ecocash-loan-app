@@ -8,22 +8,19 @@
 
 <body>
 
-<!-- 🔵 TOP -->
 <div class="header"></div>
 
-<!-- ⚪ CENTER CARD -->
 <div class="container">
 
     <h2 class="title">Next of Kin</h2>
 
-    <input placeholder="First Name">
-    <input placeholder="Surname">
-    <input placeholder="Last Name">
+    <input id="kfname" placeholder="First Name">
+    <input id="ksname" placeholder="Surname">
+    <input id="klname" placeholder="Last Name">
 
-    <input value="+263" placeholder="Phone Number">
+    <input id="kphone" value="+263" placeholder="Phone Number">
 
-    <!-- SELECT DROPDOWN -->
-    <select class="input">
+    <select id="province">
         <option>Select Province</option>
         <option>Harare</option>
         <option>Bulawayo</option>
@@ -34,11 +31,10 @@
         <option>Midlands</option>
     </select>
 
-    <button type="button" onclick="nextStep4()">Next</button>
+    <button type="button" onclick="nextStep3()">Next</button>
 
 </div>
 
-<!-- 🔵 BOTTOM -->
 <div class="footer"></div>
 
 <script src="script.js"></script>
