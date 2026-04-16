@@ -1,95 +1,154 @@
-// SLIDER DISPLAY
-if (document.getElementById("amount")) {
-    let amount = document.getElementById("amount");
-    let duration = document.getElementById("duration");
+// =====================================
+// PAGE LOAD (SLIDERS + SUMMARY)
+// =====================================
+document.addEventListener("DOMContentLoaded", function () {
 
-    amount.oninput = () => {
-        document.getElementById("amountVal").innerText = "$" + amount.value;
-    };
+    // ===== SLIDER DISPLAY =====
+    const amount = document.getElementById("amount");
+    const duration = document.getElementById("duration");
 
-    duration.oninput = () => {
-        document.getElementById("durationVal").innerText = duration.value + " days";
-    };
-}
+    const amountVal = document.getElementById("amountVal");
+    const durationVal = document.getElementById("durationVal");
 
-// STEP 1 VALIDATION
+    if (amount && duration) {
+        // show default values
+        amountVal.innerText = "$" + amount.value;
+        durationVal.innerText = duration.value + " days";
+
+        // update live
+        amount.addEventListener("input", function () {
+            amountVal.innerText = "$" + this.value;
+        });
+
+        duration.addEventListener("input", function () {
+            durationVal.innerText = this.value + " days";
+        });
+    }
+
+    // ===== SUMMARY PAGE =====
+    const summary = document.getElementById("summary");
+    if (summary) {
+        summary.innerHTML = `
+            <h3>Confirm Your Application</h3>
+            <p><strong>Amount:</strong> $${localStorage.getItem("amount")}</p>
+            <p><strong>Duration:</strong> ${localStorage.getItem("duration")} days</p>
+            <p><strong>Reason:</strong> ${localStorage.getItem("reason")}</p>
+            <p><strong>Name:</strong> ${localStorage.getItem("fname")} ${localStorage.getItem("lname")}</p>
+            <p><strong>Phone:</strong> ${localStorage.getItem("phone")}</p>
+            <p><strong>Next of Kin:</strong> ${localStorage.getItem("kfname")}</p>
+        `;
+    }
+});
+
+
+// =====================================
+// STEP 1 → STEP 2
+// =====================================
 function nextStep1() {
-    let reason = document.getElementById("reason").value;
+    const amount = document.getElementById("amount").value;
+    const duration = document.getElementById("duration").value;
+    const reason = document.getElementById("reason").value.trim();
 
-    if (reason === "") {
+    if (!reason) {
         alert("Please fill all required fields");
         return;
     }
 
-    localStorage.setItem("amount", amount.value);
-    localStorage.setItem("duration", duration.value);
+    // save data
+    localStorage.setItem("amount", amount);
+    localStorage.setItem("duration", duration);
     localStorage.setItem("reason", reason);
 
-    location.href = "step2.html";
+    // go next
+    window.location.href = "step2.html";
 }
 
+
+// =====================================
+// STEP 2 → STEP 3
+// =====================================
 function nextStep2() {
     const fname = document.getElementById("fname").value.trim();
+    const sname = document.getElementById("sname").value.trim(); // optional
     const lname = document.getElementById("lname").value.trim();
     const phone = document.getElementById("phone").value.trim();
+    const email = document.getElementById("email")?.value.trim();
 
-    // validation
+    // required fields
     if (!fname || !lname || !phone) {
         alert("Please fill all required fields");
         return;
     }
 
-    // name validation (letters only)
+    // name validation
     const nameRegex = /^[A-Za-z]+$/;
-    // First name must be letters
-if (!nameRegex.test(fname)) {
-    alert("First name must contain letters only");
-    return;
-}
 
-// Last name only validate if filled (optional)
-if (lname && !nameRegex.test(lname)) {
-    alert("Last name must contain letters only");
-    return;
-}
-
-    // phone validation
-    if (!phone.startsWith("+263") || phone.length < 10 || phone.length > 13) {
-    alert("Enter valid Zimbabwe phone number");
-    return;
-} {
-     
-
-    // go to next page
-    window.location.href = "step3.html";
-}
-
-// STEP 3 VALIDATION
-function nextStep3() {
-    let kfname = document.getElementById("kfname").value;
-
-    if (kfname === "") {
-        alert("Fill all required fields");
+    if (!nameRegex.test(fname)) {
+        alert("First name must contain letters only");
         return;
     }
 
+    if (lname && !nameRegex.test(lname)) {
+        alert("Last name must contain letters only");
+        return;
+    }
+
+    if (sname && !nameRegex.test(sname)) {
+        alert("Surname must contain letters only");
+        return;
+    }
+
+    // phone validation
+    if (!phone.startsWith("+263") || phone.length < 10 || phone.length > 13) {
+        alert("Enter valid Zimbabwe phone number");
+        return;
+    }
+
+    // save data
+    localStorage.setItem("fname", fname);
+    localStorage.setItem("sname", sname);
+    localStorage.setItem("lname", lname);
+    localStorage.setItem("phone", phone);
+    localStorage.setItem("email", email);
+
+    // go next
+    window.location.href = "step3.html";
+}
+
+
+// =====================================
+// STEP 3 → STEP 4 (NEXT OF KIN)
+// =====================================
+function nextStep3() {
+    const kfname = document.getElementById("kfname").value.trim();
+    const klname = document.getElementById("klname").value.trim();
+    const kphone = document.getElementById("kphone").value.trim();
+    const province = document.getElementById("province").value;
+
+    if (!kfname || !klname || !kphone || !province) {
+        alert("Please fill all required fields");
+        return;
+    }
+
+    // save data
     localStorage.setItem("kfname", kfname);
+    localStorage.setItem("klname", klname);
+    localStorage.setItem("kphone", kphone);
+    localStorage.setItem("province", province);
 
-    location.href = "step4.html";
+    window.location.href = "step4.html";
 }
 
-// STEP 4 SUMMARY
-if (document.getElementById("summary")) {
-    document.getElementById("summary").innerHTML = `
-        <p>Amount: $${localStorage.getItem("amount")}</p>
-        <p>Duration: ${localStorage.getItem("duration")} days</p>
-        <p>Name: ${localStorage.getItem("fname")} ${localStorage.getItem("lname")}</p>
-    `;
-}
 
+// =====================================
 // FINAL SUBMIT
+// =====================================
 function submitApp() {
-    alert("Application Submitted");
+    alert("Application Submitted Successfully");
+
+    // clear data
     localStorage.clear();
-    location.href = "index.html";
+
+    // go back to start
+    window.location.href = "index.html";
 }
