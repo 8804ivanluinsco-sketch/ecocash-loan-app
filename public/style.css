@@ -98,3 +98,12 @@ select {
     font-size: 16px;
     box-sizing: border-box;
 }
+
+/* SUMMARY TEXT */
+.summary p {
+    background: #f4f6f9;
+    padding: 14px;
+    border-radius: 12px;
+    margin-top: 12px;
+    font-size: 15px;
+}

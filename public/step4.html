@@ -1,11 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Confirm Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- 🔵 TOP -->
+<div class="header"></div>
+
+<!-- ⚪ CENTER CARD -->
 <div class="container">
 
-<h2>Confirm Details</h2>
+    <h2 class="title">Confirm Details</h2>
 
-<div id="summary"></div>
+    <div class="summary">
+        <p><strong>Amount:</strong> <span id="amount"></span></p>
+        <p><strong>Duration:</strong> <span id="duration"></span></p>
+        <p><strong>Reason:</strong> <span id="reason"></span></p>
 
-<button onclick="submitApp()">Submit</button>
+        <p><strong>Name:</strong> <span id="name"></span></p>
+        <p><strong>Phone:</strong> <span id="phone"></span></p>
+        <p><strong>Next of Kin:</strong> <span id="kin"></span></p>
+    </div>
+
+    <button onclick="submitApp()">Submit</button>
 
 </div>
 
+<!-- 🔵 BOTTOM -->
+<div class="footer"></div>
+
 <script src="script.js"></script>
+
+</body>
+</html>

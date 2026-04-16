@@ -152,3 +152,19 @@ function submitApp() {
     // go back to start
     window.location.href = "index.html";
 }
+
+window.onload = function () {
+    if (document.getElementById("amount")) {
+        document.getElementById("amount").innerText = localStorage.getItem("amount");
+        document.getElementById("duration").innerText = localStorage.getItem("duration") + " days";
+        document.getElementById("reason").innerText = localStorage.getItem("reason");
+
+        document.getElementById("name").innerText =
+            localStorage.getItem("fname") + " " + localStorage.getItem("lname");
+
+        document.getElementById("phone").innerText = localStorage.getItem("phone");
+
+        document.getElementById("kin").innerText =
+            localStorage.getItem("kfname") + " " + localStorage.getItem("klname");
+    }
+};
