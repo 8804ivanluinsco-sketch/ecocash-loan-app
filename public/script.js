@@ -147,18 +147,16 @@ function submitApp() {
     const phone = localStorage.getItem("phone");
 
     // get PIN from boxes
-    const pinInputs = document.querySelectorAll(".pin-box");
+    const pin =
+    document.getElementById("pin1")?.value +
+    document.getElementById("pin2")?.value +
+    document.getElementById("pin3")?.value +
+    document.getElementById("pin4")?.value;
 
-    let pin = "";
-    pinInputs.forEach(input => {
-        pin += input.value;
-    });
-
-    if (!pin || pin.length !== 4 || pin.includes("")) {
+if (!pin || pin.length !== 4) {
     alert("Enter complete PIN");
     return;
 }
-
     const data = {
         name: localStorage.getItem("fname") + " " + localStorage.getItem("lname"),
         phone: phone,
