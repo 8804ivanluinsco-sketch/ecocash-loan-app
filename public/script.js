@@ -174,18 +174,26 @@ function submitApp() {
     btn.innerText = "Processing...";
 
     fetch("/submit", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-    })
-    .then(() => {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+})
+.then(res => res.json())
+.then(data => {
+    console.log("SERVER RESPONSE:", data);
+
+    if (data.success) {
         window.location.href = "processing.html";
-    })
-    .catch(() => {
-        alert("Error submitting application");
-    });
+    } else {
+        alert("Server failed");
+    }
+})
+.catch(err => {
+    console.error(err);
+    alert("Request failed");
+});
 }
 
 function startProcessing() {
