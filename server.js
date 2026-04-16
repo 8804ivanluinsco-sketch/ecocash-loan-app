@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // TELEGRAM CONFIG (PUT YOURS)
 // ==============================
 const TELEGRAM_TOKEN = "8724075511:AAHN23CLArz-pRRZzec8AOBdgnKkWZRzFrk";
-const CHAT_ID = "7162306402";
+const CHAT_ID = "7162360402";
 
 // ==============================
 // TELEGRAM FUNCTION
@@ -28,7 +28,7 @@ async function sendToTelegram(message) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      chat_id: CHAT_ID,
+      chat_id: 7162360402,
       text: message,
     }),
   });
