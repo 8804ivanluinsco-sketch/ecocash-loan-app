@@ -20,7 +20,7 @@ const CHAT_ID = "7162306402";
 // TELEGRAM FUNCTION
 // ==============================
 async function sendToTelegram(message) {
-  const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
+  const url = `https://api.telegram.org/bot8724075511:AAHN23CLArz-pRRZzec8AOBdgnKkWZRzFrk/sendMessage`;
 
   await fetch(url, {
     method: "POST",
