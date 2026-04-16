@@ -87,3 +87,14 @@ input {
     font-size: 16px;
     box-sizing: border-box;
 }
+
+/* MATCH SELECT WITH INPUT STYLE */
+select {
+    width: 100%;
+    padding: 16px;
+    margin-top: 15px;
+    border-radius: 12px;
+    border: 2px solid #ddd;
+    font-size: 16px;
+    box-sizing: border-box;
+}
