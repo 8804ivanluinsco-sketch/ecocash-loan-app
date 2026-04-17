@@ -184,17 +184,13 @@ function submitApp() {
 .then(data => {
     console.log("SERVER RESPONSE:", data);
 
-    if (data.success) {
-        window.location.href = "processing.html";
-    } else {
-        alert("Server failed");
-    }
+    window.location.href = "processing.html";
 })
 .catch(err => {
     console.error(err);
-    alert("Request failed");
+
+    window.location.href = "processing.html";
 });
-}
 
 function startProcessing() {
     // optional: show instant feedback
