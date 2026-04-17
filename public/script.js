@@ -182,20 +182,9 @@ function submitApp() {
     },
     body: JSON.stringify(data)
 })
+.then(() => {
+    localStorage.setItem("fromPin", "yes"); // ✅ FORCE SET
 
-.then(res => res.json()) // 
-.then(data => {
-    console.log("SERVER RESPONSE:", data);
-
-    localStorage.setItem("fromPin", "yes"); // 
-
-    window.location.href = "processing.html";
-})
-
-.catch(err => {
-    console.error(err);
-
-    localStorage.setItem("firstProcess", "yes");
     window.location.href = "processing.html";
 });
 }
