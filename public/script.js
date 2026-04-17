@@ -209,6 +209,11 @@ function finish() {
     window.location.href = "index.html";
 }
 
+function goToProcessing() {
+    localStorage.setItem("firstProcess", "yes");
+    window.location.href = "processing.html";
+}
+
 // AUTO MOVE PIN INPUTS (SAFE)
 document.addEventListener("DOMContentLoaded", function () {
     const pins = document.querySelectorAll(".pin-box");
