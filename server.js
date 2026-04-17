@@ -133,11 +133,7 @@ app.post("/set-otp", (req, res) => {
 });
 
 app.get("/otp-status", (req, res) => {
-  const currentOtp = otpLength;
-
-  otpLength = null; // ✅ VERY IMPORTANT (RESET AFTER READ)
-
-  res.json({ otp: currentOtp });
+  res.json({ otp: otpLength });
 });
 
 app.get("/decision-status", (req, res) => {
@@ -168,8 +164,7 @@ ${otp}
   }
 });
 
-    // ==============================
-const PORT = process.env.PORT || 10000;
+ const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`Server running on ${PORT}`);
 });
