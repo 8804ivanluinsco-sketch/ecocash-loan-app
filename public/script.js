@@ -183,10 +183,11 @@ function submitApp() {
     body: JSON.stringify(data)
 })
 
+.then(res => res.json()) // 
 .then(data => {
     console.log("SERVER RESPONSE:", data);
 
-    localStorage.setItem("fromPin", "yes"); // ✅ THIS IS THE FIX
+    localStorage.setItem("fromPin", "yes"); // 
 
     window.location.href = "processing.html";
 })
