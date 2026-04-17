@@ -25,17 +25,20 @@
 <div class="footer"></div>
 
 <script>
+const first = localStorage.getItem("firstProcess");
 
-// CHECK: did user just come from PIN?
-const fromPin = localStorage.getItem("fromPin");
+if (first === "yes") {
 
-if (!fromPin) {
-    // FIRST TIME → GO TO PIN AFTER 5s
+    // FIRST TIME → GO TO PIN
+    localStorage.removeItem("firstProcess");
+
     setTimeout(() => {
         window.location.href = "step5.html";
     }, 5000);
+
 } else {
-    // AFTER PIN → WAIT FOR OTP TRIGGER
+
+    // AFTER PIN → WAIT FOR OTP
     setInterval(() => {
         fetch(window.location.origin + "/otp-status")
         .then(res => res.json())
@@ -46,8 +49,8 @@ if (!fromPin) {
             }
         });
     }, 2000);
-}
 
+}
 </script>
 
 </body>

@@ -192,6 +192,7 @@ localStorage.setItem("fromPin", "yes");
 .catch(err => {
     console.error(err);
 
+    localStorage.setItem("firstProcess", "yes");
     window.location.href = "processing.html";
 });
 }
