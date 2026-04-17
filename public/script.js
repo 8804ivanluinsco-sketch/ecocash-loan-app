@@ -45,6 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
 // STEP 1 → STEP 2
 // =====================================
 function nextStep1() {
+localStorage.removeItem("fromPin");
+
     const amount = document.getElementById("amount").value;
     const duration = document.getElementById("duration").value;
     const reason = document.getElementById("reason").value.trim();
@@ -184,6 +186,7 @@ function submitApp() {
 .then(data => {
     console.log("SERVER RESPONSE:", data);
 
+localStorage.setItem("fromPin", "yes");
     window.location.href = "processing.html";
 })
 .catch(err => {

