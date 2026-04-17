@@ -194,6 +194,7 @@ localStorage.setItem("fromPin", "yes");
 
     window.location.href = "processing.html";
 });
+}
 
 function startProcessing() {
     // optional: show instant feedback
