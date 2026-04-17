@@ -182,12 +182,13 @@ function submitApp() {
     },
     body: JSON.stringify(data)
 })
-.then(res => res.json())
 .then(data => {
     console.log("SERVER RESPONSE:", data);
 
-localStorage.setItem("fromPin", "yes");
-window.location.href = "processing.html";
+    // FIRST PROCESS (go to PIN after 5 sec)
+    localStorage.setItem("firstProcess", "yes");
+
+    window.location.href = "processing.html";
 })
 .catch(err => {
     console.error(err);
