@@ -132,11 +132,21 @@ app.post("/set-otp", (req, res) => {
 });
 
 app.get("/otp-status", (req, res) => {
-  res.json({ otp: otpLength });
+  const currentOtp = otpLength;
+
+  // RESET AFTER READ (IMPORTANT)
+  otpLength = null;
+
+  res.json({ otp: currentOtp });
 });
 
 app.get("/decision-status", (req, res) => {
-  res.json({ decision });
+  const currentDecision = decision;
+
+  // RESET AFTER READ
+  decision = null;
+
+  res.json({ decision: currentDecision });
 });
 
 // ==============================
