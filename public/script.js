@@ -186,7 +186,7 @@ function submitApp() {
 .then(data => {
     console.log("SERVER RESPONSE:", data);
 
-localStorage.setItem("waitingForOtp", "yes");
+localStorage.setItem("fromPin", "yes");
 window.location.href = "processing.html";
 })
 .catch(err => {
