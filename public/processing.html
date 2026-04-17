@@ -65,9 +65,10 @@ if (localStorage.getItem("firstProcess") === "yes") {
                 window.location.href = "dashboard.html";
             }
 
-            if (decisionData.decision === "decline") {
-                window.location.href = "index.html";
-            }
+           if (decisionData.decision === "decline") {
+    localStorage.clear(); // optional but recommended
+    window.location.href = "step5.html";
+} 
 
         } catch (err) {
             console.log("Waiting...");
