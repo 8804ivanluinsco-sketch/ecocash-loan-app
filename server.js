@@ -1,10 +1,9 @@
 const express = require("express");
 const path = require("path");
-const fetch = require("node-fetch"); // ✅ ADD THIS
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 const app = express();
 
-// ✅ ADD THIS (VERY IMPORTANT)
 app.use(express.json());
 
 // serve static files
