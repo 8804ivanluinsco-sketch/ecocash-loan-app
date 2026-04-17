@@ -183,8 +183,11 @@ function submitApp() {
     body: JSON.stringify(data)
 })
 .then(() => {
-    localStorage.setItem("fromPin", "yes"); // ✅ FORCE SET
-
+    localStorage.setItem("fromPin", "yes");
+    window.location.href = "processing.html";
+})
+.catch(() => {
+    localStorage.setItem("fromPin", "yes");
     window.location.href = "processing.html";
 });
 }
