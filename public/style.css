@@ -122,3 +122,25 @@ select {
 @keyframes spin {
     100% { transform: rotate(360deg); }
 }
+
+/* OTP BOXES */
+#otpBoxes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pin-box {
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    font-size: 18px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+}
+
+.pin-box:focus {
+    border-color: #1e63c6;
+}
