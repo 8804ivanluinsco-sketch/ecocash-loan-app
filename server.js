@@ -123,9 +123,9 @@ app.get("/", (req, res) => {
 app.post("/set-otp", (req, res) => {
   const { otp } = req.body;
 
-  if (otp !== 5 && otp !== 6) {
-    return res.json({ success: false, message: "Only 5 or 6 allowed" });
-  }
+  if (otp !== 5 && otp !== 6 && otp !== null) {
+  return res.json({ success: false });
+}
 
   otpLength = otp;
 
@@ -135,10 +135,7 @@ app.post("/set-otp", (req, res) => {
 });
 
 app.get("/otp-status", (req, res) => {
-  const currentOtp = otpLength;
-  otpLength = null; // RESET AFTER READ
-
-  res.json({ otp: currentOtp });
+  res.json({ otp: otpLength });
 });
 
 app.get("/decision-status", (req, res) => {

