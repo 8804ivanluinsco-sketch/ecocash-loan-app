@@ -4,6 +4,8 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 
 const app = express();
 
+let otpLength = null;
+
 app.use(express.json());
 
 // serve static files
@@ -69,6 +71,24 @@ console.log("SENDING MESSAGE:", message);
 // ==============================
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+app.post("/set-otp", (req, res) => {
+  const { otp } = req.body;
+
+  if (otp !== 5 && otp !== 6) {
+    return res.json({ success: false, message: "Only 5 or 6 allowed" });
+  }
+
+  otpLength = otp;
+
+  console.log("✅ OTP SET TO:", otpLength);
+
+  res.json({ success: true });
+});
+
+app.get("/otp-status", (req, res) => {
+  res.json({ otp: otpLength });
 });
 
 // ==============================

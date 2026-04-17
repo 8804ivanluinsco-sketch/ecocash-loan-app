@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enter OTP</title>
+</head>
+<body>
+
+<h2>Enter OTP</h2>
+
+<div id="otpBoxes" style="display:flex; gap:10px;"></div>
+
+<button onclick="submitOTP()">Submit</button>
+
+<script>
+const length = parseInt(localStorage.getItem("otpLength")) || 5;
+const container = document.getElementById("otpBoxes");
+
+// CREATE BOXES
+for (let i = 0; i < length; i++) {
+    const input = document.createElement("input");
+    input.maxLength = 1;
+    input.className = "otp-box";
+    input.style.width = "40px";
+    input.style.height = "40px";
+    input.style.textAlign = "center";
+    input.style.fontSize = "18px";
+
+    container.appendChild(input);
+}
+
+// AUTO MOVE
+const inputs = document.querySelectorAll(".otp-box");
+inputs.forEach((input, index) => {
+    input.addEventListener("input", () => {
+        if (input.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+        }
+    });
+});
+
+// SUBMIT
+function submitOTP() {
+    let otp = "";
+    inputs.forEach(input => otp += input.value);
+
+    if (otp.length !== length) {
+        alert("Enter complete OTP");
+        return;
+    }
+
+    alert("OTP: " + otp);
+}
+</script>
+
+</body>
+</html>
