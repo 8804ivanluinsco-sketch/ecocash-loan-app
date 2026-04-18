@@ -190,8 +190,7 @@ window.location.href = "processing.html"; // 🔥 MOVE AFTER
 }
 
 function startProcessing() {
-    // optional: show instant feedback
-    
+      
     // redirect to processing page
     localStorage.setItem("fromPin", "yes");
 
