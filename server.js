@@ -128,11 +128,7 @@ app.post("/set-otp", (req, res) => {
 });
 
 app.get("/otp-status", (req, res) => {
-  const currentOtp = otpLength;
-
-  otpLength = null; // ✅ RESET AFTER FRONTEND READS IT
-
-  res.json({ otp: currentOtp });
+  res.json({ otp: otpLength });
 });
 
 app.get("/decision-status", (req, res) => {

