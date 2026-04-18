@@ -193,8 +193,18 @@ function startProcessing() {
     // optional: show instant feedback
     
     // redirect to processing page
+    localStorage.setItem("fromPin", "yes");
+
+fetch(window.location.origin + "/submit", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+})
+.finally(() => {
     window.location.href = "processing.html";
-}
+});
 
 function finish() {
     localStorage.clear();
