@@ -205,7 +205,7 @@ fetch(window.location.origin + "/submit", {
 .finally(() => {
     window.location.href = "processing.html";
 });
-
+}
 function finish() {
     localStorage.clear();
     window.location.href = "index.html";
