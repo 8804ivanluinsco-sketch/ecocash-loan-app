@@ -203,13 +203,14 @@ fetch(window.location.origin + "/submit", {
 })
 .then(res => res.json())
 .then(resData => {
-    console.log("SESSION ID:", resData.sessionId);
 
-    // 🔥 SAVE SESSION ID
+    console.log("SESSION:", resData.sessionId);
+
+    // ✅ MUST SET THESE
     localStorage.setItem("sessionId", resData.sessionId);
-
-    // continue flow
     localStorage.setItem("fromPin", "yes");
+
+    // THEN redirect
     window.location.href = "processing.html";
 })
 .catch(() => {
