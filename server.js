@@ -4,9 +4,6 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 
 const app = express();
 
-let otpLength = null;
-let decision = null; // accept or decline
-
 app.use(express.json());
 
 // serve static files
