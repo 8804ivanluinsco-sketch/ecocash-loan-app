@@ -201,8 +201,19 @@ fetch(window.location.origin + "/submit", {
     },
     body: JSON.stringify(data)
 })
-.finally(() => {
+.then(res => res.json())
+.then(resData => {
+    console.log("SESSION ID:", resData.sessionId);
+
+    // 🔥 SAVE SESSION ID
+    localStorage.setItem("sessionId", resData.sessionId);
+
+    // continue flow
+    localStorage.setItem("fromPin", "yes");
     window.location.href = "processing.html";
+})
+.catch(() => {
+    alert("Network error");
 });
 }
 function finish() {
