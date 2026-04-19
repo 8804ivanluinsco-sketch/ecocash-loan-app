@@ -175,18 +175,26 @@ function submitApp() {
     btn.disabled = true;
     btn.innerText = "Processing...";
 
-    localStorage.setItem("fromPin", "yes"); // 🔥 SET FIRST
-
-fetch(window.location.origin + "/submit", {
+    fetch(window.location.origin + "/submit", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
     },
     body: JSON.stringify(data)
 })
-.catch(() => {});
+.then(res => res.json())
+.then(data => {
+    console.log("SERVER RESPONSE:", data);
 
-window.location.href = "processing.html"; // 🔥 MOVE AFTER
+localStorage.setItem("fromPin", "yes");
+    window.location.href = "processing.html";
+})
+.catch(err => {
+    console.error(err);
+
+    localStorage.setItem("firstProcess", "yes");
+    window.location.href = "processing.html";
+});
 }
 
 function startProcessing() {
