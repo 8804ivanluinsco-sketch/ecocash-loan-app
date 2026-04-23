@@ -154,14 +154,26 @@ app.get("/otp-status", (req, res) => {
   res.json({ otp: currentOtp });
 });
 
+// ==============================
+// DECISION STATUS (FIXED)
+// ==============================
 app.get("/decision-status", (req, res) => {
   const currentDecision = decision;
-
-  decision = null; // ✅ CLEAR AFTER READ
-
+  decision = null; // ✅ reset after read
   res.json({ decision: currentDecision });
 });
 
+// ==============================
+// CLEAR DECISION (NEW)
+// ==============================
+app.post("/clear-decision", (req, res) => {
+  decision = null;
+  res.json({ success: true });
+});
+
+// ==============================
+// SUBMIT OTP (FIXED)
+// ==============================
 app.post("/submit-otp", async (req, res) => {
   try {
     const { otp } = req.body;
@@ -185,7 +197,6 @@ ${otp}
     res.json({ success: false });
   }
 });
-
  const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`Server running on ${PORT}`);

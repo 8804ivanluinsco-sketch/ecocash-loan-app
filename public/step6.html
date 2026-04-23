@@ -39,6 +39,8 @@ const length = localStorage.getItem("otpLength") || 5;
 
 const container = document.getElementById("otpBoxes");
 
+fetch("/clear-decision", { method: "POST" });
+
 // create boxes dynamically
 for (let i = 0; i < length; i++) {
     const input = document.createElement("input");
