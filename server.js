@@ -122,8 +122,9 @@ if (cmd === "invalid") {
 
   if (cmd === "reset") {
     otpLength = null;
-    decision = null;
-  }
+    step5Decision = null;
+    step6Decision = null;
+}
 
   console.log("STATE:", { otpLength, decision });
 
