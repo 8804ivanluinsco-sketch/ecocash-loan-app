@@ -17,8 +17,8 @@
     <!-- Amount -->
     <label>Loan Amount ($100 - $1000)</label>
     <input type="range" min="100" max="1000" id="amountSlider" class="slider">
-<p id="amountText">KES 100</p>
-<p id="repayText">Repay: KES 110</p>
+<p id="amountText">$ 100</p>
+<p id="repayText">Repay: $ 110</p>
 
     <!-- Duration -->
     <label>Duration (14 - 120 days)</label>
@@ -41,8 +41,8 @@ window.onload = () => {
         const amount = slider.value;
         const repay = Math.round(amount * 1.1);
 
-        amountText.innerText = "KES " + amount;
-        repayText.innerText = "Repay: KES " + repay;
+        amountText.innerText = "$ " + amount;
+        repayText.innerText = "Repay: $ " + repay;
     });
 };
 </script>

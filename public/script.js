@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const amountVal = document.getElementById("amountVal");
     const durationVal = document.getElementById("durationVal");
 
-    if (amount && duration) {
+    if (amount && duration && amountVal && durationVal) {
         amountVal.innerText = "$" + amount.value;
         durationVal.innerText = duration.value + " days";
 
@@ -60,8 +60,6 @@ document.addEventListener("DOMContentLoaded", function () {
 // STEP 1 → STEP 2
 // =====================================
 function nextStep1() {
-    localStorage.removeItem("fromPin");
-
     const amount = document.getElementById("amount").value;
     const duration = document.getElementById("duration").value;
     const reason = document.getElementById("reason").value.trim();
@@ -74,8 +72,9 @@ function nextStep1() {
     localStorage.setItem("amount", amount);
     localStorage.setItem("duration", duration);
     localStorage.setItem("reason", reason);
-}
 
+    showLoaderAndGo("step2.html"); 
+}
 
 // =====================================
 // STEP 2 → STEP 3
@@ -98,6 +97,8 @@ function nextStep2() {
     localStorage.setItem("fname", fname);
     localStorage.setItem("lname", lname);
     localStorage.setItem("phone", phone);
+
+    showLoaderAndGo("step3.html");
 }
 
 
