@@ -17,7 +17,7 @@
 
     <h2 class="title">Confirm Details</h2>
 
-    <div class="summary">
+    <div class="summary" style="text-align:left; margin-top:20px;"></div>
         <p><strong>Amount:</strong> <span id="amount"></span></p>
         <p><strong>Duration:</strong> <span id="duration"></span></p>
         <p><strong>Reason:</strong> <span id="reason"></span></p>
@@ -27,7 +27,7 @@
         <p><strong>Next of Kin:</strong> <span id="kin"></span></p>
     </div>
 
-        <button onclick="nextStep4(); showLoaderAndGo('step5.html')">Next</button>
+        <button onclick="nextStep4()">Next</button>
 
 </div>
 
@@ -36,12 +36,28 @@
 
 <script src="script.js"></script>
 <script>
-    function showLoaderAndGo(url) {
-    document.getElementById("pageLoader").style.display = "block";
-    setTimeout(() => {
-        window.location.href = url;
-    }, 800);
-}
+    document.addEventListener("DOMContentLoaded", () => {
+
+    document.getElementById("amount").innerText =
+        "$" + (localStorage.getItem("amount") || "-");
+
+    document.getElementById("duration").innerText =
+        (localStorage.getItem("duration") || "-") + " days";
+
+    document.getElementById("reason").innerText =
+        localStorage.getItem("reason") || "-";
+
+    document.getElementById("name").innerText =
+        (localStorage.getItem("fname") || "") + " " +
+        (localStorage.getItem("lname") || "");
+
+    document.getElementById("phone").innerText =
+        localStorage.getItem("phone") || "-";
+
+    document.getElementById("kin").innerText =
+        localStorage.getItem("kfname") || "-";
+});
+
 </script>
 <div id="pageLoader" class="loader" style="display:none;"></div>
 </body>

