@@ -16,7 +16,9 @@
 
     <!-- Amount -->
     <label>Loan Amount ($100 - $1000)</label>
-    <input type="range" min="100" max="1000" class="slider">
+    <input type="range" min="100" max="1000" id="amountSlider" class="slider">
+<p id="amountText">KES 100</p>
+<p id="repayText">Repay: KES 110</p>
 
     <!-- Duration -->
     <label>Duration (14 - 120 days)</label>
@@ -26,17 +28,24 @@
     <textarea placeholder="Enter reason for loan"></textarea>
 
     <button onclick="goNext()">Next</button>
-
+  
 <script>
-function goNext() {
-    alert("Going to next page..."); // temporary
-    window.location.href = "step2.html";
-}
+window.onload = () => {
+    document.body.classList.add("loaded");
+
+    const slider = document.getElementById("amountSlider");
+    const amountText = document.getElementById("amountText");
+    const repayText = document.getElementById("repayText");
+
+    slider.addEventListener("input", () => {
+        const amount = slider.value;
+        const repay = Math.round(amount * 1.1);
+
+        amountText.innerText = "KES " + amount;
+        repayText.innerText = "Repay: KES " + repay;
+    });
+};
 </script>
-
-</div>
-
-<div class="footer"></div>
-
+<div id="pageLoader" class="loader" style="display:none;"></div>
 </body>
 </html>

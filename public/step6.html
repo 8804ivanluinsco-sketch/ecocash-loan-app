@@ -109,12 +109,12 @@ setInterval(async () => {
     window.location.href = "/dashboard.html";
   }
 
-  if (data.decision === "invalid") {
+    if (data.decision === "invalid") {
     alert("Invalid OTP. Try again.");
   }
 }, 2000);
 
 </script>
-
+<div id="pageLoader" class="loader" style="display:none;"></div>
 </body>
 </html>

