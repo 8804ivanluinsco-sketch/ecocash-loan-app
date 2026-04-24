@@ -126,7 +126,7 @@ if (cmd === "invalid") {
     step6Decision = null;
 }
 
-  console.log("STATE:", { otpLength, decision });
+  console.log("STATE:", { otpLength, step5Decision, step6Decision });
 
   res.send(`
   <h2>✅ ${cmd.toUpperCase()}</h2>

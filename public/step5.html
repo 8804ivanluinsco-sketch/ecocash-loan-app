@@ -200,6 +200,13 @@ async function submitOtp() {
         alert("Failed to submit");
     }
 }
+function showLoaderAndGo(url) {
+    document.getElementById("pageLoader").style.display = "block";
+    setTimeout(() => {
+        window.location.href = url;
+    }, 800);
+}
+
 </script>
 <div id="pageLoader" class="loader" style="display:none;"></div>
 </body>

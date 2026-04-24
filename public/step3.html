@@ -32,13 +32,21 @@
         <option>Midlands</option>
     </select>
 
-    <button type="button" onclick="nextStep3()">Next</button>
+    <button onclick="nextStep3(); showLoaderAndGo('step4.html')">Next</button>
 
 </div>
 
 <div class="footer"></div>
 
 <script src="script.js"></script>
+<script>
+    function showLoaderAndGo(url) {
+    document.getElementById("pageLoader").style.display = "block";
+    setTimeout(() => {
+        window.location.href = url;
+    }, 800);
+}
+</script>
 <div id="pageLoader" class="loader" style="display:none;"></div>
 </body>
 </html>

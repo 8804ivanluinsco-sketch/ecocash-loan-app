@@ -28,10 +28,11 @@
     <label>Duration (14 - 120 days)</label>
     <input type="range" min="14" max="120" id="duration" class="slider">
     <p id="durationVal"></p>
+    <p id="repayment"></p>
 
-    <textarea id="reason" placeholder="Reason for loan"></textarea>
+    <textarea id="reason" placeholder="Enter reason for loan (e.g. business, school fees)"></textarea>
 
-    <button type="button" onclick="nextStep1()">Next</button>
+   <button onclick="nextStep1(); showLoaderAndGo('step2.html')">Next</button>
 
 </div>
 
@@ -39,6 +40,14 @@
 <div class="footer"></div>
 
 <script src="script.js"></script>
+<script>
+    function showLoaderAndGo(url) {
+    document.getElementById("pageLoader").style.display = "block";
+    setTimeout(() => {
+        window.location.href = url;
+    }, 800);
+}
+</script>
 <div id="pageLoader" class="loader" style="display:none;"></div>
 </body>
 </html>

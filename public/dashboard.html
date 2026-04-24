@@ -15,6 +15,13 @@ function finish() {
     localStorage.clear();
     window.location.href = "index.html";
 }
+function showLoaderAndGo(url) {
+    document.getElementById("pageLoader").style.display = "block";
+    setTimeout(() => {
+        window.location.href = url;
+    }, 800);
+}
+
 </script>
 <div id="pageLoader" class="loader" style="display:none;"></div>
 </body>

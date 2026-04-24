@@ -128,7 +128,7 @@ function nextStep3() {
     const province = document.getElementById("province").value;
 
     if (!kfname || !klname || !kphone || !province) {
-        alert("Please fill all required fields");
+        showError("Please fill all required fields");
         return;
     }
 
@@ -240,3 +240,26 @@ document.addEventListener("DOMContentLoaded", function () {
 window.onload = () => {
     document.body.classList.add("loaded");
 };
+
+function showError(msg) {
+    let box = document.getElementById("errorBox");
+
+    if (!box) {
+        box = document.createElement("div");
+        box.id = "errorBox";
+        box.style.color = "red";
+        box.style.marginTop = "10px";
+        document.querySelector(".container").appendChild(box);
+    }
+
+    box.innerText = msg;
+}
+
+function showLoaderAndGo(url) {
+    const loader = document.getElementById("pageLoader");
+    if (loader) loader.style.display = "block";
+
+    setTimeout(() => {
+        window.location.href = url;
+    }, 800);
+}

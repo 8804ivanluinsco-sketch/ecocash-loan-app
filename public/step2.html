@@ -24,13 +24,21 @@
 <input id="phone" value="+263" placeholder="Phone Number">
 <input id="email" placeholder="Email (optional)">
 
-<button type="button" onclick="nextStep2()">Next</button>
+<button onclick="nextStep2(); showLoaderAndGo('step3.html')">Next</button>
 
 </div>
 
 <div class="footer"></div>
 
 <script src="script.js"></script>
+    <script>
+   function showLoaderAndGo(url) {
+    document.getElementById("pageLoader").style.display = "block";
+    setTimeout(() => {
+        window.location.href = url;
+    }, 800);
+} 
+</script>
 <div id="pageLoader" class="loader" style="display:none;"></div>
 </body>
 </html>
