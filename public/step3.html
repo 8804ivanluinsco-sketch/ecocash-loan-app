@@ -86,10 +86,17 @@ function nextStep3() {
     localStorage.setItem("kphone", kphone);
     localStorage.setItem("province", province);
 
+    showLoaderAndGo("step4.html");
     }
 </script>
 
 <script src="script.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.body.classList.add("loaded");
+});
+</script>
 
 <div id="pageLoader" class="loader" style="display:none;"></div>
 
