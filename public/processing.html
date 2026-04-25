@@ -29,13 +29,7 @@
 <script>
 
 // 🔵 FLOW 1: from earlier step → go to step5 after 5s
-if (localStorage.getItem("firstProcess") === "yes") {
-    localStorage.removeItem("firstProcess");
 
-    setTimeout(() => {
-        window.location.href = "step6.html";
-    }, 5000);
-}
 
 // 🔵 FLOW 2: always check for updates (OTP + decision)
 let isRedirecting = false;
