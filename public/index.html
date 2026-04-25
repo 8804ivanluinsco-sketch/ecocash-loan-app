@@ -2,17 +2,21 @@
 <html>
 
 <head>
-    <title>EcoCash Loan</title>
+    <title>Step 1</title>
 
+    <!-- ✅ MOBILE FIX -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+    <!-- ✅ CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<!-- 🔵 TOP -->
 <div class="header"></div>
 
+<!-- ⚪ CENTER CARD -->
 <div class="container">
 
     <h2 class="title">Loan Details</h2>
@@ -26,12 +30,13 @@
     <p id="durationVal"></p>
     <p id="repayment"></p>
 
-    <textarea id="reason" placeholder="Enter reason for loan"></textarea>
+    <textarea id="reason" placeholder="Enter reason for loan (e.g. business, school fees)"></textarea>
 
-    <button onclick="nextStep1()">Next</button>
+   <button onclick="nextStep1()">Next</button>
 
 </div>
 
+<!-- 🔵 BOTTOM -->
 <div class="footer"></div>
 
 <script src="script.js"></script>
@@ -42,7 +47,14 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+<script>
+    function showLoaderAndGo(url) {
+    document.getElementById("pageLoader").style.display = "block";
+    setTimeout(() => {
+        window.location.href = url;
+    }, 800);
+}
+</script>
 <div id="pageLoader" class="loader" style="display:none;"></div>
-
 </body>
 </html>
