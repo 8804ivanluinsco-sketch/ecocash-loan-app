@@ -159,4 +159,6 @@ window.nextStep2 = nextStep2;
 window.nextStep3 = nextStep3;
 window.nextStep4 = nextStep4;
 
+document.body.classList.add("loaded");
+
 }); 
