@@ -107,6 +107,8 @@ function nextStep3() {
     localStorage.setItem("kphone", kphone);
     localStorage.setItem("province", province);
 
+    localStorage.setItem("kinName", kfname + " " + klname);
+
     showLoaderAndGo("step4.html");
 }
 

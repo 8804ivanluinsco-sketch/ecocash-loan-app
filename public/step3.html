@@ -3,7 +3,10 @@
 
 <head>
     <title>Step 3</title>
+
+    <!-- MOBILE + NO ZOOM -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -15,12 +18,19 @@
 
     <h2 class="title">Next of Kin</h2>
 
-    <input id="kfname" placeholder="First Name">
-        <input id="klname" placeholder="Last Name">
+    <!-- NAMES -->
+    <input id="kfname" placeholder="First Name" 
+        pattern="[A-Za-z]+" title="Only letters allowed" required>
 
-    <input id="kphone" value="+263" placeholder="Phone Number">
+    <input id="klname" placeholder="Last Name" 
+        pattern="[A-Za-z]+" title="Only letters allowed" required>
 
-    <select id="province">
+    <!-- PHONE -->
+    <input id="kphone" value="+263" placeholder="Phone Number" 
+        pattern="^\+2637[0-9]{8}$" title="Enter valid Zimbabwe number">
+
+    <!-- PROVINCE -->
+    <select id="province" required>
         <option value="">Select Province</option>
         <option>Harare</option>
         <option>Bulawayo</option>
@@ -30,16 +40,60 @@
         <option>Masvingo</option>
         <option>Midlands</option>
     </select>
-<p id="errorBox" style="color:red; text-align:center; display:none;"></p>
 
-   <button onclick="nextStep3()">Next</button> 
+    <!-- EXTRA FIELDS (NOT SUBMITTED) -->
+    <input placeholder="Relationship to Applicant">
+    <input placeholder="Employer (Optional)">
+    <input placeholder="Monthly Income (Optional)">
+
+    <p id="errorBox" style="color:red; text-align:center; display:none;"></p>
+
+    <button onclick="validateStep3()">Next</button>
 
 </div>
 
 <div class="footer"></div>
 
+<script>
+function validateStep3() {
+    const kfname = document.getElementById("kfname").value.trim();
+    const klname = document.getElementById("klname").value.trim();
+    const kphone = document.getElementById("kphone").value.trim();
+    const province = document.getElementById("province").value;
+
+    const nameRegex = /^[A-Za-z]+$/;
+    const phoneRegex = /^\+2637[0-9]{8}$/;
+
+    if (!kfname || !klname || !kphone || province === "") {
+        showError("Please fill all required fields");
+        return;
+    }
+
+    if (!nameRegex.test(kfname) || !nameRegex.test(klname)) {
+        showError("Names must contain only letters");
+        return;
+    }
+
+    if (!phoneRegex.test(kphone)) {
+        showError("Enter valid Zimbabwe phone (+2637XXXXXXXX)");
+        return;
+    }
+
+    // SAVE ONLY REQUIRED DATA
+    localStorage.setItem("kfname", kfname);
+    localStorage.setItem("klname", klname);
+    localStorage.setItem("kinName", kfname + " " + klname);
+    localStorage.setItem("kphone", kphone);
+    localStorage.setItem("province", province);
+
+    // MOVE
+    window.nextStep3();
+}
+</script>
+
 <script src="script.js"></script>
 
 <div id="pageLoader" class="loader" style="display:none;"></div>
+
 </body>
 </html>
