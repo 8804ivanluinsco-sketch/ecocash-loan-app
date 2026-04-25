@@ -78,7 +78,7 @@ function nextStep1() {
     localStorage.setItem("duration", duration);
     localStorage.setItem("reason", reason);
 
-    showLoaderAndGo("step2.html"); 
+    showLoaderAndGo("step1.html");
 }
 
 // =====================================
