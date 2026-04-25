@@ -138,6 +138,7 @@ function showError(msg) {
     }
 
     box.innerText = msg;
+    box.style.display = "block";   // 👈 ADD THIS LINE HERE
 }
 
 
