@@ -5,25 +5,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ===== SLIDER DISPLAY =====
     const amount = document.getElementById("amount");
-    const duration = document.getElementById("duration");
+const duration = document.getElementById("duration");
 
-    const amountVal = document.getElementById("amountVal");
-    const durationVal = document.getElementById("durationVal");
+const amountVal = document.getElementById("amountVal");
+const durationVal = document.getElementById("durationVal");
 
-    if (amount && duration && amountVal && durationVal) {
-        amountVal.innerText = "$" + amount.value;
-        durationVal.innerText = duration.value + " days";
+// ✅ ONLY RUN IF ELEMENTS EXIST
+if (amount !== null && amountVal !== null) {
 
-        amount.addEventListener("input", function () {
-            amountVal.innerText = "$" + this.value;
-            updateLoan();
-        });
+    amountVal.innerText = "$ " + amount.value;
 
-        duration.addEventListener("input", function () {
-            durationVal.innerText = this.value + " days";
-            updateLoan();
-        });
-    }
+    amount.addEventListener("input", function () {
+        amountVal.innerText = "$ " + this.value;
+        updateLoan();
+    });
+}
+
+if (duration !== null && durationVal !== null) {
+
+    durationVal.innerText = duration.value + " days";
+
+    duration.addEventListener("input", function () {
+        durationVal.innerText = this.value + " days";
+    });
+}
 
     // ===== LOAN CALCULATOR (10%) =====
     function updateLoan() {
