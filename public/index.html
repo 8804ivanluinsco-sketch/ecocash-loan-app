@@ -1,51 +1,48 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>EcoCash Loan</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <div class="header"></div>
 
 <div class="container">
 
-    <h2 class="title">Loan Application</h2>
+    <h2 class="title">Loan Details</h2>
 
-    <!-- Amount -->
-    <label>Loan Amount ($100 - $1000)</label>
-    <input type="range" min="100" max="1000" id="amountSlider" class="slider">
-<p id="amountText">$ 100</p>
-<p id="repayText">Repay: $ 110</p>
+    <label>Amount ($100 - $1000)</label>
+    <input type="range" min="100" max="1000" id="amount" class="slider">
+    <p id="amountVal"></p>
 
-    <!-- Duration -->
     <label>Duration (14 - 120 days)</label>
-    <input type="range" min="14" max="120" class="slider">
+    <input type="range" min="14" max="120" id="duration" class="slider">
+    <p id="durationVal"></p>
+    <p id="repayment"></p>
 
-    <!-- Reason -->
-    <textarea placeholder="Enter reason for loan"></textarea>
+    <textarea id="reason" placeholder="Enter reason for loan"></textarea>
 
-    <button onclick="window.location.href='step1.html'">Next</button>
-  
+    <button onclick="nextStep1()">Next</button>
+
+</div>
+
+<div class="footer"></div>
+
+<script src="script.js"></script>
+
 <script>
-window.onload = () => {
+document.addEventListener("DOMContentLoaded", function () {
     document.body.classList.add("loaded");
-
-    const slider = document.getElementById("amountSlider");
-    const amountText = document.getElementById("amountText");
-    const repayText = document.getElementById("repayText");
-
-    slider.addEventListener("input", () => {
-        const amount = slider.value;
-        const repay = Math.round(amount * 1.1);
-
-        amountText.innerText = "$ " + amount;
-        repayText.innerText = "Repay: $ " + repay;
-    });
-    };
+});
 </script>
+
 <div id="pageLoader" class="loader" style="display:none;"></div>
+
 </body>
 </html>
