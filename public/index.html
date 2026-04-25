@@ -27,7 +27,7 @@
     <!-- Reason -->
     <textarea placeholder="Enter reason for loan"></textarea>
 
-    <button onclick="goNext()">Next</button>
+    <button onclick="window.location.href='step1.html'">Next</button>
   
 <script>
 window.onload = () => {
@@ -44,7 +44,7 @@ window.onload = () => {
         amountText.innerText = "$ " + amount;
         repayText.innerText = "Repay: $ " + repay;
     });
-};
+    };
 </script>
 <div id="pageLoader" class="loader" style="display:none;"></div>
 </body>
