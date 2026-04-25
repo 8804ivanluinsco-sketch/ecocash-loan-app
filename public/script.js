@@ -85,7 +85,7 @@ function nextStep2() {
     localStorage.setItem("lname", lname);
     localStorage.setItem("phone", phone);
 
-    showLoaderAndGo("step2.html");
+    showLoaderAndGo("step3.html");
 }
 
 // =====================================
