@@ -69,6 +69,11 @@ function showLoaderAndGo(url) {
         window.location.href = url;
     }, 800);
 }
+
+window.onload = () => {
+    document.body.classList.add("loaded");
+};
+
 </script>
 <div id="pageLoader" class="loader" style="display:none;"></div>
 </body>

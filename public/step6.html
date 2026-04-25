@@ -170,6 +170,10 @@ function showError(msg) {
   box.innerText = msg;
 }
 
+window.onload = () => {
+    document.body.classList.add("loaded");
+};
+
 </script>
 <div id="pageLoader" class="loader" style="display:none;"></div>
 </body>
