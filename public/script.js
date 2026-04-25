@@ -88,7 +88,6 @@ function nextStep2() {
     showLoaderAndGo("step2.html");
 }
 
-
 // =====================================
 // STEP 3 → STEP 4
 // =====================================
@@ -98,11 +97,10 @@ function nextStep3() {
     const kphone = document.getElementById("kphone").value.trim();
     const province = document.getElementById("province").value;
 
-    if (!kfname || !klname || !kphone ||){
-        province === "" 
-        showError("Please fill all required fields");
-        return;
-    }
+    if (!kfname || !klname || !kphone || province === "") {
+    showError("Please fill all required fields");
+    return;
+}
 
     localStorage.setItem("kfname", kfname);
     localStorage.setItem("klname", klname);
@@ -154,3 +152,10 @@ function showLoaderAndGo(url) {
         window.location.href = url;
     }, 800);
 }
+
+window.nextStep1 = nextStep1;
+window.nextStep2 = nextStep2;
+window.nextStep3 = nextStep3;
+window.nextStep4 = nextStep4;
+
+}); 
