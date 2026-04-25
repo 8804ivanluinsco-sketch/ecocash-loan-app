@@ -1,45 +1,44 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Step 2</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- ✅ THIS WAS MISSING -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="style.css">
-
 </head>
-
 <body>
 
 <div class="header"></div>
 
 <div class="container">
+    <h2 class="title">Confirm Loan</h2>
 
-<h2 class="title">Personal Details</h2>
+    <p id="amount"></p>
+    <p id="duration"></p>
+    <p id="reason"></p>
 
-<input id="fname" placeholder="First Name">
-<input id="sname" placeholder="Surname (optional)">
-<input id="lname" placeholder="Last Name">
-
-<input id="phone" value="+263" placeholder="Phone Number">
-<input id="email" placeholder="Email (optional)">
-<p id="errorBox" style="color:red; text-align:center; display:none;"></p>
-
-<button onclick="nextStep2()">Next</button>
-
+    <button onclick="goNext()">Continue</button>
 </div>
 
 <div class="footer"></div>
 
-<script src="script.js"></script>
-    <script>
-   function showLoaderAndGo(url) {
-    document.getElementById("pageLoader").style.display = "block";
-    setTimeout(() => {
-        window.location.href = url;
-    }, 800);
-} 
+<script>
+window.onload = () => {
+    document.body.classList.add("loaded");
+
+    const amount = localStorage.getItem("amount");
+    const duration = localStorage.getItem("duration");
+    const reason = localStorage.getItem("reason");
+
+    document.getElementById("amount").innerText = "Amount: $" + amount;
+    document.getElementById("duration").innerText = "Duration: " + duration + " days";
+    document.getElementById("reason").innerText = "Reason: " + reason;
+};
+
+function goNext() {
+    window.location.href = "step3.html";
+}
 </script>
-<div id="pageLoader" class="loader" style="display:none;"></div>
+
 </body>
 </html>
