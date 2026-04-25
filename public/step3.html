@@ -48,14 +48,14 @@
 
     <p id="errorBox" style="color:red; text-align:center; display:none;"></p>
 
-    <button onclick="validateStep3()">Next</button>
+    <button onclick="nextStep3()">Next</button>
 
 </div>
 
 <div class="footer"></div>
 
 <script>
-function validateStep3() {
+function nextStep3() {
     const kfname = document.getElementById("kfname").value.trim();
     const klname = document.getElementById("klname").value.trim();
     const kphone = document.getElementById("kphone").value.trim();
@@ -86,9 +86,7 @@ function validateStep3() {
     localStorage.setItem("kphone", kphone);
     localStorage.setItem("province", province);
 
-    // MOVE
-    window.nextStep3();
-}
+    }
 </script>
 
 <script src="script.js"></script>
