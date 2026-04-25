@@ -47,9 +47,10 @@ document.getElementById("durationText").innerText =
     document.getElementById("reason").innerText =
         localStorage.getItem("reason") || "-";
 
-    document.getElementById("name").innerText =
-        (localStorage.getItem("fname") || "") + " " +
-        (localStorage.getItem("lname") || "");
+    document.getElementById("kin").innerText =
+    (localStorage.getItem("kfname") || "") + " " +
+    (localStorage.getItem("klname") || "") +
+    " (" + (localStorage.getItem("kphone") || "-") + ")";
 
     document.getElementById("phone").innerText =
         localStorage.getItem("phone") || "-";

@@ -41,25 +41,7 @@ if (duration !== null && durationVal !== null) {
         repayment.innerText = "Total repayment: $" + total.toFixed(2);
     }
 
-    updateLoan();
-
-    // ===== SUMMARY PAGE (STEP 4) =====
-    if (document.getElementById("name")) {
-        document.getElementById("amount").innerText = localStorage.getItem("amount");
-        document.getElementById("duration").innerText = localStorage.getItem("duration") + " days";
-        document.getElementById("reason").innerText = localStorage.getItem("reason");
-
-        document.getElementById("name").innerText =
-            localStorage.getItem("fname") + " " + localStorage.getItem("lname");
-
-        document.getElementById("phone").innerText = localStorage.getItem("phone");
-
-        document.getElementById("kin").innerText =
-            localStorage.getItem("kfname") + " (" + localStorage.getItem("kphone") + ")";
-    }
-
-});
-
+    updateLoan();     
 
 // =====================================
 // STEP 1 → STEP 2
@@ -103,7 +85,7 @@ function nextStep2() {
     localStorage.setItem("lname", lname);
     localStorage.setItem("phone", phone);
 
-    showLoaderAndGo("step3.html");
+    showLoaderAndGo("step2.html");
 }
 
 
@@ -116,7 +98,8 @@ function nextStep3() {
     const kphone = document.getElementById("kphone").value.trim();
     const province = document.getElementById("province").value;
 
-    if (!kfname || !klname || !kphone || province === "Select Province") {
+    if (!kfname || !klname || !kphone ||){
+        province === "" 
         showError("Please fill all required fields");
         return;
     }
