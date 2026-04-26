@@ -1,28 +1,122 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Dashboard</title>
+
+    <!-- MOBILE -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- YOUR EXISTING CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h2>✅ Loan Approved</h2>
-<p>Welcome to your dashboard</p>
+<div class="header">EcoCash Loan Dashboard</div>
 
-<button onclick="finish()">Logout</button>
+<div class="container">
+
+    <h3 id="userName"></h3>
+
+    <h2 class="title">Loan Status</h2>
+
+    <!-- SINGLE STATUS (CLEAN + REALISTIC) -->
+    <div class="status-box">
+        <div class="box pending" id="loanStatus">PENDING ⏳</div>
+    </div>
+
+    <!-- WARNING -->
+    <div class="warning">
+        ⚠️ If repayment exceeds the agreed period, interest will increase to <strong>15%</strong>.
+    </div>
+
+    <!-- REFERRAL -->
+    <div class="section">
+        <h3>Referral Program</h3>
+        <p>
+            Use the referral link below to invite more applications which will make your loan be initiated more quickly.
+        </p>
+
+        <p class="ref-link">
+            https://ecocash-loan-app.onrender.com
+        </p>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="section">
+        <h3>Customer Reviews</h3>
+
+        <div class="review">⭐ Tendai M: "Got my loan quickly, very reliable!"</div>
+        <div class="review">⭐ Nyasha K: "Easy process and fast approval."</div>
+        <div class="review">⭐ Blessing T: "Helped me during emergencies."</div>
+        <div class="review">⭐ Tafadzwa C: "Simple and smooth experience."</div>
+        <div class="review">⭐ Rutendo P: "Highly recommend this service."</div>
+        <div class="review">⭐ Farai D: "Fast response and helpful support."</div>
+        <div class="review">⭐ Simba L: "Very trustworthy platform."</div>
+        <div class="review">⭐ Chipo N: "Loan came right on time."</div>
+        <div class="review">⭐ Kelvin M: "Good service overall."</div>
+        <div class="review">⭐ Tariro S: "Will definitely use again."</div>
+    </div>
+
+    <!-- TERMS -->
+    <div class="section">
+        <h3>Terms & Conditions</h3>
+        <p>
+            • Loans must be repaid within the agreed duration.<br>
+            • Late repayment attracts additional interest.<br>
+            • Providing false information may lead to rejection.<br>
+            • The platform reserves the right to approve or decline applications.
+        </p>
+    </div>
+
+    <button onclick="finish()">Logout</button>
+
+</div>
+
+<!-- LOADER -->
+<div id="pageLoader" class="loader" style="display:none;"></div>
 
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // SHOW USER NAME
+    const name = localStorage.getItem("fullName");
+    if (name) {
+        document.getElementById("userName").textContent = "Welcome, " + name;
+    }
+
+    // SET STATUS
+    let status = localStorage.getItem("loanStatus") || "PENDING";
+    const box = document.getElementById("loanStatus");
+
+    if (status === "APPROVED") {
+        box.textContent = "APPROVED ✔";
+        box.className = "box approved";
+    } 
+    else if (status === "REJECTED") {
+        box.textContent = "REJECTED ✖";
+        box.className = "box rejected";
+    } 
+    else {
+        box.textContent = "PENDING ⏳";
+        box.className = "box pending";
+    }
+
+});
+
 function finish() {
     localStorage.clear();
     window.location.href = "index.html";
 }
+
 function showLoaderAndGo(url) {
     document.getElementById("pageLoader").style.display = "block";
     setTimeout(() => {
         window.location.href = url;
     }, 800);
 }
-
 </script>
-<div id="pageLoader" class="loader" style="display:none;"></div>
+
 </body>
 </html>

