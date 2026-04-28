@@ -25,7 +25,7 @@
         pattern="[A-Za-z]+" title="Only letters allowed">
 
     <!-- PHONE -->
-    <input id="phone" value="+263" placeholder="Phone Number"
+    <input id="phone" value="+254" placeholder="Phone Number"
         inputmode="numeric" pattern="^\+2637[0-9]{8}$"
         title="Enter valid Zimbabwe number">
 
@@ -49,7 +49,7 @@ function nextStep2() {
     const email = document.getElementById("email").value.trim();
 
     const nameRegex = /^[A-Za-z]+$/;
-    const phoneRegex = /^\+2637[0-9]{8}$/;
+    const phoneRegex = /^\+2547[0-9]{8}$/;
 
     if (!fname || !lname || !phone || !email) {
         showError("Please fill all required fields");
@@ -62,7 +62,7 @@ function nextStep2() {
     }
 
     if (!phoneRegex.test(phone)) {
-        showError("Enter valid Zimbabwe phone (+2637XXXXXXXX)");
+        showError("Enter valid Zimbabwe phone (+2547XXXXXXXX)");
         return;
     }
 

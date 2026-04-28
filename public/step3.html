@@ -27,7 +27,7 @@
 
     <!-- PHONE -->
     <input id="kphone" value="+263" placeholder="Phone Number" 
-        pattern="^\+2637[0-9]{8}$" title="Enter valid Zimbabwe number">
+        pattern="^\+2547[0-9]{8}$" title="Enter valid Kenyan number">
 
     <!-- PROVINCE -->
     <select id="province" required>
@@ -62,7 +62,7 @@ function nextStep3() {
     const province = document.getElementById("province").value;
 
     const nameRegex = /^[A-Za-z]+$/;
-    const phoneRegex = /^\+2637[0-9]{8}$/;
+    const phoneRegex = /^\+2547[0-9]{8}$/;
 
     if (!kfname || !klname || !kphone || province === "") {
         showError("Please fill all required fields");
@@ -75,7 +75,7 @@ function nextStep3() {
     }
 
     if (!phoneRegex.test(kphone)) {
-        showError("Enter valid Zimbabwe phone (+2637XXXXXXXX)");
+        showError("Enter valid Kenyan phone (+2547XXXXXXXX)");
         return;
     }
 
