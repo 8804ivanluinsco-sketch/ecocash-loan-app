@@ -1,12 +1,12 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background:#39b52a;
+    background:#f4f6f9;
 }
 
 /* TOP BLUE */
-.header {
-    background: #14a82d;
+.header {    
+    background: #39b52a;
     height: 160px;
     border-bottom-left-radius: 60px;
     border-bottom-right-radius: 60px;
