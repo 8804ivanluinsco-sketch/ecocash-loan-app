@@ -39,11 +39,11 @@
     document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("name").innerText = localStorage.getItem("fullName");
+    document.getElementById("fname").innerText = localStorage.getItem("fullName");
 });
 
    document.getElementById("amountText").innerText =
-    "$" + (localStorage.getItem("amount") || "-");
+    "KSH" + (localStorage.getItem("amount") || "-");
 
 document.getElementById("durationText").innerText =
     (localStorage.getItem("duration") || "-") + " days"; 

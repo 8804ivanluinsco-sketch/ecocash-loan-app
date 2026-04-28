@@ -164,3 +164,8 @@ body.loaded {
     width: 100%;
     max-width: 50px;
 }
+
+.logo img{
+  width:150px;
+  height:auto;
+}
