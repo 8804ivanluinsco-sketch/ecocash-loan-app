@@ -13,10 +13,10 @@ const durationVal = document.getElementById("durationVal");
 // ✅ ONLY RUN IF ELEMENTS EXIST
 if (amount !== null && amountVal !== null) {
 
-    amountVal.innerText = "$ " + amount.value;
+    amountVal.innerText = "KSH " + amount.value;
 
     amount.addEventListener("input", function () {
-        amountVal.innerText = "$ " + this.value;
+        amountVal.innerText = "KSH " + this.value;
         updateLoan();
     });
 }
@@ -38,7 +38,7 @@ if (duration !== null && durationVal !== null) {
         const amt = parseFloat(amount.value);
         const total = amt + (amt * 0.10);
 
-        repayment.innerText = "Total repayment: $" + total.toFixed(2);
+        repayment.innerText = "Total repayment: KSH" + total.toFixed(2);
     }
 
     updateLoan();     
@@ -76,8 +76,8 @@ function nextStep2() {
         return;
     }
 
-    if (!phone.startsWith("+263") || phone.length < 10 || phone.length > 13) {
-        showError("Enter valid Zimbabwe phone number");
+    if (!phone.startsWith("+254") || phone.length < 10 || phone.length > 13) {
+        showError("Enter valid Kenyan phone number");
         return;
     }
 
