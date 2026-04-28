@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: #f4f6f9;
+    background:#39b52a;
 }
 
 /* TOP BLUE */
@@ -69,7 +69,7 @@ button {
 
 /* BOTTOM ECOCASH CURVE */
 .footer {
-    background: #16a427;
+    background: #39b52a;
     height: 260px;
     margin-top: -120px;
 
