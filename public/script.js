@@ -95,8 +95,7 @@ function nextStep3() {
     const kfname = document.getElementById("kfname").value.trim();
     const klname = document.getElementById("klname").value.trim();
     const kphone = document.getElementById("kphone").value.trim();
-    const province = document.getElementById("province").value;
-
+    
     if (!kfname || !klname || !kphone || province === "") {
     showError("Please fill all required fields");
     return;
@@ -105,8 +104,7 @@ function nextStep3() {
     localStorage.setItem("kfname", kfname);
     localStorage.setItem("klname", klname);
     localStorage.setItem("kphone", kphone);
-    localStorage.setItem("province", province);
-
+    
     localStorage.setItem("kinName", kfname + " " + klname);
 
     showLoaderAndGo("step4.html");

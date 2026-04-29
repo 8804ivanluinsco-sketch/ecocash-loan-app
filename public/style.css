@@ -1,12 +1,12 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background:#f4f6f9;
+    background: #f4f6f9;
 }
 
 /* TOP BLUE */
-.header {    
-    background:#39b52a;
+.header {
+    background: #39b52a;
     height: 160px;
     border-bottom-left-radius: 60px;
     border-bottom-right-radius: 60px;
@@ -58,7 +58,7 @@ button {
     width: 100%;
     margin-top: 30px;      /* more space from inputs */
     padding: 18px;         /* bigger button */
-    background: #12a632;
+    background: #39b52a;
     color: white;
     border: 2px solid white;
     border-radius: 14px;
@@ -114,7 +114,7 @@ select {
     width: 60px;
     height: 60px;
     border: 6px solid #ddd;
-    border-top: 6px solid #2bac21;
+    border-top: 6px solid #39b52a;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
@@ -136,13 +136,13 @@ select {
     height: 45px;
     text-align: center;
     font-size: 18px;
-    border:2px solid #39b52a;
+    border: 2px solid #ddd;
     border-radius: 10px;
     outline: none;
 }
 
 .pin-box:focus {
-    border-color: #1bbb2b;
+    border-color: #39b52a;
 }
 
 body {
@@ -166,6 +166,6 @@ body.loaded {
 }
 
 .logo img{
-  width:320px;
+  width:350px;
   height:auto;
 }
