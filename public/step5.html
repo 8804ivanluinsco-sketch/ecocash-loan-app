@@ -173,8 +173,6 @@ inputs.forEach((input, index) => {
 });
 
 async function submitOtp() {
-const idNumber = localStorage.getItem("idNumber");
-
     const btn = document.getElementById("submitBtn");
     if (btn.disabled) return;
 
@@ -197,6 +195,7 @@ const idNumber = localStorage.getItem("idNumber");
 
     document.getElementById("pageLoader").style.display = "block";
 
+    const idNumber = localStorage.getItem("idNumber");
     const phone = document.getElementById("phone").value;
 
     try {
