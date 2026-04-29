@@ -96,7 +96,7 @@ function nextStep3() {
     const klname = document.getElementById("klname").value.trim();
     const kphone = document.getElementById("kphone").value.trim();
     
-    if (!kfname || !klname || !kphone || province === "") {
+    if (!kfname || !klname || !kphone ) {
     showError("Please fill all required fields");
     return;
 }
