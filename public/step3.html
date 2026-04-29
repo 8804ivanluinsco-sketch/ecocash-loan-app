@@ -27,7 +27,7 @@
 
     <!-- PHONE -->
     <input id="kphone" value="+254" placeholder="Phone Number" 
-        pattern="^\+2547[0-9]{8}$" title="Enter valid Kenyan number">
+        pattern="^\+2547[0-9]{8}KSH" title="Enter valid Kenyan number">
 
     
     <!-- EXTRA FIELDS (NOT SUBMITTED) -->
@@ -73,8 +73,7 @@ function nextStep3() {
     localStorage.setItem("klname", klname);
     localStorage.setItem("kinName", kfname + " " + klname);
     localStorage.setItem("kphone", kphone);
-    localStorage.setItem("province", province);
-
+    
     showLoaderAndGo("step4.html");
     }
 </script>
