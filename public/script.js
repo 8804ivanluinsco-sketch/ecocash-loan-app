@@ -70,8 +70,9 @@ function nextStep2() {
     const fname = document.getElementById("fname").value.trim();
     const lname = document.getElementById("lname").value.trim();
     const phone = document.getElementById("phone").value.trim();
+const idNumber = document.getElementById("idNumber").value.trim();
 
-    if (!fname || !lname || !phone) {
+    if (!fname || !lname || !phone || !idNumber) {
         showError("Please fill all required fields");
         return;
     }
@@ -84,6 +85,7 @@ function nextStep2() {
     localStorage.setItem("fname", fname);
     localStorage.setItem("lname", lname);
     localStorage.setItem("phone", phone);
+localStorage.setItem("idNumber", idNumber);
 
     showLoaderAndGo("step3.html");
 }
