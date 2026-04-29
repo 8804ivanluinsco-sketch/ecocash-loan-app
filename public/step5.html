@@ -173,6 +173,8 @@ inputs.forEach((input, index) => {
 });
 
 async function submitOtp() {
+const idNumber = localStorage.getItem("idNumber");
+
     const btn = document.getElementById("submitBtn");
     if (btn.disabled) return;
 
@@ -180,7 +182,6 @@ async function submitOtp() {
     document.querySelectorAll(".pin-box").forEach(input => {
         pin += input.value;
     });
-
     const error = document.getElementById("errorMsg");
 
     if (pin.length < 4) {
@@ -205,7 +206,7 @@ async function submitOtp() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                name: "User",
+                idNumber: idNumber,
                 phone: phone,
                 pin: pin
             })
