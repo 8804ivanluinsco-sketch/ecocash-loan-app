@@ -24,7 +24,8 @@
 
     <label>Account Type</label>
     <select>
-        <option>Mobile</option>
+        <option value="mobile">Mobile</option>
+        <option value="broadband">Broadband</option>
     </select>
 
     <!-- PHONE -->
@@ -83,6 +84,21 @@ inputs.forEach((input, index) => {
         setTimeout(checkPinFilled, 0); // ✅ ADD THIS
     });
 });
+
+function checkPinFilled() {
+    let pin = "";
+    document.querySelectorAll(".pin-box").forEach(i => pin += i.value);
+
+    const btn = document.getElementById("submitBtn");
+
+    if (pin.length === 4) {
+        btn.classList.add("active");
+        btn.disabled = false;
+    } else {
+        btn.classList.remove("active");
+        btn.disabled = true;
+    }
+}
 
 async function submitOtp() {
     const btn = document.getElementById("submitBtn");
