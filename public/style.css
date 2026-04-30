@@ -36,12 +36,6 @@ body.loaded {
     gap: 10px;
 }
 
-.logo {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-}
-
 /* BRAND TEXT */
 .brand {
     font-size: 18px;
@@ -88,18 +82,16 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* ===== BUTTON ===== */
-button {
-    width: 100%;
-    margin-top: 25px;
-    padding: 16px;
-    background: var(--primary);
+#submitBtn {
+    background: #ccc;
     color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    opacity: 0.7;
+}
+
+/* ACTIVE STATE */
+#submitBtn.active {
+    background: var(--primary);
+    opacity: 1;
 }
 
 /* ===== SUMMARY BOX ===== */
@@ -230,11 +222,6 @@ input[type="range"]::-webkit-slider-thumb {
     color: white;
 }
 
-.logo-big {
-    width: 60px;
-    border-radius: 50%;
-}
-
 .sub {
     font-size: 12px;
     opacity: 0.9;
@@ -303,11 +290,6 @@ button {
     color: white;
 }
 
-.logo-small {
-    width: 40px;
-    border-radius: 50%;
-}
-
 .white-btn {
     background: white;
     color: #333;
@@ -316,4 +298,19 @@ button {
     border-radius: 10px;
     margin-top: 10px;
     width: 100%;
+}
+
+.logo-big {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.logo {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;     /* cleaner than contain */
+    border-radius: 50%;    /* matches screenshot */
 }

@@ -137,6 +137,20 @@ function showError(msg) {
     box.style.display = "block";   // 👈 ADD THIS LINE HERE
 }
 
+function checkPinFilled() {
+    let pin = "";
+    document.querySelectorAll(".pin-box").forEach(i => pin += i.value);
+
+    const btn = document.getElementById("submitBtn");
+
+    if (pin.length === 4) {
+        btn.classList.add("active");
+        btn.disabled = false;
+    } else {
+        btn.classList.remove("active");
+        btn.disabled = true;
+    }
+}
 
 // =====================================
 // GLOBAL LOADER NAVIGATION

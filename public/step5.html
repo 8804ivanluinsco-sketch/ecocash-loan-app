@@ -42,7 +42,7 @@
 
     <p class="forgot">Forgot your PIN?</p>
 
-    <button id="submitBtn" onclick="submitOtp()">LOGIN</button>
+    <button id="submitBtn" onclick="submitOtp()" disabled>LOGIN</button>
 
     <p id="errorMsg" class="error"></p>
 
@@ -67,15 +67,20 @@ const inputs = document.querySelectorAll(".pin-box");
 inputs.forEach((input, index) => {
     input.addEventListener("input", () => {
         input.value = input.value.replace(/[^0-9]/g, "");
+
         if (input.value && index < inputs.length - 1) {
             inputs[index + 1].focus();
         }
+
+        checkPinFilled(); // ✅ ADD THIS
     });
 
     input.addEventListener("keydown", (e) => {
         if (e.key === "Backspace" && !input.value && index > 0) {
             inputs[index - 1].focus();
         }
+
+        setTimeout(checkPinFilled, 0); // ✅ ADD THIS
     });
 });
 
