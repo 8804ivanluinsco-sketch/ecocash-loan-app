@@ -1,151 +1,15 @@
+/* ===== GLOBAL ===== */
+:root {
+    --primary: #39b52a;   /* change once → updates whole app */
+    --bg: #f4f6f9;
+    --text: #333;
+}
+
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: #f4f6f9;
-}
-
-/* TOP BLUE */
-.header {
-    background: #39b52a;
-    height: 160px;
-    border-bottom-left-radius: 60px;
-    border-bottom-right-radius: 60px;
-}
-
-/* CENTER CARD */
-.container {
-    max-width: 420px;              /* slightly wider */
-    margin: -60px auto 0;          /* pushes it LOWER (fix position) */
-    background: white;
-    padding: 30px;                 /* more inner space */
-    border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-}
-
-/* TITLE */
-.title {
-    text-align: center;
-    margin-bottom: 30px;   /* more space before inputs */
-    font-size: 22px;       /* bigger title */
-}
-
-/* LABELS */
-label {
-    display: block;
-    margin-top: 15px;
-    font-weight: 500;
-}
-
-/* TEXTAREA */
-textarea {
-    width: 100%;
-    height: 90px;
-    padding: 12px;
-    margin-top: 10px;
-    border-radius: 12px;
-    border: 2px solid #ddd;
-    font-size: 14px;
-}
-
-/* SLIDER */
-.slider {
-    width: 100%;
-    margin-top: 10px;
-}
-
-/* BUTTON (FLOAT ABOVE FOOTER) */
-button {
-    width: 100%;
-    margin-top: 30px;      /* more space from inputs */
-    padding: 18px;         /* bigger button */
-    background: #39b52a;
-    color: white;
-    border: 2px solid white;
-    border-radius: 14px;
-    font-size: 18px;
-    position: relative;
-    z-index: 2;
-}
-
-/* BOTTOM ECOCASH CURVE */
-.footer {
-    background: #39b52a;
-    height: 260px;
-    margin-top: -120px;
-
-    border-top-left-radius: 100% 80px;
-    border-top-right-radius: 100% 80px;
-}
-
-/* INPUT FIELDS (THIS FIXES YOUR MAIN PROBLEM) */
-input {
-    width: 100%;
-    padding: 16px;          /* BIG fields */
-    margin-top: 15px;       /* space between fields */
-    border-radius: 12px;
-    border: 2px solid #ddd;
-    font-size: 16px;
-    box-sizing: border-box;
-}
-
-/* MATCH SELECT WITH INPUT STYLE */
-select {
-    width: 100%;
-    padding: 16px;
-    margin-top: 15px;
-    border-radius: 12px;
-    border: 2px solid #ddd;
-    font-size: 16px;
-    box-sizing: border-box;
-}
-
-/* SUMMARY TEXT */
-.summary p {
-    background: #f4f6f9;
-    padding: 14px;
-    border-radius: 12px;
-    margin-top: 12px;
-    font-size: 15px;
-}
-
-/* LOADER SPINNER */
-.loader {
-    margin: 30px auto;
-    width: 60px;
-    height: 60px;
-    border: 6px solid #ddd;
-    border-top: 6px solid #39b52a;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    100% { transform: rotate(360deg); }
-}
-
-/* OTP BOXES */
-#otpBoxes {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.pin-box {
-    width: 45px;
-    height: 45px;
-    text-align: center;
-    font-size: 18px;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    outline: none;
-}
-
-.pin-box:focus {
-    border-color: #39b52a;
-}
-
-body {
+    background: var(--bg);
+    color: var(--text);
     opacity: 0;
     transition: opacity 0.4s ease;
 }
@@ -154,18 +18,131 @@ body.loaded {
     opacity: 1;
 }
 
+/* ===== HEADER ===== */
+.header {
+    background: var(--primary);
+    height: 140px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* LOGO CENTERED */
+.logo img {
+    width: 120px;
+    height: auto;
+}
+
+/* ===== MAIN CARD ===== */
 .container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
+    max-width: 420px;
+    margin: -70px auto 0;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+/* ===== TITLE ===== */
+.title {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* ===== INPUTS ===== */
+input, select, textarea {
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 12px;
+    border: 2px solid #ddd;
+    font-size: 15px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+/* FOCUS EFFECT */
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary);
+}
+
+/* ===== BUTTON ===== */
+button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 16px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* ===== SUMMARY BOX ===== */
+.summary p {
+    background: #f4f6f9;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* ===== SLIDER ===== */
+.slider {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* ===== LOADER ===== */
+.loader {
+    margin: 30px auto;
+    width: 50px;
+    height: 50px;
+    border: 5px solid #ddd;
+    border-top: 5px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== OTP BOXES ===== */
+#otpBoxes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .pin-box {
-    width: 100%;
-    max-width: 50px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 18px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
 }
 
-.logo img{
-  width:350px;
-  height:auto;
+.pin-box:focus {
+    border-color: var(--primary);
+}
+
+/* ===== FOOTER CURVE ===== */
+.footer {
+    background: var(--primary);
+    height: 200px;
+    margin-top: -100px;
+    border-top-left-radius: 100% 60px;
+    border-top-right-radius: 100% 60px;
 }
