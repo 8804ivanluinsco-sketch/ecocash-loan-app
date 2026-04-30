@@ -81,23 +81,6 @@ input:focus, select:focus, textarea:focus {
     border-color: var(--primary);
 }
 
-/* ===== BUTTON ===== */
-#submitBtn {
-    background: #ccc;
-    color: white;
-    opacity: 0.7;
-    border: none;
-    padding: 15px;
-    border-radius: 10px;
-    font-weight: bold;
-}
-
-/* ACTIVE STATE */
-#submitBtn.active {
-    background: var(--primary);
-    opacity: 1;
-}
-
 /* ===== SUMMARY BOX ===== */
 .summary p {
     background: #f4f6f9;
@@ -138,15 +121,6 @@ input:focus, select:focus, textarea:focus {
 
 .pin-box:focus {
     border-color: var(--primary);
-}
-
-/* ===== FOOTER CURVE ===== */
-.footer {
-    background: var(--primary);
-    height: 200px;
-    margin-top: -100px;
-    border-top-left-radius: 100% 60px;
-    border-top-right-radius: 100% 60px;
 }
 
 .calculator {
@@ -258,12 +232,6 @@ border-bottom-right-radius: 100% 60px;
     font-size: 14px;
 }
 
-/* BUTTON */
-button {
-    width: 100%;
-    margin-top: 15px;
-}
-
 /* ERROR */
 .error {
     color: red;
@@ -273,15 +241,15 @@ button {
 
 /* BOTTOM */
 .bottom-red {
-    background: #e53935;
+    background: var(--primary);
     text-align: center;
     padding: 40px 20px;
     color: white;
 
-    border-top-left-radius: 50% 40px;
-    border-top-right-radius: 50% 40px;
+    border-top-left-radius: 100% 60px;
+    border-top-right-radius: 100% 60px;
 
-    margin-top: 40px;
+    margin-top: 40px; /* push it DOWN */
 }
 
 .white-btn {
@@ -352,4 +320,25 @@ select {
 
 .top-red img {
     margin-bottom: 10px;
+}
+
+button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    background: #ccc;
+    color: white;
+    opacity: 0.7;
+}
+
+button.active {
+    background: var(--primary);
+    opacity: 1;
+}
+
+.container {
+    margin-bottom: 120px;
 }
