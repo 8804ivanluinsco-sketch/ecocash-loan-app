@@ -7,7 +7,7 @@
 
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text);
     opacity: 0;
@@ -50,18 +50,24 @@ body.loaded {
 /* ===== MAIN CARD ===== */
 .container {
     max-width: 420px;
-    margin: 20px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-}
+    margin: 30px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 20px;
 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
 /* ===== TITLE ===== */
 .title {
     text-align: center;
-    margin-bottom: 25px;
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.sub {
+    text-align: center;
+    font-size: 14px;
+    color: #777;
 }
 
 /* ===== INPUTS ===== */
@@ -125,9 +131,9 @@ input:focus, select:focus, textarea:focus {
 
 .calculator {
     background: #f7f7f7;
-    padding: 15px;
-    border-radius: 15px;
-    margin-top: 15px;
+    padding: 20px;
+    border-radius: 18px;
+    margin-top: 20px;
 }
 
 input[type="range"] {
@@ -154,23 +160,23 @@ input[type="range"]::-webkit-slider-thumb {
 
 .payment-box {
     border: 2px solid var(--primary);
-    border-radius: 15px;
+    border-radius: 16px;
     text-align: center;
-    padding: 15px;
-    margin-top: 15px;
+    padding: 20px;
+    margin-top: 20px;
 }
 
 .payment-box h3 {
     margin: 0;
-    font-size: 14px;
-    color: #555;
+    font-size: 15px;
+    color: #666;
 }
 
 .payment-box p {
-    margin: 5px 0 0;
-    font-size: 22px;
+    margin-top: 8px;
+    font-size: 26px;
     color: var(--primary);
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .apply-btn {
@@ -324,21 +330,58 @@ select {
 
 button {
     width: 100%;
-    margin-top: 15px;
-    padding: 15px;
-    border-radius: 10px;
+    padding: 16px;
+    border-radius: 14px;
     border: none;
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 16px;
+
     background: #ccc;
     color: white;
     opacity: 0.7;
+
+    transition: all 0.2s ease;
 }
 
 button.active {
     background: var(--primary);
     opacity: 1;
+    box-shadow: 0 6px 15px rgba(229,57,53,0.4);
+}
+
+button:active {
+    transform: scale(0.98);
 }
 
 .container {
     margin-bottom: 120px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 20px;
+    background: var(--primary);
+    border-radius: 50%;
+    margin-top: -7px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.feature {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.feature span {
+    font-size: 28px;
+}
+
+.feature h4 {
+    margin: 8px 0 2px;
+    font-weight: 600;
+}
+
+.feature p {
+    font-size: 13px;
+    color: #777;
 }
