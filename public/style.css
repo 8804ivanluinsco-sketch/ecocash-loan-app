@@ -221,3 +221,99 @@ input[type="range"]::-webkit-slider-thumb {
     font-weight: bold;
     margin-top: 20px;
 }
+
+/* TOP RED */
+.top-red {
+    background: #e53935;
+    text-align: center;
+    padding: 30px 20px;
+    color: white;
+}
+
+.logo-big {
+    width: 60px;
+    border-radius: 50%;
+}
+
+.sub {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+/* LOGIN CARD */
+.login-card {
+    background: #fff;
+    margin: -30px 15px 20px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.login-card h3 {
+    text-align: center;
+    color: #666;
+}
+
+.pin-label {
+    margin-top: 15px;
+}
+
+/* PIN */
+.pin-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.pin-box {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #e53935;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+}
+
+/* FORGOT */
+.forgot {
+    text-align: center;
+    color: #e53935;
+    font-size: 14px;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* ERROR */
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* BOTTOM */
+.bottom-red {
+    background: #e53935;
+    text-align: center;
+    padding: 30px 20px;
+    color: white;
+}
+
+.logo-small {
+    width: 40px;
+    border-radius: 50%;
+}
+
+.white-btn {
+    background: white;
+    color: #333;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    margin-top: 10px;
+    width: 100%;
+}

