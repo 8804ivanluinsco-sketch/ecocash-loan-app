@@ -300,17 +300,18 @@ button {
     width: 100%;
 }
 
-.logo-big {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
-}
-
 .logo {
     width: 32px;
     height: 32px;
-    object-fit: cover;     /* cleaner than contain */
-    border-radius: 50%;    /* matches screenshot */
+    border-radius: 50%;
+    object-fit: contain; /* NOT cover */
+    background: white;   /* helps contrast */
+}
+
+.logo-big {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: contain;
+    background: white;
 }
