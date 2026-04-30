@@ -193,11 +193,12 @@ input[type="range"]::-webkit-slider-thumb {
 .top-red {
     background: var(--primary);
     text-align: center;
-    padding: 50px 20px 100px;
+    padding: 50px 20px 80px;
     color: white;
 
-    border-bottom-left-radius: 120% 80px;
-    border-bottom-right-radius: 120% 80px;
+    /* ❌ REMOVE CURVE */
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .sub {
@@ -249,13 +250,13 @@ input[type="range"]::-webkit-slider-thumb {
 .bottom-red {
     background: var(--primary);
     text-align: center;
-    padding: 60px 20px;
+    padding: 80px 20px 40px;
     color: white;
 
     border-top-left-radius: 120% 80px;
     border-top-right-radius: 120% 80px;
 
-    margin-top: 60px;
+    margin-top: -40px; /* 👈 THIS creates the valley effect */
 }
 
 .white-btn {
@@ -278,15 +279,15 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .logo-big {
-    width: 70px;
-    height: 70px;
+    width: 65px;
+    height: 65px;
     object-fit: contain;
 
     background: white;
     padding: 12px;
     border-radius: 50%;
 
-    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 .logo-small {
     width: 50px;
@@ -300,11 +301,11 @@ input[type="range"]::-webkit-slider-thumb {
 
 .login-card {
     background: #fff;
-    margin: -70px 15px 20px; /* 👈 stronger overlap */
+    margin: -60px 15px 20px; /* 👈 sits under flat top */
     padding: 25px;
-    border-radius: 30px;
+    border-radius: 25px;
 
-    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 
     position: relative;
     z-index: 2;
