@@ -250,13 +250,13 @@ input[type="range"]::-webkit-slider-thumb {
 .bottom-red {
     background: var(--primary);
     text-align: center;
-    padding: 80px 20px 40px;
+    padding: 100px 20px 40px;
     color: white;
 
-    border-top-left-radius: 120% 80px;
-    border-top-right-radius: 120% 80px;
+    border-top-left-radius: 120% 100px;
+    border-top-right-radius: 120% 100px;
 
-    margin-top: -40px; /* 👈 THIS creates the valley effect */
+    margin-top: -80px; /* ✅ deeper valley cut */
 }
 
 .white-btn {
@@ -300,8 +300,8 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .login-card {
-    background: #fff;
-    margin: -60px 15px 20px; /* 👈 sits under flat top */
+    background: #fff;    
+    margin: 20px 15px 20px; 
     padding: 25px;
     border-radius: 25px;
 
