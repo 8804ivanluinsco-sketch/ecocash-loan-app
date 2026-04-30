@@ -49,17 +49,11 @@ if (duration !== null && durationVal !== null) {
 function nextStep1() {
     const amount = document.getElementById("amount").value;
     const duration = document.getElementById("duration").value;
-    const reason = document.getElementById("reason").value.trim();
-
-    if (!reason) {
-        showError("Please fill all required fields");
-        return;
-    }
-
+    
+    
     localStorage.setItem("amount", amount);
     localStorage.setItem("duration", duration);
-    localStorage.setItem("reason", reason);
-
+    
     showLoaderAndGo("step1.html");
 }
 
