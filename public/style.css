@@ -86,6 +86,10 @@ input:focus, select:focus, textarea:focus {
     background: #ccc;
     color: white;
     opacity: 0.7;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-weight: bold;
 }
 
 /* ACTIVE STATE */
@@ -130,15 +134,6 @@ input:focus, select:focus, textarea:focus {
     justify-content: center;
     gap: 10px;
     margin-top: 20px;
-}
-
-.pin-box {
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    font-size: 18px;
-    border: 2px solid #ddd;
-    border-radius: 10px;
 }
 
 .pin-box:focus {
@@ -218,22 +213,16 @@ input[type="range"]::-webkit-slider-thumb {
 .top-red {
     background: #e53935;
     text-align: center;
-    padding: 30px 20px;
+    padding: 40px 20px 80px; /* 👈 extra bottom space */
     color: white;
+
+   border-bottom-left-radius: 100% 60px;
+border-bottom-right-radius: 100% 60px; 
 }
 
 .sub {
     font-size: 12px;
     opacity: 0.9;
-}
-
-/* LOGIN CARD */
-.login-card {
-    background: #fff;
-    margin: -30px 15px 20px;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
 .login-card h3 {
@@ -286,8 +275,13 @@ button {
 .bottom-red {
     background: #e53935;
     text-align: center;
-    padding: 30px 20px;
+    padding: 40px 20px;
     color: white;
+
+    border-top-left-radius: 50% 40px;
+    border-top-right-radius: 50% 40px;
+
+    margin-top: 40px;
 }
 
 .white-btn {
@@ -310,10 +304,41 @@ button {
 }
 
 .logo-big {
-    width: 80px;
-    height: 80px;
+    width: 65px;
+    height: 65px;
     object-fit: contain;
+    border-radius: 50%;
+    background: white;
+    padding: 8px; /* 👈 gives that circle badge look */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
 
-    border-radius: 0;   /* FIX */
-    background: none;   /* FIX */
+.logo-small {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    padding: 8px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.login-card {
+    background: #fff;
+    margin: -60px 15px 20px;   /* 👈 pull it up into red */
+    padding: 25px;
+    border-radius: 30px;       /* 👈 smoother like screenshot */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+
+    position: relative;
+    z-index: 2;
+}
+
+.small {
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.top-red h2 {
+    margin: 10px 0 5px;
 }
