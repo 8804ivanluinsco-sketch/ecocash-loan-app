@@ -303,15 +303,17 @@ button {
 .logo {
     width: 32px;
     height: 32px;
-    border-radius: 50%;
-    object-fit: contain; /* NOT cover */
-    background: white;   /* helps contrast */
+    object-fit: contain;
+
+    border-radius: 0;   /* FIX */
+    background: none;   /* FIX */
 }
 
 .logo-big {
     width: 80px;
     height: 80px;
-    border-radius: 50%;
     object-fit: contain;
-    background: white;
+
+    border-radius: 0;   /* FIX */
+    background: none;   /* FIX */
 }
