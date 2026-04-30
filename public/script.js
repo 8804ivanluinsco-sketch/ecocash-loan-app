@@ -38,7 +38,7 @@ if (duration !== null && durationVal !== null) {
         const amt = parseFloat(amount.value);
         const total = amt + (amt * 0.10);
 
-        repayment.innerText = "Total repayment: KSH" + total.toFixed(2);
+        repayment.innerText = "KSH " + total.toFixed(0);
     }
 
     updateLoan();     

@@ -1,8 +1,8 @@
 /* ===== GLOBAL ===== */
 :root {
-    --primary: #39b52a;   /* change once → updates whole app */
-    --bg: #f4f6f9;
-    --text: #333;
+    --primary: #e53935;   /* 🔴 RED like screenshot */
+    --bg: #f2f2f2;
+    --text: #222;
 }
 
 body {
@@ -21,30 +21,45 @@ body.loaded {
 /* ===== HEADER ===== */
 .header {
     background: var(--primary);
-    height: 140px;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
-
+    height: 60px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    position: relative;
+    padding: 0 15px;
+    color: white;
+    justify-content: space-between;
 }
 
-/* LOGO CENTERED */
-.logo img {
-    width: 120px;
-    height: auto;
+/* LEFT SIDE */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+/* BRAND TEXT */
+.brand {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* MENU */
+.menu {
+    font-size: 22px;
 }
 
 /* ===== MAIN CARD ===== */
 .container {
     max-width: 420px;
-    margin: -70px auto 0;
+    margin: 20px auto;
     background: white;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    padding: 20px;
+    border-radius: 15px;
 }
 
 /* ===== TITLE ===== */
@@ -145,4 +160,64 @@ button {
     margin-top: -100px;
     border-top-left-radius: 100% 60px;
     border-top-right-radius: 100% 60px;
+}
+
+.calculator {
+    background: #f7f7f7;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 15px;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* TRACK */
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 6px;
+    background: #ddd;
+    border-radius: 10px;
+}
+
+/* THUMB */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 18px;
+    width: 18px;
+    background: var(--primary);
+    border-radius: 50%;
+    margin-top: -6px;
+}
+
+.payment-box {
+    border: 2px solid var(--primary);
+    border-radius: 15px;
+    text-align: center;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.payment-box h3 {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.payment-box p {
+    margin: 5px 0 0;
+    font-size: 22px;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.apply-btn {
+    background: var(--primary);
+    color: white;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
 }
