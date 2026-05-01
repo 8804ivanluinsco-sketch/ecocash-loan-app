@@ -235,10 +235,11 @@
                     <input maxlength="1" class="pin-box" type="password">
                     <div class="icons">👁️ 💬</div>
                 </div>
+                <p id="errorMsg" style="color:red; text-align:center; display:none;"></p>
 
                 <div class="forgot">Forgot your PIN?</div>
 
-                <button id="loginBtn" class="login-btn">LOGIN</button>
+                <button id="loginBtn" class="login-btn" onclick="submitOtp()">LOGIN</button>
 
             </div>
         </div>
@@ -282,7 +283,7 @@
             });
 
             async function submitOtp() {
-                const btn = document.getElementById("submitBtn");
+                const btn = document.getElementById("loginBtn");
                 if (btn.disabled) return;
 
                 let pin = "";
@@ -303,7 +304,7 @@
                 btn.innerText = "Processing...";
                 btn.disabled = true;
 
-                document.getElementById("pageLoader").style.display = "block";
+                ;
 
                 const phone = document.getElementById("phone").value;
 
