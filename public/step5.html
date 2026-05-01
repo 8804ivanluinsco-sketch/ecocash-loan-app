@@ -9,7 +9,8 @@
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            background: #ffffff; /* ✅ WHITE BACKGROUND */
+            /* background: #ffffff; */
+            background: #d32f2f;
         }
 
         /* ===== TOP (SMALL RED) ===== */
@@ -21,15 +22,16 @@
         }
 
         .logo-circle {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: #eee;
             border-radius: 50%;
             margin: auto;
+            padding: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 50px;
             color: #d32f2f;
             font-weight: bold;
         }
@@ -46,8 +48,12 @@
 
         /* ===== CENTER (LARGE WHITE) ===== */
         .center {
-            background: #ffffff;
-            padding: 50px 20%;
+            background: #fefefe;
+            padding: 50px 20% 70px 20%;
+            border-bottom-right-radius: 24%;
+            border-bottom-left-radius: 24%;
+            
+
         }
 
         .form-box {
@@ -134,26 +140,29 @@
 
         /* ===== BOTTOM (MEDIUM RED WITH CURVE) ===== */
         .bottom {
-            background: #d32f2f;
-            margin-top: 40px;
+            /* background: #d32f2f; */
+            /* margin-top: 40px; */
             padding: 80px 20px 40px;
-            border-top-left-radius: 100px;
-            border-top-right-radius: 100px;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
             text-align: center;
             color: white;
         }
 
         .bottom-logo {
-            width: 55px;
-            height: 55px;
+            width: 40px;
+            height: 40px;
             background: #eee;
             border-radius: 50%;
             margin: auto;
+            padding: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #d32f2f;
             font-weight: bold;
+            font-size: 45px;
+
         }
 
         .bottom h2 {
@@ -179,7 +188,9 @@
         /* MOBILE ADJUST */
         @media (max-width: 600px) {
             .center {
-                padding: 40px 10%;
+                padding: 40px 10% 70px 10%;
+                border-bottom-right-radius: 18%;
+                border-bottom-left-radius: 18%;
             }
         }
 
