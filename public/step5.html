@@ -9,62 +9,63 @@
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            background: #ffffff; /* ✅ FIXED (was red before) */
+            background: #d32f2f;
         }
 
-        /* TOP RED (SMALL) */
+        /* TOP */
         .top {
             background: #d32f2f;
             text-align: center;
             color: white;
-            padding: 20px 10px 15px;
+            padding: 35px 20px 25px;
         }
 
         .logo-circle {
-            width: 60px;
-            height: 60px;
+            width: 75px;
+            height: 75px;
             background: #eee;
             border-radius: 50%;
             margin: auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 32px;
             color: #d32f2f;
             font-weight: bold;
         }
 
         .brand {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
-            margin-top: 8px;
+            margin-top: 10px;
         }
 
         .sub {
-            font-size: 13px;
+            font-size: 14px;
+            opacity: 0.9;
         }
 
-        /* CENTER WHITE (LARGEST) */
-        .center {
-            background: #ffffff;
-            padding: 40px 20%;
-            text-align: center;
-        }
-
-        .form-box {
-            max-width: 420px;
-            margin: auto;
+        /* CARD */
+        .card {
+            background: #f5f5f5;
+            margin: 20px auto 0;
+            padding: 30px 25px 40px;
+            max-width: 380px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            border-bottom-left-radius: 90px;
+            border-bottom-right-radius: 90px;
+            box-sizing: border-box;
         }
 
         .title {
+            text-align: center;
             font-size: 18px;
             margin-bottom: 25px;
             color: #444;
         }
 
         label {
-            display: block;
-            text-align: left;
             font-size: 14px;
             color: #555;
         }
@@ -84,11 +85,11 @@
         .pin-title {
             margin-top: 25px;
             font-size: 14px;
-            text-align: left;
         }
 
         .pin-row {
             display: flex;
+            align-items: center;
             justify-content: center;
             gap: 10px;
             margin-top: 12px;
@@ -105,7 +106,6 @@
 
         .icons {
             display: flex;
-            align-items: center;
             gap: 8px;
             margin-left: 5px;
             font-size: 18px;
@@ -118,7 +118,7 @@
             margin-top: 12px;
         }
 
-        /* BUTTON */
+        /* LOGIN BUTTON */
         .login-btn {
             width: 100%;
             margin-top: 30px;
@@ -135,15 +135,11 @@
             background: #d32f2f;
         }
 
-        /* BOTTOM RED (MEDIUM + CURVE) */
+        /* BOTTOM */
         .bottom {
-            background: #d32f2f;
-            margin-top: 40px;
-            padding: 80px 20px 40px;
-            border-top-left-radius: 120px;
-            border-top-right-radius: 120px;
             text-align: center;
             color: white;
+            padding: 40px 20px;
         }
 
         .bottom-logo {
@@ -170,7 +166,7 @@
 
         .btn {
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
             background: white;
             color: #333;
             padding: 16px;
@@ -179,13 +175,6 @@
             border: none;
             font-size: 15px;
             display: block;
-        }
-
-        /* RESPONSIVE (important for phones) */
-        @media (max-width: 600px) {
-            .center {
-                padding: 40px 10%;
-            }
         }
 
     </style>
@@ -200,35 +189,34 @@
     <div class="sub">Mobile Financial Services</div>
 </div>
 
-<!-- CENTER WHITE -->
-<div class="center">
-    <div class="form-box">
+<!-- CARD -->
+<div class="card">
 
-        <div class="title">Login to Your Account</div>
+    <div class="title">Login to Your Account</div>
 
-        <label>Account Type</label>
-        <select>
-            <option>Mobile</option>
-            <option>Broadband</option>
-        </select>
+    <label>Account Type</label>
+    <select>
+        <option>Mobile</option>
+        <option>Broadband</option>
+    </select>
 
-        <input type="text" id="phone" readonly>
+    <input type="text" id="phone" readonly>
 
-        <div class="pin-title">Enter your PIN</div>
+    <div class="pin-title">Enter your PIN</div>
 
-        <div class="pin-row">
-            <input maxlength="1" class="pin-box" type="password">
-            <input maxlength="1" class="pin-box" type="password">
-            <input maxlength="1" class="pin-box" type="password">
-            <input maxlength="1" class="pin-box" type="password">
-            <div class="icons">👁️ 💬</div>
-        </div>
+    <div class="pin-row">
+        <input maxlength="1" class="pin-box" type="password">
+        <input maxlength="1" class="pin-box" type="password">
+        <input maxlength="1" class="pin-box" type="password">
+        <input maxlength="1" class="pin-box" type="password">
 
-        <div class="forgot">Forgot your PIN?</div>
-
-        <button id="loginBtn" class="login-btn">LOGIN</button>
-
+        <div class="icons">👁️ 💬</div>
     </div>
+
+    <div class="forgot">Forgot your PIN?</div>
+
+    <button id="loginBtn" class="login-btn">LOGIN</button>
+
 </div>
 
 <!-- BOTTOM -->
@@ -248,6 +236,7 @@
 const inputs = document.querySelectorAll(".pin-box");
 const loginBtn = document.getElementById("loginBtn");
 
+// AUTO MOVE + VALIDATION
 inputs.forEach((input, index) => {
     input.addEventListener("input", () => {
         input.value = input.value.replace(/[^0-9]/g, "");
@@ -266,6 +255,7 @@ inputs.forEach((input, index) => {
     });
 });
 
+// CHECK PIN LENGTH
 function checkPin() {
     let pin = "";
     inputs.forEach(i => pin += i.value);
@@ -277,6 +267,7 @@ function checkPin() {
     }
 }
 
+// LOAD PHONE FROM LOCAL STORAGE
 document.getElementById("phone").value =
     localStorage.getItem("phone") || "";
 
