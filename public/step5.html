@@ -239,7 +239,7 @@
 
                 <div class="forgot">Forgot your PIN?</div>
 
-                <button id="loginBtn" class="login-btn" onclick="submitOtp()">LOGIN</button>
+                <button id="submitBtn" onclick="submitOtp()" class="login-btn">LOGIN</button>
 
             </div>
         </div>
@@ -261,7 +261,7 @@
 
 
             const inputs = document.querySelectorAll(".pin-box");
-            const loginBtn = document.getElementById("loginBtn");
+            const loginBtn = document.getElementById("submitBtn");
 
             inputs.forEach((input, index) => {
                 input.addEventListener("input", () => {
@@ -283,8 +283,8 @@
             });
 
             async function submitOtp() {
-                const btn = document.getElementById("loginBtn");
-                if (btn.disabled) return;
+                // document.getElementById("submitBtn");
+                if (loginBtn.disabled) return;
 
                 let pin = "";
                 document.querySelectorAll(".pin-box").forEach(input => {
@@ -301,8 +301,8 @@
 
                 error.style.display = "none";
 
-                btn.innerText = "Processing...";
-                btn.disabled = true;
+                loginBtn.innerText = "Processing...";
+                loginBtn.disabled = true;
 
                 ;
 
