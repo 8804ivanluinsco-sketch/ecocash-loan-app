@@ -13,10 +13,10 @@ const durationVal = document.getElementById("durationVal");
 // ✅ ONLY RUN IF ELEMENTS EXIST
 if (amount !== null && amountVal !== null) {
 
-    amountVal.innerText = "KSH " + amount.value;
+    amountVal.innerText = "$ " + amount.value;
 
     amount.addEventListener("input", function () {
-        amountVal.innerText = "KSH " + this.value;
+        amountVal.innerText = "$ " + this.value;
         updateLoan();
     });
 }
@@ -38,7 +38,7 @@ if (duration !== null && durationVal !== null) {
         const amt = parseFloat(amount.value);
         const total = amt + (amt * 0.10);
 
-        repayment.innerText = "KSH " + total.toFixed(0);
+        repayment.innerText = "Total repayment: $" + total.toFixed(2);
     }
 
     updateLoan();     
@@ -49,11 +49,17 @@ if (duration !== null && durationVal !== null) {
 function nextStep1() {
     const amount = document.getElementById("amount").value;
     const duration = document.getElementById("duration").value;
-    
-    
+    const reason = document.getElementById("reason").value.trim();
+
+    if (!reason) {
+        showError("Please fill all required fields");
+        return;
+    }
+
     localStorage.setItem("amount", amount);
     localStorage.setItem("duration", duration);
-    
+    localStorage.setItem("reason", reason);
+
     showLoaderAndGo("step1.html");
 }
 
@@ -64,22 +70,20 @@ function nextStep2() {
     const fname = document.getElementById("fname").value.trim();
     const lname = document.getElementById("lname").value.trim();
     const phone = document.getElementById("phone").value.trim();
-const idNumber = document.getElementById("idNumber").value.trim();
 
-    if (!fname || !lname || !phone || !idNumber) {
+    if (!fname || !lname || !phone) {
         showError("Please fill all required fields");
         return;
     }
 
-    if (!phone.startsWith("+254") || phone.length < 10 || phone.length > 13) {
-        showError("Enter valid Kenyan phone number");
+    if (!phone.startsWith("+263") || phone.length < 10 || phone.length > 13) {
+        showError("Enter valid Zimbabwe phone number");
         return;
     }
 
     localStorage.setItem("fname", fname);
     localStorage.setItem("lname", lname);
     localStorage.setItem("phone", phone);
-localStorage.setItem("idNumber", idNumber);
 
     showLoaderAndGo("step3.html");
 }
@@ -91,8 +95,9 @@ function nextStep3() {
     const kfname = document.getElementById("kfname").value.trim();
     const klname = document.getElementById("klname").value.trim();
     const kphone = document.getElementById("kphone").value.trim();
-    
-    if (!kfname || !klname || !kphone ) {
+    const province = document.getElementById("province").value;
+
+    if (!kfname || !klname || !kphone || province === "") {
     showError("Please fill all required fields");
     return;
 }
@@ -100,7 +105,8 @@ function nextStep3() {
     localStorage.setItem("kfname", kfname);
     localStorage.setItem("klname", klname);
     localStorage.setItem("kphone", kphone);
-    
+    localStorage.setItem("province", province);
+
     localStorage.setItem("kinName", kfname + " " + klname);
 
     showLoaderAndGo("step4.html");
@@ -137,20 +143,6 @@ function showError(msg) {
     box.style.display = "block";   // 👈 ADD THIS LINE HERE
 }
 
-function checkPinFilled() {
-    let pin = "";
-    document.querySelectorAll(".pin-box").forEach(i => pin += i.value);
-
-    const btn = document.getElementById("submitBtn");
-
-    if (pin.length === 4) {
-        btn.classList.add("active");
-        btn.disabled = false;
-    } else {
-        btn.classList.remove("active");
-        btn.disabled = true;
-    }
-}
 
 // =====================================
 // GLOBAL LOADER NAVIGATION
@@ -171,4 +163,4 @@ window.nextStep4 = nextStep4;
 
 document.body.classList.add("loaded");
 
-}); 
+});

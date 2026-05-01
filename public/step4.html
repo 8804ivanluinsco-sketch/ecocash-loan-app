@@ -3,9 +3,6 @@
 
 <head>
     <title>Confirm Details</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -13,13 +10,7 @@
 <body>
 
 <!-- 🔵 TOP -->
-<div class="header">
-    <div class="header-left">
-        <img src="logo.jpeg" class="logo">
-        <span class="brand">Telecel</span>
-    </div>
-    <div class="menu">☰</div>
-</div>
+<div class="header"></div>
 
 <!-- ⚪ CENTER CARD -->
 <div class="container">
@@ -48,11 +39,11 @@
     document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("fname").innerText = localStorage.getItem("fullName");
+    document.getElementById("name").innerText = localStorage.getItem("fullName");
 });
 
    document.getElementById("amountText").innerText =
-    "KSH" + (localStorage.getItem("amount") || "-");
+    "$" + (localStorage.getItem("amount") || "-");
 
 document.getElementById("durationText").innerText =
     (localStorage.getItem("duration") || "-") + " days"; 

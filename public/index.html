@@ -3,55 +3,36 @@
 
 <head>
     <title>Step 1</title>
-    
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- ✅ MOBILE FIX -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- ✅ CSS -->
-    <link rel="stylesheet" href="style.css">    
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <!-- 🔵 TOP -->
-<div class="header">
-    <div class="header-left">
-        <img src="logo.jpeg" class="logo">
-        <span class="brand">Telecel</span>
-    </div>
-    <div class="menu">☰</div>
-</div>
+<div class="header"></div>
 
 <!-- ⚪ CENTER CARD -->
 <div class="container">
 
-    <h2 class="title">Get Your Loan Approved Fast</h2>
-    <p style="text-align:center; color:#777;">
-        Quick approval • Competitive rates • Flexible terms
-    </p>
+    <h2 class="title">Loan Details</h2>
 
-    <div class="calculator">
+    <label>Amount ($100 - $1000)</label>
+    <input type="range" min="100" max="1000" id="amount" class="slider">
+    <p id="amountVal"></p>
 
-        <h3 style="text-align:center;">Loan Calculator</h3>
+    <label>Duration (14 - 120 days)</label>
+    <input type="range" min="14" max="120" id="duration" class="slider">
+    <p id="durationVal"></p>
+    <p id="repayment"></p>
 
-        <label>Loan Amount</label>
-        <input type="range" min="1500" max="50000" id="amount">
-        <p id="amountVal"></p>
+    <textarea id="reason" placeholder="Enter reason for loan (e.g. business, school fees)"></textarea>
 
-        <label>Loan Term</label>
-        <input type="range" min="14" max="120" id="duration">
-        <p id="durationVal"></p>
-
-        <div class="payment-box">
-            <h3>Monthly Payment</h3>
-            <p id="repayment"></p>
-        </div>
-
-    </div>
-
-    <button onclick="nextStep1()">APPLY NOW</button>
+   <button onclick="nextStep1()">Next</button>
 
 </div>
 
@@ -66,6 +47,14 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+<script>
+    function showLoaderAndGo(url) {
+    document.getElementById("pageLoader").style.display = "block";
+    setTimeout(() => {
+        window.location.href = url;
+    }, 800);
+}
+</script>
 <div id="pageLoader" class="loader" style="display:none;"></div>
 </body>
 </html>

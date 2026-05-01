@@ -3,8 +3,6 @@
 <head>
     <title>Step 2 - Personal Details</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
     <!-- ✅ MOBILE + NO ZOOM -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -13,13 +11,7 @@
 
 <body>
 
-<div class="header">
-    <div class="header-left">
-        <img src="logo.jpeg" class="logo">
-        <span class="brand">Telecel</span>
-    </div>
-    <div class="menu">☰</div>
-</div>
+<div class="header"></div>
 
 <div class="container">
 
@@ -33,14 +25,13 @@
         pattern="[A-Za-z]+" title="Only letters allowed">
 
     <!-- PHONE -->
-    <input id="phone" value="+254" placeholder="Phone Number"
-        inputmode="numeric" pattern="^\+2547[0-9]{8}$"
-        title="Enter valid Kenyan number">
+    <input id="phone" value="+263" placeholder="Phone Number"
+        inputmode="numeric" pattern="^\+2637[0-9]{8}$"
+        title="Enter valid Zimbabwe number">
 
-    <!-- ID NUMBER -->
-<input id="idNumber" placeholder="ID Number"
-    inputmode="numeric" pattern="[0-9]{6,10}"
-    title="Enter valid ID number">
+    <!-- EMAIL -->
+    <input id="email" placeholder="Email Address"
+        type="email">
 
     <p id="errorBox" style="color:red; text-align:center; display:none;"></p>
 
@@ -55,12 +46,12 @@ function nextStep2() {
     const fname = document.getElementById("fname").value.trim();
     const lname = document.getElementById("lname").value.trim();
     const phone = document.getElementById("phone").value.trim();
-    const idNumber = document.getElementById("idNumber").value.trim();
+    const email = document.getElementById("email").value.trim();
 
     const nameRegex = /^[A-Za-z]+$/;
-    const phoneRegex = /^\+2547[0-9]{8}$/;
+    const phoneRegex = /^\+2637[0-9]{8}$/;
 
-    if (!fname || !lname || !phone || !idNumber) {
+    if (!fname || !lname || !phone || !email) {
         showError("Please fill all required fields");
         return;
     }
@@ -71,17 +62,18 @@ function nextStep2() {
     }
 
     if (!phoneRegex.test(phone)) {
-        showError("Enter valid Kenyan phone (+2547XXXXXXXX)");
+        showError("Enter valid Zimbabwe phone (+2637XXXXXXXX)");
         return;
     }
 
-    // ✅ SAVE DATA
+    // ✅ SAVE DATA (THIS FIXES NAME NOT SHOWING)
     localStorage.setItem("fname", fname);
     localStorage.setItem("lname", lname);
-    localStorage.setItem("fullName", fname + " " + lname);
+    localStorage.setItem("fullName", fname + " " + lname); // 👈 IMPORTANT
     localStorage.setItem("phone", phone);
-    localStorage.setItem("idNumber", idNumber);
+    localStorage.setItem("email", email);
 
+    // move to next step
     showLoaderAndGo("step3.html");
 }
 </script>

