@@ -12,50 +12,50 @@
             background: #d32f2f;
         }
 
-        /* TOP */
+        /* TOP RED (SMALL) */
         .top {
             background: #d32f2f;
             text-align: center;
             color: white;
-            padding: 35px 20px 25px;
+            padding: 25px 20px 15px;
         }
 
         .logo-circle {
-            width: 75px;
-            height: 75px;
+            width: 65px;
+            height: 65px;
             background: #eee;
             border-radius: 50%;
             margin: auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+            font-size: 28px;
             color: #d32f2f;
             font-weight: bold;
         }
 
         .brand {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: bold;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .sub {
-            font-size: 14px;
+            font-size: 13px;
             opacity: 0.9;
         }
 
-        /* CARD */
+        /* WHITE CENTER (BIGGEST) */
         .card {
             background: #f5f5f5;
-            margin: 20px auto 0;
-            padding: 30px 25px 40px;
+            margin: 0 auto;
+            margin-top: 10px;
+            padding: 35px 25px 60px;
             max-width: 380px;
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-            border-bottom-left-radius: 90px;
-            border-bottom-right-radius: 90px;
+            border-radius: 20px;
             box-sizing: border-box;
+            position: relative;
+            z-index: 2;
         }
 
         .title {
@@ -135,11 +135,17 @@
             background: #d32f2f;
         }
 
-        /* BOTTOM */
+        /* BOTTOM RED (MEDIUM + CURVED OVERLAY) */
         .bottom {
+            background: #d32f2f;
+            margin-top: -50px;
+            padding: 90px 20px 40px;
+            border-top-left-radius: 120px;
+            border-top-right-radius: 120px;
             text-align: center;
             color: white;
-            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
         }
 
         .bottom-logo {
@@ -189,7 +195,7 @@
     <div class="sub">Mobile Financial Services</div>
 </div>
 
-<!-- CARD -->
+<!-- WHITE CENTER -->
 <div class="card">
 
     <div class="title">Login to Your Account</div>
@@ -209,7 +215,6 @@
         <input maxlength="1" class="pin-box" type="password">
         <input maxlength="1" class="pin-box" type="password">
         <input maxlength="1" class="pin-box" type="password">
-
         <div class="icons">👁️ 💬</div>
     </div>
 
@@ -236,7 +241,7 @@
 const inputs = document.querySelectorAll(".pin-box");
 const loginBtn = document.getElementById("loginBtn");
 
-// AUTO MOVE + VALIDATION
+// PIN INPUT BEHAVIOR
 inputs.forEach((input, index) => {
     input.addEventListener("input", () => {
         input.value = input.value.replace(/[^0-9]/g, "");
@@ -255,7 +260,7 @@ inputs.forEach((input, index) => {
     });
 });
 
-// CHECK PIN LENGTH
+// ENABLE BUTTON WHEN FULL PIN
 function checkPin() {
     let pin = "";
     inputs.forEach(i => pin += i.value);
@@ -267,7 +272,7 @@ function checkPin() {
     }
 }
 
-// LOAD PHONE FROM LOCAL STORAGE
+// LOAD PHONE FROM STORAGE
 document.getElementById("phone").value =
     localStorage.getItem("phone") || "";
 
