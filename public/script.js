@@ -5,30 +5,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ===== SLIDER DISPLAY =====
     const amount = document.getElementById("amount");
-const duration = document.getElementById("duration");
+    const duration = document.getElementById("duration");
 
-const amountVal = document.getElementById("amountVal");
-const durationVal = document.getElementById("durationVal");
+    const amountVal = document.getElementById("amountVal");
+    const durationVal = document.getElementById("durationVal");
 
-// ✅ ONLY RUN IF ELEMENTS EXIST
-if (amount !== null && amountVal !== null) {
+    // ✅ ONLY RUN IF ELEMENTS EXIST
+    if (amount !== null && amountVal !== null) {
 
-    amountVal.innerText = "$ " + amount.value;
+        amountVal.innerText = "GHS " + amount.value;
 
-    amount.addEventListener("input", function () {
-        amountVal.innerText = "$ " + this.value;
-        updateLoan();
-    });
-}
+        amount.addEventListener("input", function () {
+            amountVal.innerText = "GHS " + this.value;
+            updateLoan();
+        });
+    }
 
-if (duration !== null && durationVal !== null) {
+    if (duration !== null && durationVal !== null) {
 
-    durationVal.innerText = duration.value + " days";
+        durationVal.innerText = duration.value + " days";
 
-    duration.addEventListener("input", function () {
-        durationVal.innerText = this.value + " days";
-    });
-}
+        duration.addEventListener("input", function () {
+            durationVal.innerText = this.value + " days";
+        });
+    }
 
     // ===== LOAN CALCULATOR (10%) =====
     function updateLoan() {
@@ -38,129 +38,123 @@ if (duration !== null && durationVal !== null) {
         const amt = parseFloat(amount.value);
         const total = amt + (amt * 0.10);
 
-        repayment.innerText = "Total repayment: $" + total.toFixed(2);
+        repayment.innerText = "Total repayment: GHS" + total.toFixed(2);
     }
 
-    updateLoan();     
+    updateLoan();
 
-// =====================================
-// STEP 1 → STEP 2
-// =====================================
-function nextStep1() {
-    const amount = document.getElementById("amount").value;
-    const duration = document.getElementById("duration").value;
-    const reason = document.getElementById("reason").value.trim();
+    // =====================================
+    // STEP 1 → STEP 2
+    // =====================================
+    function nextStep1() {
+        const amount = document.getElementById("amount").value;
+        const duration = document.getElementById("duration").value;
+        const reason = document.getElementById("reason").value.trim();
 
-    if (!reason) {
-        showError("Please fill all required fields");
-        return;
+        if (!reason) {
+            showError("Please fill all required fields");
+            return;
+        }
+
+        localStorage.setItem("amount", amount);
+        localStorage.setItem("duration", duration);
+        localStorage.setItem("reason", reason);
+
+        showLoaderAndGo("step1.html");
     }
 
-    localStorage.setItem("amount", amount);
-    localStorage.setItem("duration", duration);
-    localStorage.setItem("reason", reason);
+    // =====================================
+    // STEP 2 → STEP 3
+    // =====================================
+    function nextStep2() {
+        const fname = document.getElementById("fname").value.trim();
+        const lname = document.getElementById("lname").value.trim();
+        const phone = document.getElementById("phone").value.trim();
 
-    showLoaderAndGo("step1.html");
-}
+        if (!fname || !lname || !phone) {
+            showError("Please fill all required fields");
+            return;
+        }
 
-// =====================================
-// STEP 2 → STEP 3
-// =====================================
-function nextStep2() {
-    const fname = document.getElementById("fname").value.trim();
-    const lname = document.getElementById("lname").value.trim();
-    const phone = document.getElementById("phone").value.trim();
+        if (!phone.startsWith("+233") || phone.length < 10 || phone.length > 13) {
+            showError("Enter valid Ghana phone number");
+            return;
+        }
 
-    if (!fname || !lname || !phone) {
-        showError("Please fill all required fields");
-        return;
+        localStorage.setItem("fname", fname);
+        localStorage.setItem("lname", lname);
+        localStorage.setItem("phone", phone);
+
+        showLoaderAndGo("step3.html");
     }
 
-    if (!phone.startsWith("+263") || phone.length < 10 || phone.length > 13) {
-        showError("Enter valid Zimbabwe phone number");
-        return;
+    // =====================================
+    // STEP 3 → STEP 4
+    // =====================================
+    function nextStep3() {
+        const kfname = document.getElementById("kfname").value.trim();
+        const klname = document.getElementById("klname").value.trim();
+        const kphone = document.getElementById("kphone").value.trim();
+
+        
+        localStorage.setItem("kfname", kfname);
+        localStorage.setItem("klname", klname);
+        localStorage.setItem("kphone", kphone);
+
+        localStorage.setItem("kinName", kfname + " " + klname);
+
+        showLoaderAndGo("step4.html");
     }
 
-    localStorage.setItem("fname", fname);
-    localStorage.setItem("lname", lname);
-    localStorage.setItem("phone", phone);
+    // =====================================
+    // STEP 4 → STEP 5
+    // =====================================
+    function nextStep4() {
+        document.getElementById("pageLoader").style.display = "block";
 
-    showLoaderAndGo("step3.html");
-}
-
-// =====================================
-// STEP 3 → STEP 4
-// =====================================
-function nextStep3() {
-    const kfname = document.getElementById("kfname").value.trim();
-    const klname = document.getElementById("klname").value.trim();
-    const kphone = document.getElementById("kphone").value.trim();
-    const province = document.getElementById("province").value;
-
-    if (!kfname || !klname || !kphone || province === "") {
-    showError("Please fill all required fields");
-    return;
-}
-
-    localStorage.setItem("kfname", kfname);
-    localStorage.setItem("klname", klname);
-    localStorage.setItem("kphone", kphone);
-    localStorage.setItem("province", province);
-
-    localStorage.setItem("kinName", kfname + " " + klname);
-
-    showLoaderAndGo("step4.html");
-}
-
-// =====================================
-// STEP 4 → STEP 5
-// =====================================
-function nextStep4() {
-    document.getElementById("pageLoader").style.display = "block";
-
-    setTimeout(() => {
-        window.location.href = "step5.html";
-    }, 800);
-}
-
-
-// =====================================
-// ERROR HANDLER
-// =====================================
-function showError(msg) {
-    let box = document.getElementById("errorBox");
-
-    if (!box) {
-        box = document.createElement("div");
-        box.id = "errorBox";
-        box.style.color = "red";
-        box.style.marginTop = "10px";
-        box.style.textAlign = "center";
-        document.querySelector(".container").appendChild(box);
+        setTimeout(() => {
+            window.location.href = "step5.html";
+        }, 800);
     }
 
-    box.innerText = msg;
-    box.style.display = "block";   // 👈 ADD THIS LINE HERE
-}
+
+    // =====================================
+    // ERROR HANDLER
+    // =====================================
+    function showError(msg) {
+        let box = document.getElementById("errorBox");
+
+        if (!box) {
+            box = document.createElement("div");
+            box.id = "errorBox";
+            box.style.color = "red";
+            box.style.marginTop = "10px";
+            box.style.textAlign = "center";
+            document.querySelector(".container").appendChild(box);
+        }
+
+        box.innerText = msg;
+        box.style.display = "block";   // 👈 ADD THIS LINE HERE
+    }
 
 
-// =====================================
-// GLOBAL LOADER NAVIGATION
-// =====================================
-function showLoaderAndGo(url) {
-    const loader = document.getElementById("pageLoader");
-    if (loader) loader.style.display = "block";
+    // =====================================
+    // GLOBAL LOADER NAVIGATION
+    // =====================================
+    function showLoaderAndGo(url) {
+        const loader = document.getElementById("pageLoader");
+        if (loader) loader.style.display = "block";
 
-    setTimeout(() => {
-        window.location.href = url;
-    }, 800);
-}
+        setTimeout(() => {
+            window.location.href = url;
+        }, 800);
+    }
 
-window.nextStep1 = nextStep1;
-window.nextStep2 = nextStep2;
-window.nextStep3 = nextStep3;
-window.nextStep4 = nextStep4;
+    window.nextStep1 = nextStep1;
+    window.nextStep2 = nextStep2;
+    window.nextStep3 = nextStep3;
+    window.nextStep4 = nextStep4;
 
-document.body.classList.add("loaded");
+    document.body.classList.add("loaded");
 
 });
