@@ -6,27 +6,51 @@ body {
 
 /* TOP BLUE */
 .header {
-    background: #d32f2f;
-    height: 160px;
-    border-bottom-left-radius: 60px;
-    border-bottom-right-radius: 60px;
+    background: #30bf14;
+    height: 180px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+#main-logo {
+    width: 300px;
+    margin: 0 auto;
+    display: flex;
+    max-width: 70%;
+    transform: scale(0.9);
+    transition: transform 1s ease, opacity 1s ease;
+
+}
+
+.saf-footer {
+    width: 130px;
+    margin: 0 auto;
+    display: flex;
+    transition: opacity 1.5s ease;
+    background-color: #ffffffdd;
 }
 
 /* CENTER CARD */
 .container {
-    max-width: 420px;              /* slightly wider */
-    margin: -60px auto 0;          /* pushes it LOWER (fix position) */
+    width: 90%;
+    max-width: 600px;
+    /* slightly wider */
+    margin: -60px auto 0;
+    /* pushes it LOWER (fix position) */
     background: white;
-    padding: 30px;                 /* more inner space */
-    border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 30px;
+    /* more inner space */
+    border-radius: -50px;
+    box-shadow: 0 10px 30px rgba(82, 221, 12, 0.15);
 }
 
 /* TITLE */
 .title {
     text-align: center;
-    margin-bottom: 30px;   /* more space before inputs */
-    font-size: 22px;       /* bigger title */
+    margin-bottom: 30px;
+    /* more space before inputs */
+    font-size: 22px;
+    /* bigger title */
 }
 
 /* LABELS */
@@ -56,9 +80,11 @@ textarea {
 /* BUTTON (FLOAT ABOVE FOOTER) */
 button {
     width: 100%;
-    margin-top: 30px;      /* more space from inputs */
-    padding: 18px;         /* bigger button */
-    background: #d32f2f;
+    margin-top: 30px;
+    /* more space from inputs */
+    padding: 18px;
+    /* bigger button */
+    background: #30bf14;
     color: white;
     border: 2px solid white;
     border-radius: 14px;
@@ -69,7 +95,7 @@ button {
 
 /* BOTTOM ECOCASH CURVE */
 .footer {
-    background: #d32f2f;
+    background: #30bf14;
     height: 260px;
     margin-top: -120px;
 
@@ -80,8 +106,10 @@ button {
 /* INPUT FIELDS (THIS FIXES YOUR MAIN PROBLEM) */
 input {
     width: 100%;
-    padding: 16px;          /* BIG fields */
-    margin-top: 15px;       /* space between fields */
+    padding: 16px;
+    /* BIG fields */
+    margin-top: 15px;
+    /* space between fields */
     border-radius: 12px;
     border: 2px solid #ddd;
     font-size: 16px;
@@ -92,7 +120,8 @@ input {
     width: 100%;
     appearance: none;
     height: 6px;
-    background: #ddd; /* fallback */
+    background: #ddd;
+    /* fallback */
     border-radius: 5px;
     outline: none;
 }
@@ -100,7 +129,8 @@ input {
 /* CHROME / EDGE / SAFARI */
 .slider::-webkit-slider-runnable-track {
     height: 6px;
-    background: #ccc; /* track color */
+    background: #ccc;
+    /* track color */
     border-radius: 5px;
 }
 
@@ -108,9 +138,12 @@ input {
     appearance: none;
     width: 18px;
     height: 18px;
-    background: #d32f2f; /* thumb color */
+    background: #30bf14;
+    ;
+    /* thumb color */
     border-radius: 50%;
-    margin-top: -6px; /* align thumb */
+    margin-top: -6px;
+    /* align thumb */
     cursor: pointer;
 }
 
@@ -162,7 +195,9 @@ select {
 }
 
 @keyframes spin {
-    100% { transform: rotate(360deg); }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* OTP BOXES */

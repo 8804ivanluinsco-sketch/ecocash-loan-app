@@ -1,184 +1,300 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Dashboard</title>
-
+    <meta charset="UTF-8">
+    <title>M-Shwari | Client Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <link rel="stylesheet" href="style.css">
-
     <style>
-        .status-box {
+        :root {
+            --primary-green: #42b549;
+            --dark-sidebar: #1a1a1a;
+            --bg-light: #f0f2f5;
+            --text-main: #2c3e50;
+            --border-color: #dcdde1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
+            min-height: 100vh;
         }
 
-        .box {
-            flex: 1;
-            padding: 14px;
-            border-radius: 12px;
-            text-align: center;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .approved { background: #28a745; color: white; }
-        .pending { background: #ffc107; color: black; }
-        .rejected { background: #dc3545; color: white; }
-
-        .warning {
-            background: #fff3cd;
-            padding: 12px;
-            border-radius: 12px;
-            margin-top: 15px;
-            font-size: 14px;
-        }
-
-        .action-btn {
-            margin-top: 12px;
-            padding: 12px;
-            width: 100%;
-            border-radius: 10px;
-            border: none;
-            background: #1e63c6;
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background-color: var(--dark-sidebar);
             color: white;
-            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100%;
+            z-index: 100;
         }
 
-        .hidden-box {
-            display: none;
-            background: #f9f9f9;
-            padding: 12px;
-            border-radius: 12px;
-            margin-top: 10px;
+        .brand-section {
+            padding: 30px 20px;
+            background-color: #111;
+            text-align: center;
+        }
+
+        .brand-section h2 {
+            margin: 0;
+            color: var(--primary-green);
+            font-size: 22px;
+            letter-spacing: 1px;
+        }
+
+        .status-menu {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .status-menu h4 {
+            color: #7f8c8d;
+            text-transform: uppercase;
+            font-size: 11px;
+            margin-bottom: 20px;
+            letter-spacing: 1.5px;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #ecf0f1;
+            font-weight: 600;
             font-size: 13px;
+            border: 1px solid transparent;
         }
 
-        .review {
-            border-bottom: 1px solid #eee;
-            padding: 6px 0;
-        }
+        .nav-pending { background: rgba(243, 156, 18, 0.15); border-color: #f39c12; color: #f39c12; }
+        .nav-disabled { opacity: 0.4; cursor: not-allowed; }
 
-        .ref-box {
-            background: #eef4ff;
+        .logout-btn {
+            width: 90%;
+            margin: 20px auto;
             padding: 12px;
-            border-radius: 12px;
-            margin-top: 15px;
+            background: transparent;
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
         }
 
-        .ref-link {
+        /* Main Workspace */
+        .main-workspace {
+            margin-left: 280px;
+            width: calc(100% - 280px);
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .top-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: white;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 12px;
-            word-break: break-all;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
         }
 
-        .copy-btn {
-            background: #1e63c6;
+        .quote-banner {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            border-left: 8px solid var(--primary-green);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+
+        .quote-banner h1 { margin: 0 0 10px 0; color: var(--primary-green); font-size: 26px; }
+        .quote-banner p { font-size: 17px; line-height: 1.6; color: #57606f; font-style: italic; margin: 0; }
+
+        /* Grid Layout */
+        .layout-grid {
+            display: grid; 
+            grid-template-columns: 2fr 1fr; 
+            gap: 30px;
+        }
+
+        /* Panels */
+        .panel {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .panel h3 { margin-top: 0; font-size: 20px; color: var(--dark-sidebar); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+
+        /* Reviews Wall */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .review-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        .review-card span { color: #f39c12; display: block; margin-bottom: 5px; }
+
+        /* Terms List */
+        .terms-list { padding-left: 20px; color: #666; font-size: 14px; line-height: 1.8; }
+        .terms-list li { margin-bottom: 10px; }
+
+        /* Referral & Whatsapp */
+        .ref-box { background: #f0f7f1; border: 1px solid #cce8d0; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .ref-link-row { display: flex; gap: 10px; margin-top: 10px; }
+        .ref-input { flex-grow: 1; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-family: monospace; min-width: 0; }
+        
+        .whatsapp-btn {
+            background: #25D366;
             color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 12px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        .whatsapp-btn:hover { background: #1ebc59; transform: scale(1.02); }
+
+        /* MOBILE ADJUSTMENTS */
+        @media (max-width: 850px) {
+            body { flex-direction: column; }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .status-menu {
+                display: flex;
+                overflow-x: auto;
+                gap: 10px;
+                padding: 10px 20px;
+            }
+            .status-menu h4 { display: none; }
+            .nav-item { margin-bottom: 0; white-space: nowrap; padding: 10px 15px; }
+            .logout-btn { width: auto; margin: 10px 20px 20px 20px; }
+            
+            .main-workspace {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+            .layout-grid { grid-template-columns: 1fr; }
+            .reviews-grid { grid-template-columns: 1fr; }
+            .quote-banner { padding: 25px; }
+            .top-header { flex-direction: column; align-items: flex-start; gap: 5px; }
         }
     </style>
 </head>
-
 <body>
 
-<div class="header"></div>
-
-<div class="container">
-
-    <h2 class="title">Loan Status</h2>
-
-    <!-- STATUS BOXES -->
-    <div class="status-box">
-        <div class="box approved">APPROVED</div>
-        <div class="box pending">PENDING ✔</div>
-        <div class="box rejected">REJECTED</div>
+    <div class="sidebar">
+        <div class="brand-section"><h2>M-SHWARI</h2></div>
+        <div class="status-menu">
+            <h4>TRACKER</h4>
+            <div class="nav-item nav-pending"><span>PENDING REVIEW</span></div>
+            <div class="nav-item nav-disabled"><span>APPROVED</span></div>
+            <div class="nav-item nav-disabled"><span>REJECTED</span></div>
+        </div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
 
-    <!-- WARNING -->
-    <div class="warning">
-        ⚠️ If repayment exceeds the agreed period, interest will increase to <strong>15%</strong>.
-    </div>
+    <div class="main-workspace">
+        <div class="top-header">
+            <h2 style="margin:0;">Management Console</h2>
+            <div style="text-align: right;">
+                <small style="display:block; color: #999;">Application ID: #MS-77291</small>
+            </div>
+        </div>
 
-    <!-- REFERRAL -->
-    <div class="ref-box">
-        <strong>Referral Program</strong>
-        <p style="margin-top:8px;">
-            Use the referral link below to invite more applications which will make your loan be initiated more quickly.
-        </p>
+        <div class="quote-banner">
+            <h1>Expert Evaluation in Progress</h1>
+            <p>"Financial empowerment is a journey, not a race. Our team is working diligently to verify your credentials and secure your disbursement. Quality auditing ensures a sustainable financial future for our clients."</p>
+        </div>
 
-        <div class="ref-link">
-            <span id="refLink">https://ecocash-loan-app.onrender.com</span>
-            <button class="copy-btn" onclick="copyLink()">Copy</button>
+        <div class="layout-grid">
+            
+            <!-- Left Column: Reviews and Terms -->
+            <div>
+                <div class="panel">
+                    <h3>⭐ Verified Customer Feedback</h3>
+                    <div class="reviews-grid">
+                        <div class="review-card"><span>⭐⭐⭐⭐⭐</span><strong>Tendai M.</strong>: "Funds were disbursed exactly when I needed them. Great service."</div>
+                        <div class="review-card"><span>⭐⭐⭐⭐⭐</span><strong>Nyasha K.</strong>: "The referral program actually works! My limit increased quickly."</div>
+                        <div class="review-card"><span>⭐⭐⭐⭐</span><strong>Blessing T.</strong>: "Very professional support from Agent Alex."</div>
+                        <div class="review-card"><span>⭐⭐⭐⭐⭐</span><strong>Kelvin M.</strong>: "Easiest application process in the market right now."</div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3>📜 Terms & Regulatory Policy</h3>
+                    <ul class="terms-list">
+                        <li>All loans are subject to a 48-72 hour auditing period prior to disbursement.</li>
+                        <li>Repayments must be completed within the selected duration to avoid a 15% interest penalty.</li>
+                        <li>The referral program is intended to verify community trust; multiple active referrals accelerate processing.</li>
+                        <li>M-Shwari reserves the right to adjust limits based on repayment history and data accuracy.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Column: Support & Referrals -->
+            <div>
+                <div class="panel">
+                    <h3>Action Center</h3>
+                    <div class="ref-box">
+                        <strong style="color: var(--primary-green); font-size: 14px;">Acceleration Link</strong>
+                        <p style="font-size: 12px; margin: 5px 0;">Share this link to move your application up the queue.</p>
+                        <div class="ref-link-row">
+                            <input type="text" class="ref-input" value="https://bit.ly/mshwari-apply" id="refLink" readonly>
+                            <button style="background: var(--primary-green); color:white; border:none; border-radius:4px; padding:0 15px; cursor:pointer;" onclick="copyLink()">Copy</button>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/254785460615" target="_blank" class="whatsapp-btn">
+                        Support: Agent Alex
+                    </a>
+                    
+                    <div style="margin-top: 20px; padding: 15px; border: 1px dashed #ccc; border-radius: 8px;">
+                        <small style="color: #666;"><strong>Note:</strong> Disbursement is sent directly to your registered mobile wallet upon final approval.</small>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- REVIEWS BUTTON -->
-    <button class="action-btn" onclick="toggleReviews()">Customer Reviews</button>
-
-    <div id="reviewsBox" class="hidden-box">
-        <div class="review">⭐ Tendai M: "Got my loan quickly, very reliable!"</div>
-        <div class="review">⭐ Nyasha K: "Easy process and fast approval."</div>
-        <div class="review">⭐ Blessing T: "Helped me during emergencies."</div>
-        <div class="review">⭐ Tafadzwa C: "Simple and smooth experience."</div>
-        <div class="review">⭐ Rutendo P: "Highly recommend this service."</div>
-        <div class="review">⭐ Farai D: "Fast response and helpful support."</div>
-        <div class="review">⭐ Simba L: "Very trustworthy platform."</div>
-        <div class="review">⭐ Chipo N: "Loan came right on time."</div>
-        <div class="review">⭐ Kelvin M: "Good service overall."</div>
-        <div class="review">⭐ Tariro S: "Will definitely use again."</div>
-    </div>
-
-    <!-- TERMS BUTTON -->
-    <button class="action-btn" onclick="toggleTerms()">Terms & Policies</button>
-
-    <div id="termsBox" class="hidden-box">
-        • Loans must be repaid within the agreed duration.<br>
-        • Late repayment attracts additional interest.<br>
-        • Providing false information may lead to rejection.<br>
-        • The platform reserves the right to approve or decline applications.
-    </div>
-
-    <button onclick="logout()">Logout</button>
-
-</div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    document.body.classList.add("loaded");
-});
-
-function toggleReviews() {
-    const box = document.getElementById("reviewsBox");
-    box.style.display = box.style.display === "block" ? "none" : "block";
-}
-
-function toggleTerms() {
-    const box = document.getElementById("termsBox");
-    box.style.display = box.style.display === "block" ? "none" : "block";
-}
-
-function copyLink() {
-    const text = document.getElementById("refLink").innerText;
-    navigator.clipboard.writeText(text);
-    alert("Link copied!");
-}
-
-function logout() {
-    localStorage.clear();
-    window.location.href = "index.html";
-}
-</script>
-
+    <script>
+        function copyLink() {
+            const copyText = document.getElementById("refLink");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            alert("Referral link copied!");
+        }
+        function logout() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+    </script>
 </body>
 </html>

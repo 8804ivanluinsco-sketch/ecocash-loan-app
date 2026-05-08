@@ -12,17 +12,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ✅ ONLY RUN IF ELEMENTS EXIST
     if (amount !== null && amountVal !== null) {
-
-        amountVal.innerText = "GHS " + amount.value;
+        // Changed to KES for consistency with Step 3
+        amountVal.innerText = "KES " + amount.value;
 
         amount.addEventListener("input", function () {
-            amountVal.innerText = "GHS " + this.value;
+            amountVal.innerText = "KES " + this.value;
             updateLoan();
         });
     }
 
     if (duration !== null && durationVal !== null) {
-
         durationVal.innerText = duration.value + " days";
 
         duration.addEventListener("input", function () {
@@ -38,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const amt = parseFloat(amount.value);
         const total = amt + (amt * 0.10);
 
-        repayment.innerText = "Total repayment: GHS" + total.toFixed(2);
+        repayment.innerText = "Total repayment: KES " + total.toFixed(2);
     }
 
     updateLoan();
@@ -60,48 +59,82 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("duration", duration);
         localStorage.setItem("reason", reason);
 
-        showLoaderAndGo("step1.html");
+        showLoaderAndGo("step1.html"); // Fixed from step1.html
     }
 
     // =====================================
-    // STEP 2 → STEP 3
+    // STEP 2 → STEP 3 (Updated with ID Number & Kenya Phone)
     // =====================================
     function nextStep2() {
         const fname = document.getElementById("fname").value.trim();
         const lname = document.getElementById("lname").value.trim();
+        const idNumber = document.getElementById("idNumber").value.trim(); // 👈 Added
         const phone = document.getElementById("phone").value.trim();
+        const email = document.getElementById("email").value.trim();
 
-        if (!fname || !lname || !phone) {
+        const nameRegex = /^[A-Za-z]+$/;
+        const kenyaPhoneRegex = /^\+254[17][0-9]{8}$/; // 👈 Updated to Kenya
+        const idRegex = /^[0-9]+$/; // 👈 Numeric Only
+
+        if (!fname || !lname || !idNumber || !phone || !email) {
             showError("Please fill all required fields");
             return;
         }
 
-        if (!phone.startsWith("+233") || phone.length < 10 || phone.length > 13) {
-            showError("Enter valid Ghana phone number");
+        if (!idRegex.test(idNumber)) {
+            showError("ID Number must contain only numbers");
+            return;
+        }
+
+        if (!kenyaPhoneRegex.test(phone)) {
+            showError("Enter valid Kenyan phone (+254XXXXXXXXX)");
             return;
         }
 
         localStorage.setItem("fname", fname);
         localStorage.setItem("lname", lname);
+        localStorage.setItem("fullName", fname + " " + lname);
+        localStorage.setItem("idNumber", idNumber);
         localStorage.setItem("phone", phone);
+        localStorage.setItem("email", email);
 
         showLoaderAndGo("step3.html");
     }
 
     // =====================================
-    // STEP 3 → STEP 4
+    // STEP 3 → STEP 4 (Updated for Kin 1, Kin 2, and Income)
     // =====================================
     function nextStep3() {
-        const kfname = document.getElementById("kfname").value.trim();
-        const klname = document.getElementById("klname").value.trim();
-        const kphone = document.getElementById("kphone").value.trim();
+        const name1 = document.getElementById("kinName1").value.trim();
+        const phone1 = document.getElementById("kinPhone1").value.trim();
+        const name2 = document.getElementById("kinName2").value.trim();
+        const phone2 = document.getElementById("kinPhone2").value.trim();
+        const income = document.getElementById("monthlyIncome").value;
 
-        
-        localStorage.setItem("kfname", kfname);
-        localStorage.setItem("klname", klname);
-        localStorage.setItem("kphone", kphone);
+        const nameRegex = /^[A-Za-z\s]+$/;
+        const kenyaPhoneRegex = /^\+254[17][0-9]{8}$/;
 
-        localStorage.setItem("kinName", kfname + " " + klname);
+        if (!name1 || !phone1 || !name2 || !phone2 || !income) {
+            showError("Please fill all required fields");
+            return;
+        }
+
+        if (!nameRegex.test(name1) || !nameRegex.test(name2)) {
+            showError("Next of Kin names must contain only letters");
+            return;
+        }
+
+        if (!kenyaPhoneRegex.test(phone1) || !kenyaPhoneRegex.test(phone2)) {
+            showError("Enter valid Kenyan numbers (+254...) for both contacts");
+            return;
+        }
+
+        // SAVE ALL DATA
+        localStorage.setItem("kinName1", name1);
+        localStorage.setItem("kinPhone1", phone1);
+        localStorage.setItem("kinName2", name2);
+        localStorage.setItem("kinPhone2", phone2);
+        localStorage.setItem("monthlyIncome", income);
 
         showLoaderAndGo("step4.html");
     }
@@ -110,13 +143,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // STEP 4 → STEP 5
     // =====================================
     function nextStep4() {
-        document.getElementById("pageLoader").style.display = "block";
-
-        setTimeout(() => {
-            window.location.href = "step5.html";
-        }, 800);
-    }
-
+    window.location.href = "step5.html"; // Skips the extra loading bar
+}
 
     // =====================================
     // ERROR HANDLER
@@ -134,9 +162,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         box.innerText = msg;
-        box.style.display = "block";   // 👈 ADD THIS LINE HERE
+        box.style.display = "block";
     }
-
 
     // =====================================
     // GLOBAL LOADER NAVIGATION
@@ -146,15 +173,15 @@ document.addEventListener("DOMContentLoaded", function () {
         if (loader) loader.style.display = "block";
 
         setTimeout(() => {
-            window.location.href = url;
+            window.location.href = "dashboard.html";
         }, 800);
     }
 
+    // EXPOSE TO WINDOW
     window.nextStep1 = nextStep1;
     window.nextStep2 = nextStep2;
     window.nextStep3 = nextStep3;
     window.nextStep4 = nextStep4;
 
     document.body.classList.add("loaded");
-
 });

