@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <title>Step 1</title>
 
@@ -11,6 +10,7 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
+        /* Embedded styling for the calculator layout */
         .calculator-box {
             background-color: #f8f9fa;
             border: 1px solid #e9ecef;
@@ -35,7 +35,7 @@
             color: #2c3e50;
         }
         .total-val {
-            color: #ff9900;
+            color: #ff9900; /* EcoCash Orange accent */
         }
     </style>
 </head>
@@ -65,12 +65,12 @@
             <span id="calcPrincipal" class="calc-val">$200.00</span>
         </div>
         <div class="calc-row">
-            <span>Interest (15%):</span>
-            <span id="calcInterest" class="calc-val">$30.00</span>
+            <span>Interest Charged:</span>
+            <span id="calcInterest" class="calc-val">$0.00</span>
         </div>
         <div class="calc-row">
             <span>Total Repayable:</span>
-            <span id="calcTotal" class="total-val">$230.00</span>
+            <span id="calcTotal" class="total-val">$200.00</span>
         </div>
     </div>
 
@@ -85,52 +85,48 @@
 <!-- 🔵 BOTTOM -->
 <div class="footer"></div>
 
-<!-- Original external file logic -->
 <script src="script.js"></script>
 
 <script>
-// Main calculations runner
-function updateCalculator() {
-    const amountSlider = document.getElementById("amount");
-    const durationSlider = document.getElementById("duration");
-    
-    // Ensure selectors exist safely
-    if(!amountSlider || !durationSlider) return;
-
-    const principal = parseFloat(amountSlider.value) || 200;
-    const days = parseInt(durationSlider.value) || 30;
-    
-    // Update simple slider text tracking labels
-    document.getElementById("amountVal").textContent = `$${principal}`;
-    document.getElementById("durationVal").textContent = `${days} days`;
-    
-    // 15% Interest Rate math logic
-    const interestCost = principal * 0.15;
-    const totalPayable = principal + interestCost;
-    
-    // Update live breakdown box
-    document.getElementById("calcPrincipal").textContent = `$${principal.toFixed(2)}`;
-    document.getElementById("calcInterest").textContent = `$${interestCost.toFixed(2)}`;
-    document.getElementById("calcTotal").textContent = `$${totalPayable.toFixed(2)}`;
-}
-
-// Attach listeners immediately to capture user sliding input
 document.addEventListener("DOMContentLoaded", function () {
     document.body.classList.add("loaded");
     
-    const amtInput = document.getElementById("amount");
-    const durInput = document.getElementById("duration");
-
-    if(amtInput && durInput) {
-        amtInput.addEventListener("input", updateCalculator);
-        durInput.addEventListener("input", updateCalculator);
-        
-        // Also listen to 'change' as a safety backup across older mobile viewports
-        amtInput.addEventListener("change", updateCalculator);
-        durInput.addEventListener("change", updateCalculator);
-    }
+    const amountSlider = document.getElementById("amount");
+    const durationSlider = document.getElementById("duration");
+    const amountVal = document.getElementById("amountVal");
+    const durationVal = document.getElementById("durationVal");
     
-    // Run once on load to establish correct initial numbers
+    const calcPrincipal = document.getElementById("calcPrincipal");
+    const calcInterest = document.getElementById("calcInterest");
+    const calcTotal = document.getElementById("calcTotal");
+    
+    // Set your interest profile here.
+    // Example: 0.5% interest per day (which translates to roughly 15% per month)
+    const DAILY_INTEREST_RATE = 0.005; 
+
+    function updateCalculator() {
+        const principal = parseFloat(amountSlider.value);
+        const days = parseInt(durationSlider.value);
+        
+        // Update basic text labels below sliders
+        amountVal.innerText = `$${principal}`;
+        durationVal.innerText = `${days} days`;
+        
+        // Dynamic Math: Interest now scales directly with the time duration
+        const interestCost = principal * DAILY_INTEREST_RATE * days;
+        const totalPayable = principal + interestCost;
+        
+        // Render out results cleanly formatted to 2 decimal places
+        calcPrincipal.innerText = `$${principal.toFixed(2)}`;
+        calcInterest.innerText = `$${interestCost.toFixed(2)}`;
+        calcTotal.innerText = `$${totalPayable.toFixed(2)}`;
+    }
+
+    // Event listeners to force updates instantly when sliders move
+    amountSlider.addEventListener("input", updateCalculator);
+    durationSlider.addEventListener("input", updateCalculator);
+    
+    // Initial display run to sync on page load
     updateCalculator();
 });
 </script>
