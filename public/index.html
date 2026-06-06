@@ -9,6 +9,36 @@
 
     <!-- ✅ CSS -->
     <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Embedded styling for the calculator layout layout */
+        .calculator-box {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .calc-row:last-child {
+            margin-bottom: 0;
+            padding-top: 10px;
+            border-top: 1px dashed #dee2e6;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .calc-val {
+            color: #2c3e50;
+        }
+        .total-val {
+            color: #ff9900; /* EcoCash Orange accent colors work nicely here */
+        }
+    </style>
 </head>
 
 <body>
@@ -22,17 +52,34 @@
     <h2 class="title">Loan Details</h2>
 
     <label>Amount ($100 - $1000)</label>
-    <input type="range" min="100" max="1000" id="amount" class="slider">
-    <p id="amountVal"></p>
+    <input type="range" min="100" max="1000" step="10" value="200" id="amount" class="slider">
+    <p id="amountVal">$200</p>
 
     <label>Duration (14 - 120 days)</label>
-    <input type="range" min="14" max="120" id="duration" class="slider">
-    <p id="durationVal"></p>
+    <input type="range" min="14" max="120" value="30" id="duration" class="slider">
+    <p id="durationVal">30 days</p>
+    
+    <!-- 🧮 LIVE LOAN CALCULATOR -->
+    <div class="calculator-box">
+        <div class="calc-row">
+            <span>Principal Amount:</span>
+            <span id="calcPrincipal" class="calc-val">$200.00</span>
+        </div>
+        <div class="calc-row">
+            <span>Interest (15%):</span>
+            <span id="calcInterest" class="calc-val">$30.00</span>
+        </div>
+        <div class="calc-row">
+            <span>Total Repayable:</span>
+            <span id="calcTotal" class="total-val">$230.00</span>
+        </div>
+    </div>
+
     <p id="repayment"></p>
 
     <textarea id="reason" placeholder="Enter reason for loan (e.g. business, school fees)"></textarea>
 
-   <button onclick="nextStep1()">Next</button>
+    <button onclick="nextStep1()">Next</button>
 
 </div>
 
@@ -44,11 +91,49 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     document.body.classList.add("loaded");
+    
+    // Wire up the live calculator mechanics
+    const amountSlider = document.getElementById("amount");
+    const durationSlider = document.getElementById("duration");
+    const amountVal = document.getElementById("amountVal");
+    const durationVal = document.getElementById("durationVal");
+    
+    const calcPrincipal = document.getElementById("calcPrincipal");
+    const calcInterest = document.getElementById("calcInterest");
+    const calcTotal = document.getElementById("calcTotal");
+    
+    // Fixed simple interest rate factor (15%)
+    const INTEREST_RATE = 0.15; 
+
+    function updateCalculator() {
+        const principal = parseFloat(amountSlider.value);
+        const days = parseInt(durationSlider.value);
+        
+        // Update basic text labels
+        amountVal.innerText = `$${principal}`;
+        durationVal.innerText = `${days} days`;
+        
+        // Calculate math values
+        const interestCost = principal * INTEREST_RATE;
+        const totalPayable = principal + interestCost;
+        
+        // Render out results to the calculator interface
+        calcPrincipal.innerText = `$${principal.toFixed(2)}`;
+        calcInterest.innerText = `$${interestCost.toFixed(2)}`;
+        calcTotal.innerText = `$${totalPayable.toFixed(2)}`;
+    }
+
+    // Event listeners to update instantly when sliders move
+    amountSlider.addEventListener("input", updateCalculator);
+    durationSlider.addEventListener("input", updateCalculator);
+    
+    // Initial display sync run
+    updateCalculator();
 });
 </script>
 
 <script>
-    function showLoaderAndGo(url) {
+function showLoaderAndGo(url) {
     document.getElementById("pageLoader").style.display = "block";
     setTimeout(() => {
         window.location.href = url;
