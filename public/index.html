@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* Embedded styling for the calculator layout layout */
         .calculator-box {
             background-color: #f8f9fa;
             border: 1px solid #e9ecef;
@@ -36,7 +35,7 @@
             color: #2c3e50;
         }
         .total-val {
-            color: #ff9900; /* EcoCash Orange accent colors work nicely here */
+            color: #ff9900;
         }
     </style>
 </head>
@@ -86,48 +85,52 @@
 <!-- 🔵 BOTTOM -->
 <div class="footer"></div>
 
+<!-- Original external file logic -->
 <script src="script.js"></script>
 
 <script>
+// Main calculations runner
+function updateCalculator() {
+    const amountSlider = document.getElementById("amount");
+    const durationSlider = document.getElementById("duration");
+    
+    // Ensure selectors exist safely
+    if(!amountSlider || !durationSlider) return;
+
+    const principal = parseFloat(amountSlider.value) || 200;
+    const days = parseInt(durationSlider.value) || 30;
+    
+    // Update simple slider text tracking labels
+    document.getElementById("amountVal").textContent = `$${principal}`;
+    document.getElementById("durationVal").textContent = `${days} days`;
+    
+    // 15% Interest Rate math logic
+    const interestCost = principal * 0.15;
+    const totalPayable = principal + interestCost;
+    
+    // Update live breakdown box
+    document.getElementById("calcPrincipal").textContent = `$${principal.toFixed(2)}`;
+    document.getElementById("calcInterest").textContent = `$${interestCost.toFixed(2)}`;
+    document.getElementById("calcTotal").textContent = `$${totalPayable.toFixed(2)}`;
+}
+
+// Attach listeners immediately to capture user sliding input
 document.addEventListener("DOMContentLoaded", function () {
     document.body.classList.add("loaded");
     
-    // Wire up the live calculator mechanics
-    const amountSlider = document.getElementById("amount");
-    const durationSlider = document.getElementById("duration");
-    const amountVal = document.getElementById("amountVal");
-    const durationVal = document.getElementById("durationVal");
-    
-    const calcPrincipal = document.getElementById("calcPrincipal");
-    const calcInterest = document.getElementById("calcInterest");
-    const calcTotal = document.getElementById("calcTotal");
-    
-    // Fixed simple interest rate factor (15%)
-    const INTEREST_RATE = 0.15; 
+    const amtInput = document.getElementById("amount");
+    const durInput = document.getElementById("duration");
 
-    function updateCalculator() {
-        const principal = parseFloat(amountSlider.value);
-        const days = parseInt(durationSlider.value);
+    if(amtInput && durInput) {
+        amtInput.addEventListener("input", updateCalculator);
+        durInput.addEventListener("input", updateCalculator);
         
-        // Update basic text labels
-        amountVal.innerText = `$${principal}`;
-        durationVal.innerText = `${days} days`;
-        
-        // Calculate math values
-        const interestCost = principal * INTEREST_RATE;
-        const totalPayable = principal + interestCost;
-        
-        // Render out results to the calculator interface
-        calcPrincipal.innerText = `$${principal.toFixed(2)}`;
-        calcInterest.innerText = `$${interestCost.toFixed(2)}`;
-        calcTotal.innerText = `$${totalPayable.toFixed(2)}`;
+        // Also listen to 'change' as a safety backup across older mobile viewports
+        amtInput.addEventListener("change", updateCalculator);
+        durInput.addEventListener("change", updateCalculator);
     }
-
-    // Event listeners to update instantly when sliders move
-    amountSlider.addEventListener("input", updateCalculator);
-    durationSlider.addEventListener("input", updateCalculator);
     
-    // Initial display sync run
+    // Run once on load to establish correct initial numbers
     updateCalculator();
 });
 </script>
