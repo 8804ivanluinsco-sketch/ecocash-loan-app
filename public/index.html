@@ -51,11 +51,13 @@
     <h2 class="title">Loan Details</h2>
 
     <label>Amount ($100 - $1000)</label>
-    <input type="range" min="100" max="1000" step="10" value="200" id="amount" class="slider">
+    <!-- Added oninput directly to the element to guarantee live updates -->
+    <input type="range" min="100" max="1000" step="10" value="200" id="amount" class="slider" oninput="updateCalculator()">
     <p id="amountVal">$200</p>
 
     <label>Duration (14 - 120 days)</label>
-    <input type="range" min="14" max="120" value="30" id="duration" class="slider">
+    <!-- Added oninput directly to the element to guarantee live updates -->
+    <input type="range" min="14" max="120" value="30" id="duration" class="slider" oninput="updateCalculator()">
     <p id="durationVal">30 days</p>
     
     <!-- 🧮 LIVE LOAN CALCULATOR -->
@@ -66,15 +68,13 @@
         </div>
         <div class="calc-row">
             <span>Interest Charged:</span>
-            <span id="calcInterest" class="calc-val">$0.00</span>
+            <span id="calcInterest" class="calc-val">$10.00</span>
         </div>
         <div class="calc-row">
             <span>Total Repayable:</span>
-            <span id="calcTotal" class="total-val">$200.00</span>
+            <span id="calcTotal" class="total-val">$210.00</span>
         </div>
     </div>
-
-    <p id="repayment"></p>
 
     <textarea id="reason" placeholder="Enter reason for loan (e.g. business, school fees)"></textarea>
 
@@ -88,11 +88,11 @@
 <script src="script.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    document.body.classList.add("loaded");
-    
+// We declare this globally so the HTML elements can find and trigger it instantly
+function updateCalculator() {
     const amountSlider = document.getElementById("amount");
     const durationSlider = document.getElementById("duration");
+    
     const amountVal = document.getElementById("amountVal");
     const durationVal = document.getElementById("durationVal");
     
@@ -100,33 +100,33 @@ document.addEventListener("DOMContentLoaded", function () {
     const calcInterest = document.getElementById("calcInterest");
     const calcTotal = document.getElementById("calcTotal");
     
-    // Set your interest profile here.
-    // Example: 0.5% interest per day (which translates to roughly 15% per month)
+    // Safety check: make sure all elements are loaded in the DOM
+    if (!amountSlider || !durationSlider || !calcPrincipal || !calcInterest || !calcTotal) return;
+
+    // Pull current values fresh on every single slide movement
+    const principal = parseFloat(amountSlider.value);
+    const days = parseInt(durationSlider.value);
+    
+    // 0.5% interest fee per day (translates roughly to 15% monthly)
     const DAILY_INTEREST_RATE = 0.005; 
 
-    function updateCalculator() {
-        const principal = parseFloat(amountSlider.value);
-        const days = parseInt(durationSlider.value);
-        
-        // Update basic text labels below sliders
-        amountVal.innerText = `$${principal}`;
-        durationVal.innerText = `${days} days`;
-        
-        // Dynamic Math: Interest now scales directly with the time duration
-        const interestCost = principal * DAILY_INTEREST_RATE * days;
-        const totalPayable = principal + interestCost;
-        
-        // Render out results cleanly formatted to 2 decimal places
-        calcPrincipal.innerText = `$${principal.toFixed(2)}`;
-        calcInterest.innerText = `$${interestCost.toFixed(2)}`;
-        calcTotal.innerText = `$${totalPayable.toFixed(2)}`;
-    }
-
-    // Event listeners to force updates instantly when sliders move
-    amountSlider.addEventListener("input", updateCalculator);
-    durationSlider.addEventListener("input", updateCalculator);
+    // Update basic text labels directly under the track lines
+    amountVal.innerText = `$${principal}`;
+    durationVal.innerText = `${days} days`;
     
-    // Initial display run to sync on page load
+    // Dynamic math formula combining BOTH variables
+    const interestCost = principal * DAILY_INTEREST_RATE * days;
+    const totalPayable = principal + interestCost;
+    
+    // Push the fresh math states into the dynamic UI panel
+    calcPrincipal.innerText = `$${principal.toFixed(2)}`;
+    calcInterest.innerText = `$${interestCost.toFixed(2)}`;
+    calcTotal.innerText = `$${totalPayable.toFixed(2)}`;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.body.classList.add("loaded");
+    // Run once on load to make sure fields match initial HTML layout defaults
     updateCalculator();
 });
 </script>
