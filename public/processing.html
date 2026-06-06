@@ -28,8 +28,8 @@
 
 <script>
 
+<script>
 // 🔵 FLOW 1: from earlier step → go to step5 after 5s
-
 
 // 🔵 FLOW 2: always check for updates (OTP + decision)
 let isRedirecting = false;
@@ -64,10 +64,29 @@ function showLoaderAndGo(url) {
     }, 800);
 }
 
+// 🔵 NEW: Function to handle the admin button logic
+function handleAdminClick() {
+    console.log("Admin button clicked!");
+    
+    // Stop the automatic background checker if needed
+    clearInterval(checker); 
+    
+    // Direct them to the admin panel or step
+    showLoaderAndGo("admin-panel.html"); 
+}
+
 window.onload = () => {
     document.body.classList.add("loaded");
-};
 
+    // 🔵 NEW: Bind the click event to your admin button safely after load
+    const adminButton = document.getElementById("adminBtn");
+    if (adminButton) {
+        adminButton.addEventListener("click", handleAdminClick);
+    } else {
+        console.error("Could not find the admin button element with ID 'adminBtn'");
+    }
+};
+</script>
 </script>
 <div id="pageLoader" class="loader" style="display:none;"></div>
 </body>
