@@ -1,101 +1,92 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Step 2 - Personal Details</title>
+
+    <!-- ✅ MOBILE + NO ZOOM -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="header">
-    <img src="logo-removebg-preview.png" alt="M-Shwari" id="main-logo">
-    
+<div class="header"></div>
+
+<div class="container">
+
+    <h2 class="title">Personal Details</h2>
+
+    <!-- NAMES -->
+    <input id="fname" placeholder="First Name" 
+        pattern="[A-Za-z]+" title="Only letters allowed">
+
+    <input id="lname" placeholder="Last Name" 
+        pattern="[A-Za-z]+" title="Only letters allowed">
+
+    <!-- PHONE -->
+    <input id="phone" value="+263" placeholder="Phone Number"
+        inputmode="numeric" pattern="^\+2637[0-9]{8}$"
+        title="Enter valid Zimbabwe number">
+
+    <!-- EMAIL -->
+    <input id="email" placeholder="Email Address"
+        type="email">
+
+    <p id="errorBox" style="color:red; text-align:center; display:none;"></p>
+
+    <button onclick="nextStep2()">Next</button>
+
 </div>
 
-    <div class="container">
+<div class="footer"></div>
 
-        <h2 class="title">Personal Details</h2>
+<script>
+function nextStep2() {
+    const fname = document.getElementById("fname").value.trim();
+    const lname = document.getElementById("lname").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const email = document.getElementById("email").value.trim();
 
-        <input id="fname" placeholder="First Name" pattern="[A-Za-z]+" title="Only letters allowed">
-        <input id="lname" placeholder="Last Name" pattern="[A-Za-z]+" title="Only letters allowed">
+    const nameRegex = /^[A-Za-z]+$/;
+    const phoneRegex = /^\+2637[0-9]{8}$/;
 
-        <input id="idNumber" placeholder="ID Number" inputmode="numeric" type="text">
+    if (!fname || !lname || !phone || !email) {
+        showError("Please fill all required fields");
+        return;
+    }
 
-        <input id="phone" value="+254" placeholder="Phone Number" inputmode="numeric" 
-            title="Enter valid Kenyan number">
+    if (!nameRegex.test(fname) || !nameRegex.test(lname)) {
+        showError("Names must contain only letters");
+        return;
+    }
 
-        <input id="email" placeholder="Email Address" type="email">
+    if (!phoneRegex.test(phone)) {
+        showError("Enter valid Zimbabwe phone (+2637XXXXXXXX)");
+        return;
+    }
 
-        <p id="errorBox" style="color:red; text-align:center; display:none;"></p>
-        
-        <br><br><br>
-        <button onclick="nextStep2()">Next</button>
+    // ✅ SAVE DATA (THIS FIXES NAME NOT SHOWING)
+    localStorage.setItem("fname", fname);
+    localStorage.setItem("lname", lname);
+    localStorage.setItem("fullName", fname + " " + lname); // 👈 IMPORTANT
+    localStorage.setItem("phone", phone);
+    localStorage.setItem("email", email);
 
-    </div>
+    // move to next step
+    showLoaderAndGo("step3.html");
+}
+</script>
 
-    <div class="footer">
-    <br><br><br><br><br><br>
-    <img src="safaricom-25.gif" alt="Safaricom" class="saf-footer" id="saf-logo">
-</div>
+<script src="script.js"></script>
 
-    <script>
-        function nextStep2() {
-            const fname = document.getElementById("fname").value.trim();
-            const lname = document.getElementById("lname").value.trim();
-            const idNumber = document.getElementById("idNumber").value.trim();
-            const phone = document.getElementById("phone").value.trim();
-            const email = document.getElementById("email").value.trim();
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.body.classList.add("loaded");
+});
+</script>
 
-            const nameRegex = /^[A-Za-z]+$/;
-            // Updated regex for Kenyan numbers: starts with +254 then 7 or 1, then 8 digits
-            const kenyaPhoneRegex = /^\+254[17][0-9]{8}$/;
-            const idRegex = /^[0-9]+$/;
-
-            if (!fname || !lname || !idNumber || !phone || !email) {
-                showError("Please fill all required fields");
-                return;
-            }
-
-            if (!idRegex.test(idNumber)) {
-                showError("ID Number must contain only numbers");
-                return;
-            }
-
-            if (!nameRegex.test(fname) || !nameRegex.test(lname)) {
-                showError("Names must contain only letters");
-                return;
-            }
-
-            if (!kenyaPhoneRegex.test(phone)) {
-                showError("Enter valid Kenyan phone (+254XXXXXXXXX)");
-                return;
-            }
-
-            // Save Data
-            localStorage.setItem("fname", fname);
-            localStorage.setItem("lname", lname);
-            localStorage.setItem("fullName", fname + " " + lname);
-            localStorage.setItem("idNumber", idNumber);
-            localStorage.setItem("phone", phone);
-            localStorage.setItem("email", email);
-
-            // Move to Step 3 (step3.html)
-            showLoaderAndGo("step3.html");
-        }
-
-        function showError(msg) {
-            const err = document.getElementById("errorBox");
-            if (err) {
-                err.innerText = msg;
-                err.style.display = "block";
-            }
-        }
-    </script>
-
-    <script src="script.js"></script>
-    <div id="pageLoader" class="loader" style="display:none;"></div>
+<div id="pageLoader" class="loader" style="display:none;"></div>
 
 </body>
 </html>
